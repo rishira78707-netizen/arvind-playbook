@@ -1343,16 +1343,7 @@ ScrollTrigger.create({
   onEnter: () => document.querySelectorAll(".counter").forEach(runCounter)
 });
 
-// Nav active link on scroll
-const sections = ["hero","welcome","significant","ecosystem","role","numbers","ninety","navigator","philosophy","hrhumor"];
-const navLinks = document.querySelectorAll(".nav-links a");
-sections.forEach((id, i) => {
-  ScrollTrigger.create({
-    trigger: "#"+id, start:"top 55%", end:"bottom 55%",
-    onEnter: () => navLinks.forEach((a,j) => a.classList.toggle("active", i===j)),
-    onEnterBack: () => navLinks.forEach((a,j) => a.classList.toggle("active", i===j))
-  });
-});
+// Nav active state fixed to Home
 
 // ── HR HUMOR CAROUSEL ──
 let currentPanel = 0;
@@ -1370,7 +1361,7 @@ function showPanel(n){
 // Auto-rotate every 5 seconds
 setInterval(() => {
   showPanel((currentPanel+1) % panels.length);
-}, 5000);
+}, 10000);
 </script>
 
 </body></html>
