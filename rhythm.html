@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Operating Rhythm — Arvind Limited · HRBP Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --red:#C8102E;--red-dark:#a00e24;--white:#FFFFFF;--off-white:#F7F7F5;
+  --light-grey:#EAEAEA;--mid-grey:#B7B7B7;--dark-grey:#2D2D2D;
+  --font-display:"Playfair Display",Georgia,serif;
+  --font-body:"Raleway",Arial,sans-serif;
+  --nav-h:64px;--max-w:1200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);color:var(--dark-grey);background:var(--white);overflow-x:hidden;cursor:none;}
+#cur{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-r{position:fixed;width:26px;height:26px;border:1.5px solid rgba(200,16,46,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+a,button,select{cursor:none;}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+section{position:relative;}
+.rv{opacity:0;transform:translateY(28px);}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:block;}
+.sec-title{font-family:var(--font-display);font-size:clamp(26px,2.8vw,40px);font-weight:600;color:var(--dark-grey);line-height:1.2;}
+.sec-title em{font-style:italic;color:var(--red);}
+.sec-intro{font-size:14px;line-height:1.85;color:rgba(45,45,45,.65);max-width:600px;margin-top:14px;}
+.sec-header{margin-bottom:52px;}
+
+/* NAV */
+#navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--light-grey);display:flex;align-items:center;z-index:1000;transition:box-shadow .3s;}
+#navbar.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.08);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-img{height:44px;width:auto;display:block;}
+.nav-divider{width:1px;height:28px;background:var(--light-grey);}
+.nav-playbook-tag{font-family:var(--font-body);font-size:11px;font-weight:700;color:var(--mid-grey);letter-spacing:.14em;text-transform:uppercase;}
+.nav-playbook-tag span{color:var(--red);}
+.nav-links{display:flex;align-items:center;gap:0;list-style:none;}
+.nav-links a{display:block;padding:6px 10px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid-grey);text-decoration:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--dark-grey);border-bottom-color:var(--red);}
+
+/* HERO */
+#page-hero{padding-top:calc(var(--nav-h) + 72px);padding-bottom:72px;background:var(--off-white);position:relative;overflow:hidden;}
+#page-hero::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+#page-hero::after{content:"";position:absolute;top:-40%;right:-5%;width:32%;height:160%;background:rgba(200,16,46,.03);transform:skewX(-14deg);pointer-events:none;}
+.hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:end;}
+.hero-breadcrumb{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.hero-breadcrumb::before{content:"";width:20px;height:1px;background:var(--red);}
+.hero-breadcrumb a{color:var(--mid-grey);text-decoration:none;transition:color .2s;}
+.hero-breadcrumb a:hover{color:var(--red);}
+.hero-breadcrumb span{color:var(--red);}
+.hero-title{font-family:var(--font-display);font-size:clamp(28px,3.6vw,50px);font-weight:600;line-height:1.1;color:var(--dark-grey);margin-bottom:20px;}
+.hero-title em{font-style:italic;color:var(--red);}
+.hero-body{font-size:14px;line-height:1.85;color:rgba(45,45,45,.65);max-width:460px;}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.hmc{background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--red);padding:20px 18px;}
+.hmc.alt{border-top-color:var(--dark-grey);}
+.hmc-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:8px;}
+.hmc-val{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--dark-grey);}
+.hmc-sub{font-size:11px;color:var(--mid-grey);margin-top:4px;line-height:1.4;}
+
+/* SUBNAV */
+#section-nav{position:sticky;top:var(--nav-h);z-index:500;background:var(--white);border-bottom:2px solid var(--light-grey);overflow-x:auto;}
+.section-nav-inner{display:flex;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+.snav-btn{padding:13px 14px;font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--mid-grey);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;display:block;margin-bottom:-2px;}
+.snav-btn:hover{color:var(--dark-grey);}
+.snav-btn.active{color:var(--red);border-bottom-color:var(--red);}
+
+/* SHARED TAB SYSTEM */
+.tab-wrap{display:flex;gap:0;border-bottom:2px solid var(--light-grey);margin-bottom:36px;overflow-x:auto;}
+.tab-btn{padding:11px 20px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .2s,border-color .2s;}
+.tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ SEC 1 — WHAT IS RHYTHM ══ */
+#what-is{padding:100px 0;background:var(--white);}
+.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px;}
+.what-card{padding:32px 28px;background:var(--off-white);border-top:3px solid var(--light-grey);transition:border-top-color .3s;}
+.what-card:hover{border-top-color:var(--red);}
+.what-card-label{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px;}
+.what-card-title{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--dark-grey);margin-bottom:10px;}
+.what-card-body{font-size:13px;line-height:1.8;color:rgba(45,45,45,.7);}
+.rhythm-definition{background:var(--dark-grey);padding:40px 48px;margin-bottom:56px;position:relative;}
+.rhythm-definition::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red);}
+.rhythm-def-label{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,16,46,.7);margin-bottom:16px;}
+.rhythm-def-text{font-family:var(--font-display);font-size:clamp(16px,1.8vw,22px);font-weight:400;font-style:italic;line-height:1.55;color:var(--white);}
+
+/* ══ SEC 2 — DAILY RHYTHM ══ */
+#daily{padding:100px 0;background:var(--off-white);}
+#daily::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.daily-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.daily-card{background:var(--white);border-top:3px solid var(--light-grey);transition:border-top-color .3s,box-shadow .3s;overflow:hidden;}
+.daily-card:hover{border-top-color:var(--red);box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.daily-card-header{padding:20px 20px 16px;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.daily-card-seq{font-size:11px;font-weight:800;color:rgba(200,16,46,.4);flex-shrink:0;margin-top:2px;}
+.daily-card-title{font-size:13px;font-weight:700;color:var(--dark-grey);line-height:1.4;flex:1;}
+.daily-card-arrow{font-size:14px;color:var(--mid-grey);transition:transform .25s;flex-shrink:0;}
+.daily-card-arrow.open{transform:rotate(90deg);}
+.daily-card-body{display:none;padding:0 20px 20px;border-top:1px solid var(--light-grey);font-size:12px;line-height:1.75;color:rgba(45,45,45,.7);}
+.daily-card-body.open{display:block;animation:fadeUp .25s ease;}
+.daily-end-note{background:var(--dark-grey);padding:24px 28px;margin-top:2px;grid-column:1/-1;display:flex;align-items:center;gap:20px;}
+.daily-end-note-icon{font-size:20px;flex-shrink:0;}
+.daily-end-note-text{font-size:13px;line-height:1.7;color:rgba(255,255,255,.65);}
+.daily-end-note-text strong{color:var(--white);}
+
+/* ══ SEC 3 — WEEKLY RHYTHM ══ */
+#weekly{padding:100px 0;background:var(--white);}
+.week-tab-btn{padding:11px 20px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .2s,border-color .2s;}
+.week-tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.week-panel{display:none;}
+.week-panel.active{display:block;animation:fadeUp .3s ease;}
+.week-panel-inner{display:grid;grid-template-columns:240px 1fr;gap:0;}
+.week-left{background:var(--dark-grey);padding:36px 28px;}
+.week-day-name{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.week-focus-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,16,46,.7);margin-bottom:10px;}
+.week-focus-title{font-size:14px;font-weight:700;color:var(--red);line-height:1.4;}
+.week-right{padding:36px 36px;background:var(--off-white);}
+.week-activities-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:16px;}
+.week-activities-text{font-size:13px;line-height:1.8;color:var(--dark-grey);margin-bottom:24px;}
+.week-output-wrap{background:var(--white);border-left:3px solid var(--red);padding:14px 18px;}
+.week-output-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.week-output-text{font-size:12px;line-height:1.65;color:var(--dark-grey);}
+
+/* ══ SEC 4 — MONTHLY RHYTHM ══ */
+#monthly{padding:100px 0;background:var(--off-white);}
+#monthly::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.month-activity-card{background:var(--white);margin-bottom:2px;border-left:3px solid var(--light-grey);transition:border-left-color .25s;}
+.month-activity-card:hover{border-left-color:var(--red);}
+.mac-header{padding:18px 22px;display:flex;align-items:flex-start;gap:16px;}
+.mac-stakeholder{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;background:rgba(200,16,46,.07);color:var(--red);white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.mac-title{font-size:13px;font-weight:700;color:var(--dark-grey);flex:1;line-height:1.45;}
+.mac-freq{font-size:10px;color:var(--mid-grey);flex-shrink:0;font-style:italic;margin-top:2px;}
+.mac-output-toggle{font-size:10px;font-weight:700;color:var(--red);background:none;border:none;border-bottom:1px solid rgba(200,16,46,.3);padding:0;margin:0 22px 14px 22px;display:inline-flex;align-items:center;gap:6px;transition:border-color .2s;}
+.mac-output-toggle:hover{border-bottom-color:var(--red);}
+.mac-output-body{display:none;padding:0 22px 16px;font-size:12px;line-height:1.7;color:rgba(45,45,45,.7);border-top:1px dashed var(--light-grey);padding-top:14px;}
+.mac-output-body.open{display:block;animation:fadeUp .25s ease;}
+
+/* ══ SEC 5 — QUARTERLY RHYTHM ══ */
+#quarterly{padding:100px 0;background:var(--white);}
+.qtr-activity-card{background:var(--off-white);margin-bottom:2px;border-left:3px solid var(--light-grey);transition:border-left-color .25s;}
+.qtr-activity-card:hover{border-left-color:var(--red);}
+.qac-inner{padding:20px 24px;}
+.qac-timing{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:8px;}
+.qac-title{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--dark-grey);margin-bottom:8px;}
+.qac-purpose{font-size:12px;line-height:1.7;color:rgba(45,45,45,.7);margin-bottom:10px;}
+.qac-output-toggle{font-size:10px;font-weight:700;color:var(--red);background:none;border:none;border-bottom:1px solid rgba(200,16,46,.3);padding:0;display:inline-flex;align-items:center;gap:6px;transition:border-color .2s;}
+.qac-output-toggle:hover{border-bottom-color:var(--red);}
+.qac-output-body{display:none;margin-top:14px;padding:14px 16px;background:var(--white);border-left:2px solid var(--red);font-size:12px;line-height:1.7;color:var(--dark-grey);}
+.qac-output-body.open{display:block;animation:fadeUp .25s ease;}
+
+/* ══ SEC 6 — ANNUAL CALENDAR ══ */
+#annual{padding:100px 0;background:var(--off-white);}
+#annual::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.annual-layout{display:grid;grid-template-columns:1fr 380px;gap:0;border:1px solid var(--light-grey);}
+.annual-grid-side{background:var(--white);}
+.annual-grid-header{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--dark-grey);}
+.aghq{padding:8px 14px;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);text-align:center;}
+.aghq.q1{color:rgba(200,16,46,.8);}
+.annual-months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.month-cell{padding:16px 14px;border-right:1px solid var(--light-grey);border-bottom:1px solid var(--light-grey);cursor:pointer;transition:background .2s;position:relative;}
+.month-cell:nth-child(4n){border-right:none;}
+.month-cell.active{background:rgba(200,16,46,.05);outline:2px solid var(--red);outline-offset:-2px;}
+.month-cell:hover:not(.active){background:var(--off-white);}
+.mc-qtr{font-size:8px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px;}
+.mc-qtr.q1c{color:rgba(200,16,46,.7);}
+.mc-qtr.q2c{color:rgba(107,122,94,.8);}
+.mc-qtr.q3c{color:rgba(155,126,168,.8);}
+.mc-qtr.q4c{color:rgba(184,144,106,.8);}
+.mc-name{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--dark-grey);margin-bottom:6px;}
+.mc-preview{font-size:10px;line-height:1.4;color:var(--mid-grey);}
+.mc-count{display:inline-block;font-size:9px;font-weight:800;padding:2px 7px;background:var(--off-white);color:var(--dark-grey);margin-top:6px;border-radius:2px;}
+.mc-count.active-count{background:var(--red);color:var(--white);}
+
+/* Annual side panel */
+.annual-side-panel{background:var(--dark-grey);padding:28px 24px;border-left:3px solid var(--red);overflow-y:auto;max-height:500px;}
+.asp-month{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.asp-qtr{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(200,16,46,.7);margin-bottom:20px;}
+.asp-empty{font-size:13px;color:rgba(255,255,255,.35);font-style:italic;padding:40px 0;text-align:center;}
+.asp-activity{margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:16px;}
+.asp-activity:last-child{border-bottom:none;margin-bottom:0;}
+.asp-activity-num{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,16,46,.6);margin-bottom:6px;}
+.asp-activity-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.4;}
+.asp-activity-biz{font-size:11px;line-height:1.6;color:rgba(255,255,255,.5);font-style:italic;}
+
+/* ══ SEC 7 — ACTIVITY MATRIX ══ */
+#matrix{padding:100px 0;background:var(--white);}
+.matrix-pct-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:48px;}
+.mps-card{padding:24px 20px;text-align:center;background:var(--off-white);border-top:3px solid var(--light-grey);}
+.mps-card.target{border-top-color:var(--red);}
+.mps-card.careful{border-top-color:var(--dark-grey);}
+.mps-card.sys{border-top-color:var(--mid-grey);}
+.mps-card.min{border-top-color:rgba(200,16,46,.3);}
+.mps-pct{font-family:var(--font-display);font-size:32px;font-weight:700;color:var(--dark-grey);display:block;}
+.mps-label{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mid-grey);margin-top:4px;}
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--light-grey);}
+.matrix-axis-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;text-align:center;padding:10px;}
+.matrix-axis-label.row-label{writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);padding:16px 10px;background:var(--off-white);border-right:1px solid var(--light-grey);font-size:9px;letter-spacing:.16em;}
+.matrix-axis-label.strategic{color:var(--red);}
+.matrix-axis-label.operational{color:var(--dark-grey);}
+.matrix-col-headers{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.mch{padding:10px 20px;font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;background:var(--off-white);border-bottom:1px solid var(--light-grey);text-align:center;}
+.mch.recurring{color:var(--red);border-right:1px solid var(--light-grey);}
+.mch.triggered{color:var(--dark-grey);}
+.matrix-inner{display:grid;grid-template-columns:32px 1fr 1fr;gap:0;}
+.mx-row-label{display:flex;align-items:center;justify-content:center;writing-mode:vertical-lr;text-orientation:mixed;transform:rotate(180deg);font-size:8px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:var(--off-white);border-right:1px solid var(--light-grey);}
+.mx-row-label.strategic-lbl{color:var(--red);border-bottom:1px solid var(--light-grey);}
+.mx-row-label.operational-lbl{color:var(--dark-grey);}
+.mx-cell{padding:0;border:1px solid var(--light-grey);cursor:pointer;position:relative;transition:background .25s;}
+.mx-cell:hover .mx-cell-bg{opacity:1;}
+.mx-cell.active-cell{z-index:2;}
+.mx-cell.dimmed{opacity:.35;}
+.mx-cell-bg{position:absolute;inset:0;background:rgba(200,16,46,.04);opacity:0;transition:opacity .2s;}
+.mx-cell-header{padding:18px 20px 12px;border-bottom:1px solid var(--light-grey);}
+.mx-cell-badge{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;}
+.mx-cell-badge .pct{font-size:14px;font-family:var(--font-display);font-weight:700;}
+.mx-cell-title{font-size:11px;font-weight:700;color:var(--dark-grey);line-height:1.4;}
+.mx-cell-subtitle{font-size:10px;color:var(--mid-grey);margin-top:3px;}
+.mx-cell-items{padding:0 20px 20px;display:none;}
+.mx-cell-items.open{display:block;animation:fadeUp .3s ease;}
+.mx-cell-items ul{list-style:none;margin-top:12px;}
+.mx-cell-items ul li{font-size:11px;line-height:1.65;color:var(--dark-grey);padding:6px 0;border-bottom:1px solid var(--light-grey);padding-left:14px;position:relative;}
+.mx-cell-items ul li::before{content:"›";position:absolute;left:0;color:var(--red);font-weight:800;}
+.mx-cell-items ul li:last-child{border-bottom:none;}
+
+/* ══ SEC 8 — METRICS ══ */
+#metrics{padding:100px 0;background:var(--off-white);}
+#metrics::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.metrics-context{background:var(--white);border:1px solid var(--light-grey);border-left:3px solid var(--red);padding:18px 24px;margin-bottom:40px;font-size:13px;line-height:1.75;color:var(--dark-grey);}
+.metric-cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.metric-card{background:var(--white);padding:24px 22px;border-top:3px solid var(--light-grey);transition:border-top-color .3s,box-shadow .3s;}
+.metric-card:hover{border-top-color:var(--red);box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.metric-card-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:10px;}
+.metric-card-name{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--dark-grey);margin-bottom:8px;line-height:1.3;}
+.metric-card-def{font-size:11px;line-height:1.65;color:rgba(45,45,45,.65);margin-bottom:14px;}
+.metric-card-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.metric-tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;}
+.metric-tag.freq{background:rgba(45,45,45,.07);color:var(--dark-grey);}
+.metric-tag.owner{background:rgba(200,16,46,.07);color:var(--red);}
+.metric-threshold{background:rgba(200,16,46,.05);border-left:2px solid var(--red);padding:10px 14px;font-size:11px;line-height:1.65;color:var(--dark-grey);}
+.metric-threshold strong{color:var(--red);}
+
+/* ══ CLOSING DARK SECTION ══ */
+#closing{background:var(--dark-grey);padding:120px 0;position:relative;overflow:hidden;text-align:center;}
+#closing::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--red),transparent);}
+#closing::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;border:1px solid rgba(200,16,46,.06);pointer-events:none;}
+.closing-eyebrow{font-size:10px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:rgba(200,16,46,.6);margin-bottom:28px;display:block;}
+.closing-statement{font-family:var(--font-display);font-size:clamp(28px,4vw,52px);font-weight:600;line-height:1.15;color:var(--white);max-width:820px;margin:0 auto 28px;}
+.closing-statement em{font-style:italic;color:var(--red);}
+.closing-line{width:40px;height:2px;background:var(--red);margin:0 auto;}
+
+/* FOOTER */
+#footer{background:var(--dark-grey);padding:72px 0 40px;border-top:1px solid rgba(255,255,255,.07);}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-tagline{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px;}
+.footer-credit{font-size:12px;line-height:1.9;color:rgba(255,255,255,.4);}
+.footer-credit strong{color:rgba(255,255,255,.7);}
+.footer-col-title{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:10px;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:8px;}
+.footer-links a:hover{color:var(--white);}
+.footer-links a::before{content:"→";font-size:10px;color:var(--red);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.07);}
+.footer-bottom-left,.footer-bottom-right{font-size:11px;color:rgba(255,255,255,.25);}
+
+#back-top{position:fixed;bottom:32px;right:32px;width:44px;height:44px;background:var(--red);display:flex;align-items:center;justify-content:center;z-index:900;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(16px);border:none;}
+#back-top.visible{opacity:1;pointer-events:all;transform:translateY(0);}
+#back-top svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;}
+
+@media(max-width:1024px){
+  .nav-links,.hero-inner,.footer-top{grid-template-columns:1fr;}
+  .container,.nav-inner,.section-nav-inner{padding:0 24px;}
+  .daily-grid{grid-template-columns:1fr 1fr;}
+  .matrix-grid,.annual-layout{grid-template-columns:1fr;}
+  .annual-side-panel{max-height:none;}
+  .metric-cards-grid{grid-template-columns:1fr 1fr;}
+  .what-grid,.matrix-pct-strip{grid-template-columns:1fr 1fr;}
+  .week-panel-inner{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACEAX0DASIAAhEBAxEB/8QAHQABAAICAwEBAAAAAAAAAAAAAAcIAwQCBQYJAf/EAFMQAAEDAwICBQULBwgIBgMAAAECAwQABREGBxIhCBMxQVEUImFxgRUWMjdydHWCkbGzIzM1QmJzshgkNlKTlKHRFyVDVFVXkrRkg6LC0tMmw+H/xAAbAQABBQEBAAAAAAAAAAAAAAAAAQIDBAUGB//EADwRAAEDAgMCDAQDCQEBAAAAAAEAAhEDBBIhMQVBBhMiMlFhcYGRobHBNEKC0RQzNRUkUmJysuHw8ZLi/9oADAMBAAIRAxEAPwC5dKUoQlKUoQlad9ucOy2Wbd7g6GokJhb7yz3JSCT7eVblV/6ZOsPIdOwdGQ3sSLmryiYEnmmOg+ak/KWB7EKprjhEq7s+zN5csojec+zf5KT9otf2/cXSpvUOMuE60+piTFW4FqaUOY5gDIKSk5x3kd1exqlPRj1r70txmoUt7gtl64YkjJ81DuT1K/YolPqWT3VdakpuxBW9t7OFjdFreacx9u5KUpT1jpSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKEJSlKELhIeajsOPvuJbabSVrWo4CUgZJJ8KpNqaHfd27nrfcKClaoFpShTDSkniUwCQlCfAhsFxQ8SfGp46WusRp3bddlju8M2+lUfkeaY4ALyvaCEfXr1GxejE6N2xt9olsJE2SgybglSe11wZKD48Iwj6tROGMwuj2dV/Zlr+MjlPMN7AZce/RURPMdpHpBq8/R81v7+NuYkqU7x3SCfI5+e1TiQMOfXSUq9ZI7qqRvJo9ehtxLlYkoUIRUJMBR/WjrJKf+khSD4lBPfXf9GnWvvP3IYZlO8FrvPDDlZPJC8/kXPYolPqcUe6oqZwugrqNtWrNpWIq0syBiHZvHh5gK7dKUq0vNEpSlCEpSor3n3osmgeO1wmk3bUBSCIqV8LbAPYp1Q7OXMJHM8uwHNISAJKsW1rVuqgp0mySpUrRm3mzwTibdYEY+D0hCPvNVg0xad497ELuVy1M9ZNOuKISptKmmXOeCG2kEFwDxWrHgT3e5tnRf0Gyz/rG43ue+eal9a20nPoARn7SaYHE6BalXZlranBcV+VvDRMd8gKYHNR6fRBfnG924xo7ZcedTJQUoSO0kg9lam3upWtYaOgakZiqitTQtSGlL4iEpWpIJOB2hOcY5ZxVcN3ujozpzT8rUOk58mczDQXpEOU2guhsc1KQtIGeEc+EjJGeeRg++0Tb77cuifbW9MXGXBvDMNx+IuM5wrWpDy1dX9YAp9ZB7qA50wQnVtnWgt21KNXFicGyRGHI6j38FOFKoGndDcUgEa2vnP8A8SanToxO3fW0eXd73uBqaRMtk1vNuTKCWSjAUkryCVpUQoYyByI59tI2qHGApb3g5Vs6JrVKggdAP2ViKUpUq5xKUrrdS2k3u0uQBdLlaysgiTb3g08nHgogj2EGhOaASATAXZUqoNul7j3/AHim6D01uTfJEWPJdQq4Ouk9W03gLWUjAUQo8AxgKOOwHlOF822vLem5Bt25+tG7k0ypbb781K21KAJwpAQPNz4EH0mow8nQLWudlMtnMbUqiXAHQ5A9OWXqpOpVAm90dxVtpX79b4MgHHlRqw3RutupNU6cj6w1BrzUknExaWYKZQDJDasflMglWSDyBAx40jamIwArN/weqWNI1atQRpv18FO9KUqVc8lKh3evfK16JkO2OxsNXa/JGHApX5CIe7rCOalfsDHpI5ZhKyTd5d5Ls8xDvU0REHEhxDxiQo4PYk9XzUcfq+crvPLnUZqAGAty02FWrUuPquDGdJ+3/J3K40u4QIYzLmxo47MuupT95rXYvtjfVws3m3Oq8ESUE/4GoJs/RasakB3UeqbnNkq5uGI020M+twOE+vl7K7GZ0XNBOt4jXW/x145EuMLHtBa+4ill3QmG02YDH4gnrDMvWVOqFpWniQoKHiDmv2qm6r2Q3D0E0u76H1FMuMZgFZbhLXGlIT6G0qKXMd+CCe5NYtt+kdqS1SWousW03u3EhKpDbaW5TQ8eWEuY8CAfT3UnGQYcFY/YBrUzVs6gqAbtD4FW3pWjp+8Wy/2aNeLPMbmQZSONl5s8lD7wQcgg8wQQa3qkXPuaWkgiCEpXQ61065qS2eSsX68WR9GS1Jt0ktKCiOXEOxY9B9mO2qQv7i7isPuML1xfitpakKImrwSDg45+imPfhWxsvY7totcabwCNQZ3q/lKqZtZY94dwtOvXu2bmzojLUpUYokzHuIqSlKs+aCMeePsr1n+ijfL/AJtL/vkj/KkDydyfV2RSovLH3DQRrk77Kw9Krs7tVvslBLW63GsdiVT5CQfbwn7q8xqOZ0i9umlzbhdZVwtzXnLkoDc1kDxVlAcSPSQB6aC+NQinsZlY4aVwwnozHqFbClVv296TTTzzcPXNqRGSrl7oW9KlIT6VtHKgPSkq9Qqw9quEG625i42yWxMhyEcbL7KwtC0+IIpzXB2io3uzrmydFZsde4962aUpTlRSlKUISlKjjpGayOjdspr0Z7q7lcf5jCI7UrWDxLHhwoClA+ISO+kJgSp7ag+4qtpM1cYUSwMbw9J1UzPX6e04QUd6FoZX5v8AaPZV6UJxVoaiLop6P97O2bNyktcE69qEtYIwUs4wyn/p871rNS7TWDKTvWhtmu19cUafMpjCO7U95UK9LfRfu/oRGpIbXFcLEVOr4RzXGVjrB9XAX6kq8ap+QFJIPYa+k77TT7DjDzaXGnElC0KGQpJGCDVA92tIuaH1/c9PlKvJm19dCWr9eOvJR68c0n0pNRVm710vBS/x03Wrjm3Mdm/wPqrc9HfW/v225ivSneO628+RzsnmpaQOFz66cH18Q7qkaqQdHDW3vM3IjJlO8Fqu3DCmZOEoJP5Jw/JUcE9yVqNXfqSm7EFz23tn/g7s4RyXZj3HcfKEpSlSLEUfb+a+/wBH+hXJ0UoVdpi/JrehQyAsjKnCO8ISCfSeEd9U/wBuLBI13uTbLNLkPOquMsuzX1KJWpABcdUVf1ilKgD4kVJHTNursrci22kq/IQLYHEjPYt1auI/Y2j7K1ehwwh3d6QtfazZZDifX1rCfuUarPOJ8L0DZtEWGyXXDee4Ez6eGqt7Cix4MNmHDZbYjsNpbaaQMJQlIwAB3AAVmpSrK4AmTJXF5tDzK2XEhSFpKVJI5EHkRXk9nbHL01txarFOjmO9D65HVlQUQnrllJyCRzSUnt769dSkjOU8VXCmae4kHwn7qkXST0Z7z9y5S4zXBbLvxTYmB5qVE/lW/Yo59S01rdHjWPvN3MgvyHeC23HEKbk4SlKz5iz8leOfcCqrMdJXRh1ftrKXEZLlztWZsQJGVLCR+UbHjxIzgd6gmqREJWjHIpUPtFVnjC6QvR9kXDNqbPNKrqBhPsf93hfSulRz0dtZHWW2UF+U91lyt/8AMpxJypS0AcKz8pJSr1k+FSNVkGRK86uaD7eq6k/UGErxm9erhorbe63ptYTNLfk8EeL7nmoPp4eaz6EmvZ1WHpL3CXrrdjT+2VndJDDqevKeYS84MlR/ds5V9Y015gK7si0bc3TQ/mjN3YP9hel6HGkfc3SEvV0tCjKvC+rYUv4QjtkjP1l8R9ICTU4XT9GSv3K/4TXGzW6JaLRDtUBoNRIbCGGUD9VCUhIH2CuV0/Rkr9yv+E0rRhEKG+u3Xl06sd58t3kvm3H/ADDfyR91XR6I3xLw/nsr8U1S6P8AmG/kj7quj0RviXh/PZX4pqCjzl3XCz4L6h6FS5Xh989Yr0RtvcbxGUBPcAjQcjOHl8grHfwjKvq17iq69N2WtNk0xACiEOS3n1DxKEBI/ENTvMNJXE7It23N7Tpu0Jz7s/ZVoiR5l1urERlSn506SlpCnFElx1xYAKj2klSuZ7edfQXQWl7bo7ScDT1rbAZitgKWR5zzh+G4rxUo5J+zsAqj2zSEr3a0olaQoe6rBwfQrIq/tRURqV0XC6u7FTojSJ9vL3SlKVOuMSqgdLfRkXTutot/trCWYl8StbyEDCUyUEcavRxhQVjxCj31b+oE6bDSDoKxPEeem8BAPoLDpP8ACKjqjkrc4O13Ur9gGjpB8PuvBdEPWj9o1mvSEl5Rt13ClsIJ5NyUpzkeHEhJB9KU1bivnlt5MVb9wNOTUK4SzdYxJ9BdSD/gTX0NpKJkQrvCu2bTum1W/MM+0f4hK+b10/Ss35y5/Ga+kNfN66fpWZ85c/jNNrblb4H86t9PuradDL4qp30y9+EzU21CXQy+Kqd9MvfhM1NtSU+aFz+2vj6valFAKBSoAg8iD30pT1lqp3Si2pi6adGstNxUsWqS6ETorYwiM6o+atI7kKPIjsCiMcjy8hsRujN29vyI8x1x7TktwCZHyT1BPLrkDuI7wPhD04q5mrrJE1Lpi5WGcnMefGWwv9niHJQ9IOCPSK+dsmO/ElPQ5SOCRHcU08n+qtJKVD7QarVBgMheg7CuG7Ts321zysOXcdO8dPYvpGw60+w2+y4hxpxIWhaTkKSRkEHvFc6h3okamdvm2AtUpwrkWN8xEknJLJAU17ACUD0IqYqsNMiVw95bOta76LvlKUpSlVZKq1uk65u10irdomMtS7PaFlmSpJ5YThclXozhLQP9Yemp53d1a3onb66X8lPlDbfVREH9d9fmtj1ZOT6Aai7odaSciaeuGtrila5t3cLUdxzmospVlS8/tuZJ8eBJqN+ZDVvbL/dLepfHUclv9R1PcFPbTaGmktNoShCAEpSkYAA7AK5UpUiwUqD+l5osXrRbWqobQM6yZL2BzXFURx/9Jwr0Dj8anCscphmVFdiyWkusPILbiFDIUkjBB9BFNc3EIVuxu3Wlw2s3cfLeO8L5sqAUkpIyCMGrwdHHW51ptzGMt7rLrbMQ52T5yykeY4flJwT6eLwqo26Wk3tE67uenXAossOccRav9owrm2c95x5p9KTXoujprf3lbjRlSnurtV04Yc3JwlOT+TcPyVHt7kqVVdjsLs16Ftq0btGxx08yOU37d484V4aUpVpeZKl3S0+OqZ8wjfcquz6GPxtT/oF/8eNXWdLT46pnzGN/Cquz6GPxtT/oF/8AHjVVP5nevSKn6H9A9Fb6lKVaXm6UpShCVRfpBaN95e5U6JHZ6u2z8zYOB5qULJ4kD5KsjHhw1eiol6U2jDqjbh25RGeO5WQqls4HnLax+VQPqjix3lAqOo3EFu8Hr/8ACXYDjyXZH2Pj5SoK6K+sfezuQ3a5T3Bb76ExV5PmpfBJZV7SSj648KufXzWQtSSlxpxSFpIUhaDgpI5gg9xHbmr87N6vRrfby2X1Sk+WFHUzkJ/VkI5L5dwPJQHgoUyi7ctXhZY4XtumjXI9u7yy7l3urL3D03pm5X6erEaBGW+vnzVwjISPSTgD0moB6Jdil3/UuoNz70krkvvuMR1K5jrFnjeUM9wBQgejiHdW90wtSSHotl28tJLs66yEPvtJPNSQsJZbPoU5z/8AKqZNvNNRtIaKtWnIuCmEwEOLH+0cPNa/rKKj7afzndiy2/uWzSfmrGPpGvifJd/WtdP0ZK/cr/hNbNa10/Rkr9yv+E1IsJuoXzbj/mG/kj7quj0RviXh/PZX4pql0f8AMN/JH3VdHojfEvD+eyvxTVajzl6Nws+C+oehUuVWzpv/AJrSnypX3NVZOq2dN/8ANaU+VK+5qpavNK5Lg7+o0+/0KhbZf43NKfSjP31fyqB7L/G5pT6UZ++r+U2joVp8LviKf9PuUpSlTLkkqB+mv8Xdk+mk/wDbvVPFQP01/i7sn00n/t3qZU5pWtsP9Qpdvsqu6b/pLafn8f8AFTX0ar5y6b/pLafn8f8AFTX0aplHQrd4Yc6l3+yV83rp+lZvzlz+M19Ia+b10/Ss35y5/GaStuS8D+dW+n3VtOhl8VU76Ze/CZqbahLoZfFVO+mXvwmam2pKfNC5/bXx9XtSlKU9ZaV8/wDd+KmFuvquOn4Iu0hwejjWV4/9VfQCvnzulNFx3N1RNSQpLl3khBHelLikpP2JFQ1tAuv4IA8fU6I9/wDqmToQyFJv2qouTwuRYrhHpSp0f+6rRVWXoQwXDM1VcykhoIix0qx2qy4pQ9g4ftFWap1LmrN4SEHaNSOr+0JSldNrfUMPSmk7lqGeoBmEwpzhzgrV2JQPSpWAPXUixGMc9wa0SSq8dJu6zNcbp2HbKyu8SWHkdeU8wJDo+Ef3bWVfXUO6rJ2G1w7JZYVnt7YaiQmEMMp8EpAA+6q6dEewy7/qi/bl3v8ALSVPLZYWRyU+557yx4YBSkehSh3VZio6ecu6Vubbc2jxdkw5Uxn1uOZSlKVIsFKUpQhQR0wdGe6uko+r4bXFMs54JPCOa4yyMn6isK9AKzVTFAKSUkZBGDX0knxI0+DIgzWUPxpLSmXmljKVoUCFJPoIJFfP3cfS0jRetrnpuQVqTFd/m7iu11lXNtfrKSM+kGq9ZucrvuCt/wAZSNs45tzHZ/g+qt10bNbHWW3EdEx7rLrasQ5hUcqXgfk3D8pOMn+sFVJ1Ua6POtveTuNFelO8FruOIc7J81AJ8xw/JV2n+qVVeUcxkVJTdiC53b9h+DuzhHJdmPcdx8oVLulp8dUz5jG/hVXZ9DH42p/0C/8Ajx66zpafHVM+Yxv4VV2fQx+Nqf8AQL/48aoT+Z3rrKn6H9A9Fb6lKVaXm6UpShCV+KAUkpUAQRgg99ftKEKhe92jTobcW4Whpsot7p8qt57uoWThI+SQpH1Qe+vc9EXWqLDq+XpqfIDdvuzZdaKzhLchtJPs4kAg+lCalbpZaN98O3/u9EZ4p9iKn+Q85cc461PsAC/qHxqnXFw+cCRjvHbVVwwOyXpdjUbtjZvF1Dnoe0aH0PkrH7LNO7ob+3rcSY2VWy1q/mQWOQUQUMAepAUs+ClJPfVm68HsJo/3lbaW62vNBE+SPLJ3Ln1zgBKT8lISj6te8qdggLiNr3La9yRT5jeS3sH31Sta6foyV+5X/Ca2a1rp+jJX7lf8Jp6zG6hfNuP+Yb+SPuq6PRG+JeH89lfimqXR/wAw38kfdV0eiN8S8P57K/FNVqPOXo3Cz4L6h6FS5VbOm/8AmtKfKlfc1Vk6rZ03/wA1pT5Ur7mqlq80rkuDv6jT7/QqFtl/jc0p9KM/fV/KoHsv8bmlPpRn76v5TaOhWnwu+Ip/0+5SlKVMuSSoH6a/xd2T6aT/ANu9U8VA/TX+LuyfTSf+3eplTmla2w/1Cl2+yq7pv+ktp+fx/wAVNfRqvnLpv+ktp+fx/wAVNfRqmUdCt3hhzqXf7JXzeun6Vm/OXP4zX0hr5vXT9KzfnLn8ZpK25LwP51b6fdW06GXxVTvpl78JmptqEuhl8VU76Ze/CZqbakp80Ln9tfH1e1KUrrtR32zactblzvtyjW+G38J19YSCfADtJ8AMk09ZrWlxDWiSV1u5mp2NHaFu2oXlJ4osc9QhR/OPHzW0+1RAr58FSuErdWVK+EtajzJ7yalLpAbru7hXRuFbkuRtOwVlTCHPNXIXjHWrHcMEhKe4Ek8zgem6N+zsq+XGLq/VERbFnjrDsOK8jCpiwcpWQexsHnz+Ecfq9tZ5xugL0DZdFmxbJ1a5yc7dv6h2/wCnRTR0bdIO6Q2uhtTGi1cLksz5SVDzkFYAQg+BCEoBHjmpKpSrAECFwlzcOuKzqr9XGVil+UeSPeSdUJHVq6rrc8HHjlxY54zjOKgzc3a3dTcBTTV51lYWYLKuNuFFjOoZ4u5RySVK9ZIHcBU8UoLZ1Ulpe1LR+OlE9JAPhKhXazbzdLb6Eu2W/U+mptscdLpjSorx6tR+EUKSQRnA5HIzzxzOZqpSgCEl1d1Lp/GVInqAE+CUpSlVVKUpQhdZqX3f9zf/AMbFsM7jH6QKw1w9/wADnnsqv+4Gx25WuNSuX+96j015SptLKEMIeQ222nJCUgpJ7VE8yTzqydKa5odqr9ltGtZHFRiemJKqYei/rEgg6gsBB/e//Gpb0PpzebTliasjuotKXCOykNsSJTMhx5lA7By4eMAdmSD6alilIKYGis3O3Lq6bhrQR2BVx1f0fNYar1DKv1713bn5skjiItykpSkDCUpAXyAH/wDcms+g9htaaK1E3fbDrm1tSktqaWly2rWh1tRBKFDj7CUpPIg5A51YelJxbUp2/emnxRcMMRGFsR4LUsybki2MJvD0R6eE/lnIrSm2lHPalKlKI5Y7Sa26UqRY5MmUpSlCRKUpQhcXm23mVsuoS42tJStKhkKB5EEVUnR+0LsbpHuackx1Kslqc91ELUCUuR+LLCM9548JPj1a6txTAznAye+muaHQtGw2lVsm1Gs+cR2dfdmlKUpyzkrx+49p11eYq4GldQ2qyxnmC2869DW7ICjkEoVxBKRj9knOTnsr2FKQiVJSqmk8PAEjpAPkVVdPRZvyQANX2wAch/Ml/wDyqT9m9vtd7ftt2pWqbPcLCX1OuRlQVh1BUOfVr4+WTg8woduMZqWaU0U2jMLTuduXlzTNOq4EHqH2SoK3Q2f15uHcIsq+azsrTcRKkx48a2OJbRxY4jzcJJOBzJ7uWOdTrSlc0O1VO0vatm/jKUA9MA+qrJaejTqa1XSLc7frmDHmRHkvMOpgKyhaTkHmvB9R5GrDaWZ1Cxa+r1LOt02cFnD0KMplBRgYylSlednPMEDs5V2tKGsDdFLe7UuL0AVyDHUAfEBKUpTlnpUL7vbX6+3FeajztWWSJa4shbsWKzAcBychKlqKyVKCSRywOZ5VNFKQtB1Vm0u6lpU4ylE9YB9VVprovajZeQ81rO3NuNqC0LTDXlKgcgjzu4irE6Nj6rjW9TOrLla7hJSQG3oUVbHEMcysKUocWf6uB6K7ylI1gborF5tW5vWhtcgx1D1AXndeQtXT7YIukbxbrS+sKS7IlRVPKSCORbAUAFDnzUCOzlVev5Ld/wC/WFtJ8TDcJP8A6qtPSkcwO1S2e1rmyaW0CBPUPWFWq19HvX1qjmNatznLewVlZaimQ0gqOAVcKXAM8hz9Ara/0G7of837h/eZf/21YulHFhWDwgviZJH/AJb9lXT/AEG7of8AN+4f3iX/APbWmejJfLlMTIv+4RkqB5rMRx5zHeApx3l/j6qsvSji2oHCG/bzXAfS37KLdCbEaC0s+3Mchu3qc2QUP3EhaUHxS2AEA+BIJHjUpDkMClKcABosy4uq1y7FWcXHrSlKUqgSlfi1JQkrWoJSkZJJwAK1/dCB/v0b+1T/AJ0JQCdFs0rGxIjv8XUPtO8PbwLCsfZXGVLixS2JMllguK4UdY4E8R8BntNCIMws1KVjkPsx2i7IebZbHapagkD2mhIslKxx32JLQdjvNvNnsU2oKH2iv0vMh4Ml1AdIyEcQ4iPHFCWCudK4uuNtNlx1aW0DtUo4Ar8W8yhnr1utpawDxlQCcHs50JIXOlfja0OIC0KSpKhkKScgitefcIEBAXPnRoiVdhedSgH7TQlAJMBbNK4suNvNJdZcQ42oZSpJyCPQa/HHmW1obW6hK1/BSpQBV6vGhELnSh5DJrgy608jjZdQ4nOMoUCP8KEi50rGw+xIQVsPNupBwShQUAfDlX6w8y+kqZdbdSDglCgQD4cqEsFc6VwceZaUhDjqEKWcIClAFR9HjXOhIlK0nrvaWZghvXOE3JVyDKn0hZ+rnNbtCUtI1SlKxPyY7BAffaa4uzjWE5+2hIBKy0rExJjvkhiQ06R2hCwcfZWWhBEJStSXdLZEfQxLuMSO6v4KHXkpUr1AnnW2OYyKEpBGZSlY5L7EZovSHm2Wx2rcUEge00jvsSGg7HebebPYpCgoH2ihEGJWSlcH3mY7RdfdbabT2rWoJA9prjGkR5TQdjPtPtnsW2sKH2ihEGJWWlY1PsJeSwp5tLqhlKCocRHoFfj8mMwQl+Q00TzAWsDP20IgrLSsTEmM+SGJDTpHMhCwcfZXJ51plsuPOIbQO1S1AAe00Ig6LnSuCnmUs9cp1CWsA8ZUOHB7OdckKStAWhQUlQyCDkEUJIX7SuLrjbLZcdcS2gdqlHAHtrguTHQyl5b7SW1fBWVgJPqNCWCstK1vdCB/v0b+1T/nWRuRHcaU62+0ttOeJaVggY58zQjCRuWWlcG3mXGeubdQtvBPGlQKeXbzrD7oQP8Afo39qn/OhGElbNKxsSI7+eofad4e3gWFY+yscqdCiKSmVLjsKX8EOOBJV6s9tCIMwtilAQRkcxShIui3C/oDqL6Kk/hKqs2y2i9k7vt5Bn60nW6PeluPB5Dt3LCuEOKCPMCxjzeHu59tWZ3C/oBqL6Kk/hKqFujfttoTU+0lsu9903CnznXZCVvuFXEoJeWE9hxyAA9lROEuC6LZtwKFhUcXubym5t10d1jJSVs/pLb3TkS4TNvnGHo81aG5TrM4yUlTYJSnJUQCA4eXpFQ/vJbrnu5uRqC0WR1Zh6MtS1NdX/tZyiFdWD3FXAUg9xbPjUvand01s/theLjY7bGt8dgKdZjoJ4XZKwlCAcknmQgH0Amor2p223bh6XbvFl19Esar5i4SmXbah51TixniWpaSckYOByBJ9NDv4VLYVML6l86pno0vkycpmAdG5d6l7ZHV6db7a2q9rcC5fV9RNx3Po5KPt5K9ShUP7zrsVx6QEe0bozZkXSLdtDltQFrQwt444lKKeY58YKhzGEAkA89zZpu7bX7yztAajnMymtRseXxZLTfVtuSQVFXCnsSSAsEDl5iMDmK9ZuPuVoKHqmTo7cXTj7dvSlC40ydA6+NIURzKAASMZA4gO3OcYGQmW5op0TbX7jbtLmuaS3DqAd7esaaTqsm0u3GhLLqNWqdA6klSLctlTTkKPcA9GKzjClYOSQM4CieZyMYrzOtrrarJ0u7NcrzcItvht6f4VSJLobQkkvgAqPLma85ohWk19JCzK2fMoWoxnTfA0HBGCeFWMBfPGeH9nPDw99eh11Z7Tf8ApcWe1XuBHnwndP8AEth9PElRSXyDj0Gk3ZdKn4ssuXOruc4GkTmIcB0HrW10lNc6Kvuzl4tlo1VZbjMdcjFEePMQ4tYTIbUrCQcnABPqFb26aUnokJSQMe4tt5Y/aYrrOkft7ofT2z93u1m0xbLfNZcjBuQyyErQFSG0qwfSCR7a7PdJSR0SEqJGPcW288/tMUGZM9CiocTxVtxExxu+Jnk9C342qzonovWbUTTaHJEeww0R0rHml1baEIz6ApQJ9ANed262TsuqtOxdXbkv3DUF8vDKZSi9LWhLCFjiQgcBByARkfBHYAAOffp0o7rXotWjT0ZSEyn7DDXGKzhJdQhC0AnuBKQCfTXQ7Xb26esOmoulNwVS7BfbMymG4l+M4oOpbHClXmgkHhAznkTzBINLlIlNZx4pVTZzxmM4sPOw7ojOJmY6l1rsGVsZuxp6BZbhLf0bqZ/ydcGQsrEZ3iSnKT3EFxBB7SOIHOAa5dLa3Tbtrjb63Wt/ye4yHZCIj3GUFt3iZ4FBQ5pIOOY7O2v2dcl75br6dc09Ekp0hpqR5VIuLzRQmQ7xJUEpB9KEgA88FZIHLPcb+kDerabJAzcXMf2jFNywmNFZpPey8ouqfmhj8Xg6J64139K9DtHuE5rHSlztV8a8i1VZ21x7pEWOFRUAR1gHgSOeOQOe4gnoehsANlXMAD/WD/8AAisu/mi7rCno3Q0OlTV+t7ZTcWEJyJsbGFZSPhEJ7R2lIGPOSmuHQ64Rs08EK4ki5SADn9lFOE4gCqlZtE7PqVqOQc5uX8JGKR2Z5dXYtfoVJSnbG8BIAHu87yA/8PHqJ9nNTXvb24TtX9S5I0jIvLltu7TYJLK+S0PBPcRx4B78FJ5lNSz0KiFbZXgpII93nuz5vHrU6K1st98281nabnHblQpd9kNPNK5hSS03n1H09oPOmgSGwr1esylWvDUbiaS0EdRnzGo61l6REuJcNX7Qz4T7UmM/fW3WXWzxJWlTschQPgRXbdI7U1/bl6d2+0rLXCumpZBbclIJSplkFIOCOYzxEkjnhBA5mod1JYNQ6I3T0Roi5ylzLHE1CxKschwecptyQ1xoz2ZSQMpxyJJHJQAl7pIWG+MXPTO4+nIS58vTcgqkRUAlTjJIJIwCcDCgcZIC891LJMpgoUqVS1ZiDhD8JOhJJLZ74nrWhcNgtoLPZGo1+uLkaa8kgXCVcgytxY+EpKVHg7xy4T3Zz21Je1MG0WjRkSy2jUvvibgjq3Jhlh9RUeeORISACAE9wx66jbU25ewmu7BEnaslNv8AkoUtuHIafDzK1AcScN8lHkBkEjl21m6IVveiaS1BLFtkwbfOvC37eHmijjY4EhJTntAxjPPsPM0ojFkqV4y7qWbnXTny0jJwyn+U65DcMlN1V86U1shXrcfbO03BrrYk2euO+kEglC3o6VAEcxyJ5irB1XvpTwkXPcXbS1rlvxPLZy4/XsL4HWuN1hPEg9yhnIPjinVOaqmwSRetIMZO/tK0N6NptJbdaOc1no64XDT94gOt+TqTNUeuKlhJSOLnnBJwDggHIIr1G624mooG0GlHbWkRNTasaisoUBw9QtxtKllOfgnKgkeHFntFbls6PukG7oxPvt41HqXqFcSI90mhxnPLmQEgn1E4PYQazdJjSF41BpO23fTbJduunpqZrDCE5LiR2hI7yCEqx38JA5kU0tIBIWgy8t69ajTqv4yCSXOEajIZySJzMrRtHRw0Cm0hOoUz7zd3RxSbguY4hS3D8JSUg4xns4uI+JNdZtFLve328EraS53R+52Z6IZdldfOVtJAzwDwGEuAjsBbyAOIiu4sHSL27lWVMi9zZNnuLaeGTBciOrUhY5EJKUkEZ7M4PiBXUbUsXLcbeiVuxJtj9vsUKJ5HZhITwuP5BTx47xhbhJHLzwATwmjk5YUp/HcVW/aE4IMYtMW7D/8AOULz+8CrFcukOm07pzZkXSbVuC7YgLWhhbpCcqUU8xz6wFQwcpQCcdshbS7c6Esmol6o0DqSVItzjCmnIUe4B6MVnGFKwckgZwFE4JzyxWDcTcrQEfVUrRu4+nH2YKAlUSZPgdfHkkgZKMAkYJA4gPHOO+OtCK0qrpI2k7PmULOYzhvYQHBG4eFfYF88Z4Md3Fw8PfSZByki4rWeHlMAZ203ACe4nvMrsN8HbJP38t9n3NmTIujk20OQUpWtDDkgk5Kinn4gkcxhPMAnPuNqNttA2jUw1XoDUkl6B1KmnYUW4h6MtZxgrwcnAz5qieZBGMU3K3L0Jb9VP6M3D05ITberQ4xNmwOvjPrIyeAAE8sgcQB58WcYBMbaWVo9fSL08vZ0yRCU06b4llLqYwbwewL547P2eLg4eeaMg5DG3FazDOUwBh66bgBOfQT3mV63cQD+V5oA4Gfc1zn9WVXU9JGDp65b5aHhasdZZsjsN4THHXupSlIKiMryOHzgnnn0V224hH8rzQAyM+5rnL6squo6SMnTsPfLQ0nViWFWNER0zEvNFxBRlWMoAJV53DywaDoe1Ps54+3wzPFO01+fTr6OteV3P01tbZoVvf2hvTjusVTW0QWbVcFSVryeecE8GBzzkeByCcTD0nA+rYC6iYEl/ETrgOzj69vP+NRbuTqDYGfo+ZF0XbmDqNwAW02y3PR3kvZ81XFwp5DvHMnuGa9tu97to6JiRqZTnuuIcHywvHz+Prms8Z/rePpzSZZp9UVHVLV1TFIfHL5xzGn8o9Vt7igfyQkDAx737fy/sa95s0ANo9H4/wCCQ/wUV4PcUj+SEg5GPcC3/wD6a09tt8tsLNt5py0XHUamZsG1xo8hsQJCuBxDSUqGUoIOCDzBIp0gOz6Fmvtq1xZuFJhcRUdoCdw6F6vpPAK2M1GFAEcMfkfnDVcNLaOsGt9itIWXUUVcmEm2w3whDqmzxpZABykg/rGus3v1JZtV9Gy93+xTPKrdIS0Gni2pvPDLbSrksAjmCOYr2WzRB2l0kR/weL+EmnZF3coJq2+zxEtc2oeog4R4FQBI2n0OjpJxtEJtbvuI5ZzLUz5S5xdZ53PjzxY5DlnFTPcdFae0Ls7qy0abiLjQ34MuS4hbynCXCxwk5USexCeVeRlkfy0IYzz97x/99Shuh8WupvomV+Eqmhogq1f3lxUfbse8kFrSRJzMnPtUdbFADoqtgAYEG5cv/OfqKtltKbG3Tb2DM1vdLbGvi1uh5t67mOoJCyEeYFDHm47ufbUq7FEHorNkEEeQ3L8Z+os2V1FsTb9u4MXXUW1u31K3S+p+1OvrKSslGVpQQfNx38uym5Zdi0qfG4rvi8c8Z8mvzeX+FPm0Gl9vbBbLjN24djSY8xaUPuszlSWy42CQnJUcEcfPHjVf9srdtpq6VeXN4LtIa1i5PWh0T5a4yWxyHCg5CchXEOEnkAABjtn7ajVm21ytFzibcIbVGt+JEmLDgOMecsHHClaUhSldWRy8BUfztxdj9bxn1bg2Fu03hhJbkMXCEsSkAdyXW08fsyCPClMQNFStKly2rWBbUk4ZI/MHRI1gjXuUo7TaMt+idOuW61Xu4XaC++X4ypMgOJabIAShvh80J5Z5AZJJr2FQN0RA91ervcozTo73QHuJ5TnOMucePq9Vn0+niqeakZmMli7UpPpXb2vdiPTpqJzHT09a4uIQ62ptxCVoWClSVDIIPaCK4RI0aGwGIkdqO0kkhtpASkZ5nkKUpyoyYhcZsOJOZ6mbFYktZ4uB5sLTnxwazpASAlIAA5ADupShEnRa8iDCkSGpL8OO6+zzacW2FKR38ieY9lflxt8C5RzHuMKNMZPa2+0lxJ9hBFKUIDiN6xWaz2izRzHs9rhW9k8y3FYS0k+xIFZ1Q4apqZqorBlJTwpeLY4wPAK7cczSlCUvcTJOa5S40eWwqPLjtSGVY4m3UBSTg5GQeXbXF2HEeh+ROxWHIvCE9SpsFGB2Dh7MDA+ylKEkkLIy00wyhlltDbaEhKEISAlIHYAB2CtS6Waz3UpN0tMCcUfB8pjoc4fVxA0pQgOIMg5rajsMxmUsR2W2WkDCUNpCUpHoArhIhxJDzT8iKw86yctLW2FKbPikns7B2UpQiTMrPWCHDiQ2SzDisR2iclDTYQnPjgUpQiTokGFDgtFqFEYitqVxFDLYQCfHA7+Q+ykKFDhIUiHEYjJWriUGmwgKPicd9KUILid6/ZMOJKW0uTFYfUyrjaLjYUUK8RnsPpFZqUoRJXVu6d0+7O8udsVrcl5z16ojZcz8rGa7QchgUpQlLnO1KVgkwocl5l6TEYedZPE0txsKU2eRyknsPIdnhSlCQEjRZ6UpQkXWy7BYZk0TZdktsiUDkPOxUKWPrEZrskgJASkAAcgB3UpQnFxORK1rjb4FyjmPcYUaYye1t9pLiT7CCKxWaz2izRzHs9rhW9k8y3FYS0k+xIFKUIxuw4ZyWW42+BcoxjXGFGmMHtbfaS4k+wgisNmstnsrBYs9qg25pXaiLHS0D6wkClKEY3YcM5LO7BhOzG5rkOOuU0MNvKbBWgc+QV2jtP20lwIMtYXKhRn1JGAXWkqIHtFKUJMR6VxjW23RnOtjQIrK8Y4m2UpP2gVllxo0xhUeXHakMqxxNuoCknByMg8qUoRiMzK/HIcRyGITkVhcYJCepU2CjhHYOHswMCtL3vWD/gds/uiP8qUoSh7hoVs+51v8gMDyCL5Gf9h1Ker7c/Bxjt5+us7LTTDKGWW0NNISEoQhICUgdgAHYKUoSEk6rGYcMzRNMRgygnhD3VjjA8OLtxWV1tt1pbTqEuNrSUqSoZCge0Ed4pShElYmIcSPE8kYisNRsEdShsJRg9o4Ry55NafvesH/AAO2f3RH+VKUJQ9w0K2YNut8ArMGDFi8eOPqWko4sdmcDn2mta8adsF5cQ5d7HbLgtHwFSoqHSn1FQNKUQlFRwOIHNb8ZhmMwhiOy2yygYQ22kJSkeAA5CslKUJmq//Z" alt="Arvind" class="nav-logo-img">
+      <div class="nav-divider"></div>
+      <span class="nav-playbook-tag">HRBP <span>Playbook</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">index.html</a></li>
+      <li><a href="#">company.html</a></li>
+      <li><a href="#">stakeholders.html</a></li>
+      <li><a href="#">charter.html</a></li>
+      <li><a href="#">engagement.html</a></li>
+      <li><a href="#" class="active">Rhythm</a></li>
+      <li><a href="#">processes.html</a></li>
+      <li><a href="#">dashboard.html</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="page-hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-breadcrumb">
+          <a href="#">Home</a>&nbsp;/&nbsp;<a href="#">Engagement</a>&nbsp;/&nbsp;<span>Operating Rhythm</span>
+        </div>
+        <h1 class="hero-title">The <em>Operating Rhythm</em><br>of an Arvind HRBP</h1>
+        <p class="hero-body">A structured cadence of daily, weekly, monthly, quarterly, and annual activities that keeps the HRBP embedded in the business — proactively, not reactively. Every activity has a named owner, a defined output, and a stated purpose tied to a business outcome.</p>
+      </div>
+      <div class="hero-meta rv">
+        <div class="hmc">
+          <div class="hmc-label">Time Horizons Mapped</div>
+          <div class="hmc-val">5</div>
+          <div class="hmc-sub">Daily · Weekly · Monthly · Quarterly · Annual</div>
+        </div>
+        <div class="hmc alt">
+          <div class="hmc-label">Target Zone</div>
+          <div class="hmc-val">65%</div>
+          <div class="hmc-sub">Recurring-Strategic activities</div>
+        </div>
+        <div class="hmc">
+          <div class="hmc-label">Metrics Tracked</div>
+          <div class="hmc-val">12</div>
+          <div class="hmc-sub">With named thresholds & actions</div>
+        </div>
+        <div class="hmc alt">
+          <div class="hmc-label">Annual Activities</div>
+          <div class="hmc-val">36+</div>
+          <div class="hmc-sub">Mapped across Apr–Mar FY calendar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBNAV -->
+<div id="section-nav">
+  <div class="section-nav-inner">
+    <a class="snav-btn active" href="#what-is">What Is a Rhythm</a>
+    <a class="snav-btn" href="#daily">Daily</a>
+    <a class="snav-btn" href="#weekly">Weekly</a>
+    <a class="snav-btn" href="#monthly">Monthly</a>
+    <a class="snav-btn" href="#quarterly">Quarterly</a>
+    <a class="snav-btn" href="#annual">Annual Calendar</a>
+    <a class="snav-btn" href="#matrix">Activity Matrix</a>
+    <a class="snav-btn" href="#metrics">Key Metrics</a>
+  </div>
+</div>
+
+<!-- ══ SEC 1 — WHAT IS A RHYTHM ══ -->
+<section id="what-is">
+  <div class="container">
+    <div class="rhythm-definition rv">
+      <div class="rhythm-def-label">Section 1 · Definition</div>
+      <p class="rhythm-def-text">"An HRBP Operating Rhythm is the structured cadence of activities — recurring and triggered — that enables an HR Business Partner to stay proactively embedded in the business rather than responding reactively to events after they occur."</p>
+    </div>
+    <div class="sec-header rv">
+      <span class="eyebrow">Why a Rhythm Exists</span>
+      <h2 class="sec-title">Not a to-do list.<br><em>A governance mechanism.</em></h2>
+      <p class="sec-intro">Each activity has a named owner, a defined output, and a stated purpose tied to a business outcome. Without a defined rhythm, the HRBP role defaults to firefighting — processing transactions and resolving immediate issues rather than building the workforce capability the business needs.</p>
+    </div>
+    <div class="what-grid rv">
+      <div class="what-card">
+        <div class="what-card-label">The Problem It Solves</div>
+        <div class="what-card-title">Reactive vs. Proactive</div>
+        <div class="what-card-body">Without a defined rhythm, urgent operational tasks crowd out strategic ones. The HRBP becomes a responder to whatever arrives in the inbox — grievances, payroll queries, ad-hoc requests — rather than the architect of a BU workforce that meets business targets.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-label">What the Rhythm Governs</div>
+        <div class="what-card-title">Five Time Horizons</div>
+        <div class="what-card-body">Daily: operational integrity. Weekly: focus and triage. Monthly: analytical depth and compliance. Quarterly: strategic cycles — PMS, talent calibration, succession. Annual: governance, people plan, and operating rhythm review itself.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-label">For Arvind HRBPs Specifically</div>
+        <div class="what-card-title">Balancing Two Demands</div>
+        <div class="what-card-body">Managing multi-location workforce across Wovens, Knits, and Garmenting means the HRBP must balance strategic interventions (succession, talent health, org effectiveness) with operational integrity (compliance, grievance resolution, payroll accuracy). This document maps that balance.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-label">The Discipline Standard</div>
+        <div class="what-card-title">Rhythm Is Identity</div>
+        <div class="what-card-body">An HRBP who works to a rhythm has decided to be proactive. One without a rhythm is defined by whatever landed in their inbox this morning. The difference between a transactional HR generalist and a strategic HRBP is not capability — it is discipline.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SEC 2 — DAILY ══ -->
+<section id="daily">
+  <div class="container">
+    <div class="sec-header rv">
+      <span class="eyebrow">Section 2 · Daily Operating Rhythm</span>
+      <h2 class="sec-title">Nine activities.<br><em>Every working day.</em></h2>
+      <p class="sec-intro">The daily rhythm gives the HRBP a predictable day structure that balances strategic work with operational responsiveness. Each activity has a clear purpose tied to a business outcome — not a process requirement.</p>
+    </div>
+    <div class="daily-grid rv">
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">01</span>
+          <span class="daily-card-title">Morning Attendance & Absenteeism Review</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Review attendance data for the HRBP's BU. Identify same-day absenteeism above threshold. Flag production-impacting absences to the HR head / HOD.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">02</span>
+          <span class="daily-card-title">HR Helpdesk Queue Triage</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Review and route or resolve overnight employee queries on payroll, leave balances, transfer requests, and grievances. All queries acknowledged within 2 hours of business start.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">03</span>
+          <span class="daily-card-title">Manager Pulse Connect — 1 Per Day</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Brief 15-minute check-in with one BU manager per day to stay current on team health, emerging performance concerns, or hiring pressures. Rotated across all managers in a 4-week cycle.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">04</span>
+          <span class="daily-card-title">Pending Approval Review</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Ensure no approval is pending for more than 24 hours — offers, confirmations, transfers. Identify stuck approvals and escalate to COE as warranted. Maintain zero-aging on critical approvals.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">05</span>
+          <span class="daily-card-title">Talent Acquisition Pipeline Check</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Review open requisition status for the BU. Confirm interview schedules with hiring managers. Flag any role stalled beyond SLA (30 days). Coordinate with TA team on shortlists or offer negotiations.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">06</span>
+          <span class="daily-card-title">Employee Floor Walk or Informal Connect</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Brief shopfloor or office walkthrough to pick up informal pulse — visible signs of disengagement, informal grievances, or morale signals that will not appear in formal data for weeks. Document observations in daily log.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">07</span>
+          <span class="daily-card-title">Escalation & Grievance Resolution Follow-up</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Review any open grievances or escalations from previous 48 hours. Confirm resolution path, owner, and deadline. Any grievance older than 3 working days without an owner is an escalation trigger.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">08</span>
+          <span class="daily-card-title">Data Hygiene & HRMS Update</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Ensure all day's people movements — joining, exits, transfers, promotions — are reflected in HRMS. Data accuracy by end of day is non-negotiable.</div>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-header" onclick="toggleDaily(this)">
+          <span class="daily-card-seq">09</span>
+          <span class="daily-card-title">End-of-Day Done / Doing / Stuck Note</span>
+          <span class="daily-card-arrow">›</span>
+        </div>
+        <div class="daily-card-body">Three-bullet status note: one item completed, one in progress, one blocked. Sent daily to HR Head or manager. Creates accountability trail and surfaces blockers before they become escalations.</div>
+      </div>
+      <div class="daily-end-note">
+        <span class="daily-end-note-icon">📋</span>
+        <div class="daily-end-note-text"><strong>Daily log discipline:</strong> Every floor walk observation, every manager connect insight, and every escalation decision must be documented. Pattern recognition across weeks is only possible if daily notes exist. The log is the HRBP's institutional memory.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SEC 3 — WEEKLY ══ -->
+<section id="weekly">
+  <div class="container">
+    <div class="sec-header rv">
+      <span class="eyebrow">Section 3 · Weekly Operating Rhythm</span>
+      <h2 class="sec-title">One focus area<br><em>per day. Every week.</em></h2>
+      <p class="sec-intro">Each working day carries a distinct focus area, ensuring that every critical HRBP function receives dedicated attention at least once per week and does not get displaced by daily firefighting.</p>
+    </div>
+    <div class="tab-wrap rv" id="week-tabs">
+      <button class="week-tab-btn active" onclick="switchWeek(this,'w-mon')">Monday</button>
+      <button class="week-tab-btn" onclick="switchWeek(this,'w-tue')">Tuesday</button>
+      <button class="week-tab-btn" onclick="switchWeek(this,'w-wed')">Wednesday</button>
+      <button class="week-tab-btn" onclick="switchWeek(this,'w-thu')">Thursday</button>
+      <button class="week-tab-btn" onclick="switchWeek(this,'w-fri')">Friday</button>
+    </div>
+    <div class="week-panel active" id="w-mon">
+      <div class="week-panel-inner">
+        <div class="week-left"><div class="week-day-name">Monday</div><div class="week-focus-label">Focus Area</div><div class="week-focus-title">Business Alignment & Data Refresh</div></div>
+        <div class="week-right"><div class="week-activities-label">Key Activities</div><div class="week-activities-text">Review people dashboard updated over the weekend: attrition MTD, open roles, absenteeism trend, PMS completion status. Brief the HR head on any weekend developments. Set the week's 3 priority people items.</div><div class="week-output-wrap"><div class="week-output-label">Output</div><div class="week-output-text">Weekly HRBP priority list set — three clearly named people items the HRBP will move forward this week, shared with the HR Head by 10 AM.</div></div></div>
+      </div>
+    </div>
+    <div class="week-panel" id="w-tue">
+      <div class="week-panel-inner">
+        <div class="week-left"><div class="week-day-name">Tuesday</div><div class="week-focus-label">Focus Area</div><div class="week-focus-title">Talent Acquisition & Hiring Pipeline</div></div>
+        <div class="week-right"><div class="week-activities-label">Key Activities</div><div class="week-activities-text">Recruitment pipeline review: progress on all open requisitions, interview feedback received, offers pending, rejections requiring re-sourcing. Coordinate with TA on any stalled roles. Raise new requisitions if approved headcount is pending.</div><div class="week-output-wrap"><div class="week-output-label">Output</div><div class="week-output-text">Recruitment status update; any stalled role formally flagged with reason; new requisitions raised in ATS; TA coordination completed.</div></div></div>
+      </div>
+    </div>
+    <div class="week-panel" id="w-wed">
+      <div class="week-panel-inner">
+        <div class="week-left"><div class="week-day-name">Wednesday</div><div class="week-focus-label">Focus Area</div><div class="week-focus-title">Manager Capability & Performance</div></div>
+        <div class="week-right"><div class="week-activities-label">Key Activities</div><div class="week-activities-text">Structured manager check-ins (2 per week). Focus on: underperformance conversations in progress, PMS completion gaps, feedback quality, and team health signals. Mid-week is best for substantive conversations — managers are neither in week-start mode nor week-close mode.</div><div class="week-output-wrap"><div class="week-output-label">Output</div><div class="week-output-text">HRBP conversation log updated; any manager coaching action documented; PIP initiations progressed; PMS completion gaps escalated where needed.</div></div></div>
+      </div>
+    </div>
+    <div class="week-panel" id="w-thu">
+      <div class="week-panel-inner">
+        <div class="week-left"><div class="week-day-name">Thursday</div><div class="week-focus-label">Focus Area</div><div class="week-focus-title">Employee Engagement & Retention</div></div>
+        <div class="week-right"><div class="week-activities-label">Key Activities</div><div class="week-activities-text">Review exit interviews submitted in past 7 days; identify common themes; flag any at-risk high performer for pre-emptive retention conversation. Run scheduled stay interviews with identified at-risk employees.</div><div class="week-output-wrap"><div class="week-output-label">Output</div><div class="week-output-text">Exit theme note drafted; at-risk employee list updated; stay interview outputs documented and shared with HR Head if any flight risk identified.</div></div></div>
+      </div>
+    </div>
+    <div class="week-panel" id="w-fri">
+      <div class="week-panel-inner">
+        <div class="week-left"><div class="week-day-name">Friday</div><div class="week-focus-label">Focus Area</div><div class="week-focus-title">Governance, Compliance & Planning</div></div>
+        <div class="week-right"><div class="week-activities-label">Key Activities</div><div class="week-activities-text">Review the week's escalations, compliance deadlines for the coming week, and any statutory obligations due. Prepare the weekly status note for HR Head covering the week's progress against the Monday priority list.</div><div class="week-output-wrap"><div class="week-output-label">Output</div><div class="week-output-text">Weekly status note sent to HR Head; action item list with owners and deadlines confirmed; compliance calendar for the following week reviewed and flagged.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SEC 4 — MONTHLY ══ -->
+<section id="monthly">
+  <div class="container">
+    <div class="sec-header rv">
+      <span class="eyebrow">Section 4 · Monthly Operating Rhythm</span>
+      <h2 class="sec-title">Twelve activities.<br><em>Structured by week of month.</em></h2>
+      <p class="sec-intro">Distributed across four weeks to prevent bunching at month-end. Each activity has a stakeholder, an expected output, and a frequency note that specifies when it becomes non-negotiable.</p>
+    </div>
+    <div class="tab-wrap rv" id="month-tabs">
+      <button class="tab-btn active" onclick="switchTab('month',this,'m-w1')">Week 1 · Days 1–7</button>
+      <button class="tab-btn" onclick="switchTab('month',this,'m-w2')">Week 2 · Days 8–14</button>
+      <button class="tab-btn" onclick="switchTab('month',this,'m-w3')">Week 3 · Days 15–21</button>
+      <button class="tab-btn" onclick="switchTab('month',this,'m-w4')">Week 4 · Days 22–31</button>
+    </div>
+    <div class="tab-panel active" id="m-w1">
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HR Head</span><span class="mac-title">Headcount and attrition report for prior month — BU-level: actual headcount vs. approved plan, MTD attrition, joinings, exits, open roles by grade. Shared by Day 5.</span><span class="mac-freq">Every month — non-negotiable</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">BU-level report covering actual headcount vs. approved plan, MTD attrition, joinings, exits, and open roles by grade. Shared by Day 5 of the month. Forms the basis of all people conversations for the month.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">TA Lead</span><span class="mac-title">Manpower requisition review — reconcile open requisitions against approved manpower plan; close roles open beyond SLA or re-justify to business.</span><span class="mac-freq">Every month</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">All open requisitions reconciled against approved manpower plan. Roles open beyond SLA either closed or formally re-justified. ATS updated. Prevents headcount drift and ensures hiring stays within plan.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HR Ops + HRBP</span><span class="mac-title">New joiner onboarding completion check (Day 30 cohort) — confirm statutory enrollment, induction sign-off, probation KRA setting, and manager introduction.</span><span class="mac-freq">Every month</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">Confirmation that Day 30 joiners have completed: statutory enrollment (PF, ESI), induction sign-off, probation KRA setting, and manager introduction. Any incomplete items flagged to HR Ops with 48-hour correction deadline.</div></div>
+    </div>
+    <div class="tab-panel" id="m-w2">
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HR Head + Managers</span><span class="mac-title">PMS status review — completion rates for all E and above grade employees: KRA submission, mid-year review, or annual appraisal. Non-compliant managers flagged.</span><span class="mac-freq">Every month during PMS cycle</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">PMS completion rates for all E and above grade employees documented. Non-compliant managers formally flagged to HR Head with a correction deadline. Completion rate tracked as an HRBP KPI.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">Payroll Team</span><span class="mac-title">Payroll input validation — confirm all HRBP-owned inputs (new joins, exits, promotions, performance-linked variable pay) submitted before payroll cut-off date.</span><span class="mac-freq">Every month — zero tolerance for delay</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">All HRBP-owned payroll inputs confirmed submitted to the payroll team by cut-off date. Payroll errors trace back to late HRBP inputs — zero-tolerance policy. Confirmation sent to payroll team in writing.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HR Head</span><span class="mac-title">Manager 1:1 completion tracking — confirm all scheduled manager check-ins for the month completed; any missed manager rescheduled within the same month.</span><span class="mac-freq">Every month</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">Completion rate for all manager check-ins tracked and reported to HR Head. Any manager missed in the cycle rescheduled within the same month. Completion rate tracked as an HRBP KPI.</div></div>
+    </div>
+    <div class="tab-panel" id="m-w3">
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HRBP</span><span class="mac-title">Monthly attrition deep-dive and retention analysis — voluntary vs. involuntary, by grade, tenure, department, and reason code. Propose targeted retention interventions for at-risk cohorts.</span><span class="mac-freq">Every month; BU > 5% requires written action plan</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">Attrition analysis: voluntary vs. involuntary, by grade, tenure, department, and reason code. Patterns identified. Targeted retention interventions proposed for at-risk cohorts. Any BU exceeding 5% monthly attrition requires a written action plan.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">CHRO / HR Head</span><span class="mac-title">Talent health dashboard review — bench strength, critical role gaps, HiPo attrition YTD, succession bench coverage, IDP completion. Presented at monthly HR Head 1:1.</span><span class="mac-freq">Every month</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">BU talent health dashboard updated: succession bench coverage, HiPo attrition YTD, critical role vacancy age, IDP completion rate. Presented to HR Head in monthly 1:1. Inputs to quarterly 9-Box and succession planning cycle.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HRBP</span><span class="mac-title">Exit interview theme analysis — aggregate exit data for the month; identify top 3 attrition reasons; themes repeating 3 consecutive months trigger formal retention initiative.</span><span class="mac-freq">Every month</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">Aggregated exit interview data for the month. Top 3 attrition reasons identified. Themes that repeat for 3 consecutive months trigger a formal retention initiative with CHRO involvement.</div></div>
+    </div>
+    <div class="tab-panel" id="m-w4">
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">E+ grade sample</span><span class="mac-title">Engagement pulse check — 5-question digital pulse survey or 2 stay interviews per week. Gauge engagement momentum between annual surveys.</span><span class="mac-freq">Monthly (months without quarterly survey)</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">5-question digital pulse survey or 2 stay interviews per week. Monthly pulse applies in months without quarterly survey; stay interviews run year-round. Insights fed into monthly HR Head 1:1.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HR Compliance + Payroll</span><span class="mac-title">Compliance check — PF ECR by 15th, ESI challan by 21st, all FFS settlements for exited employees processed within 30-day window.</span><span class="mac-freq">Every month — any default is immediate escalation</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">Statutory filings confirmed: PF ECR by 15th, ESI challan by 21st. All FFS (full and final settlements) for exited employees processed within 30-day window. Any default is an immediate escalation to HR Head — creates statutory risk for Arvind.</div></div>
+      <div class="month-activity-card"><div class="mac-header"><span class="mac-stakeholder">HR Head + CHRO</span><span class="mac-title">Monthly HR governance report and HR Head 1:1 — HRBP presents people dashboard, attrition analysis, talent update, and compliance status. One decision required before meeting ends.</span><span class="mac-freq">Every month — CHRO version by last working day</span></div><button class="mac-output-toggle" onclick="toggleOutput(this)">See Output →</button><div class="mac-output-body">Monthly people dashboard, attrition analysis, talent update, and compliance status presented to HR Head. One decision committed before the meeting ends. CHRO version shared by last working day of the month.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SEC 5 — QUARTERLY ══ -->
+<section id="quarterly">
+  <div class="container">
+    <div class="sec-header rv">
+      <span class="eyebrow">Section 5 · Quarterly Operating Rhythm</span>
+      <h2 class="sec-title">Strategic cycles that<br><em>drive the full year.</em></h2>
+      <p class="sec-intro">Every quarterly activity has a hard deadline within the quarter and a named output that feeds the next cycle. These are not optional — they are the engine of the HRBP operating model.</p>
+    </div>
+    <div class="tab-wrap rv" id="qtr-tabs">
+      <button class="tab-btn active" onclick="switchTab('qtr',this,'q-1')">Q1 · April – June</button>
+      <button class="tab-btn" onclick="switchTab('qtr',this,'q-2')">Q2 · July – September</button>
+      <button class="tab-btn" onclick="switchTab('qtr',this,'q-3')">Q3 · October – December</button>
+      <button class="tab-btn" onclick="switchTab('qtr',this,'q-4')">Q4 · January – March</button>
+    </div>
+    <div class="tab-panel active" id="q-1">
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">Mar–Apr · Deadline: April 30</div><div class="qac-title">OKR Setting — E and Above Grade</div><div class="qac-purpose">OKRs set for the year in alignment with business objectives. Team Member + Manager. Concurrent with Cycle Closure of the prior year. Foundation of the full PMS cycle.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Signed OKRs in HRMS for 100% of E and above grade population. Completion rate tracked and reported to CHRO. Prior-year Cycle Closure formally locked by April 30.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">April 1–15</div><div class="qac-title">Annual People Plan & Headcount Finalisation</div><div class="qac-purpose">HRBP presents BU-level people plan to HR Head and CHRO: approved headcount, attrition forecast, succession priorities, L&D plan, and key hiring milestones for the year.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">BU People Plan document submitted to CHRO by April 15. Secures budget and headcount approvals for the year.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">April – May</div><div class="qac-title">Apprentice / Trainee Intake Planning</div><div class="qac-purpose">New academic batch joins in April–May. HRBP coordinates with GCC on onboarding, induction, and Apprenticeship Act compliance. First formal pulse of new joiners at Day 30.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Apprentice joining register; Day 30 pulse results; any early disengagement signals flagged to HR Head.</div></div></div>
+    </div>
+    <div class="tab-panel" id="q-2">
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">July</div><div class="qac-title">Q1 Check-In — E and Above Grade</div><div class="qac-purpose">Periodic progress conversation between Team Member and Manager. Challenges and support requirements surfaced and documented. Upstream input to Mid-Year Review in Sep–Oct.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Q1 Check-In completion rate logged in HRMS. Unresolved support flags escalated to HR Head within 7 days.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">July – August</div><div class="qac-title">First 9-Box Talent Calibration</div><div class="qac-purpose">First 9-Box of the year for all E and above grade workforce. Identify HiPos, flagging, and development interventions. Initiate IDPs for identified HiPos. Succession map for critical roles updated.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">9-Box grid per BU; succession map updated; IDPs initiated for HiPos within 30 days of calibration.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">August – September</div><div class="qac-title">Annual Engagement Survey Launch & Results</div><div class="qac-purpose">Full-cycle engagement survey across all grades. HRBP presents BU-level results to HR Head. Action plans drafted and committed by HR Head before end of quarter.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">BU engagement score vs. company average; action plan shared with HR Head; CHRO consolidated view by September 30.</div></div></div>
+    </div>
+    <div class="tab-panel" id="q-3">
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">Sep – Oct · Deadline: October 31</div><div class="qac-title">Mid-Year Review — E and Above Grade</div><div class="qac-purpose">Formal half-year assessment (TM + Manager + Reviewer). Feedforward inputs for H2 planning. Performance trajectory, development needs, and H2 priorities identified.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Mid-Year Review completion rate ≥ 95% by October 31. Feedforward documented in HRMS. H2 development actions committed.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">April – May (post Annual Assessment)</div><div class="qac-title">Annual Increment & Compensation Review</div><div class="qac-purpose">C&B COE benchmarking initiated after Annual Assessment ratings are locked. HRBP provides BU performance context, equity inputs, and retention risk flags. HRBP reviews draft increment matrix before letters are issued in May.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Increment matrix sign-off; retention risk flag for top performers before letters sent; letters issued by May 31.</div></div></div>
+    </div>
+    <div class="tab-panel" id="q-4">
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">January – February</div><div class="qac-title">Annual Succession Planning Presentation to CHRO</div><div class="qac-purpose">Full succession bench review for all critical roles. HRBP presents bench strength, development gaps, and cross-BU movement recommendations to CHRO.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Succession dashboard; critical role risk ratings; cross-BU succession moves approved by CHRO.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">February – March · Deadline: March 15</div><div class="qac-title">Workforce Plan for Next FY — Headcount Requisitions</div><div class="qac-purpose">HRBP works with HR Head to project next year's headcount needs: new roles, backfill projections, natural attrition estimates. Submitted to CHRO for budget approval.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Draft headcount plan for next FY submitted by March 15. CHRO-approved by March 31.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">January</div><div class="qac-title">Check-In — E and Above Grade</div><div class="qac-purpose">Periodic progress conversation between Team Member and Manager. Course correction before Annual Assessment in Mar–Apr. Flags any H2 performance concerns early.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Check-In completion rate logged in HRMS. Critical performance concerns escalated to HR Head before Annual Assessment cycle opens.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">Mar–Apr · Deadline: April 30</div><div class="qac-title">Annual Assessment — E and Above Grade</div><div class="qac-purpose">Full-cycle evaluation (TM + Reviewer + Calibration Panel). Ratings, promotions, and development direction decided. Most consequential PMS event of the year.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Final ratings submitted to CHRO by April 30. Promotion decisions communicated. Development plans initiated within 30 days of assessment.</div></div></div>
+      <div class="qtr-activity-card"><div class="qac-inner"><div class="qac-timing">March · Annual</div><div class="qac-title">Annual HR Operating Rhythm Review</div><div class="qac-purpose">HRBP reviews effectiveness of current year's rhythm: what cadences held, what slipped, what must be redesigned. Inputs to updated Operating Rhythm document for next FY.</div><button class="qac-output-toggle" onclick="toggleQacOutput(this)">See Output →</button><div class="qac-output-body">Updated HRBP Operating Rhythm document. Signed off by HR Head before April 1.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SEC 6 — ANNUAL CALENDAR ══ -->
+<section id="annual">
+  <div class="container">
+    <div class="sec-header rv">
+      <span class="eyebrow">Section 6 · Annual Operating Rhythm</span>
+      <h2 class="sec-title">Every activity anchored<br><em>to a business event.</em></h2>
+      <p class="sec-intro">The annual calendar maps HRBP activities to Arvind's April–March financial year. Click any month to see its activities and the business event each one supports.</p>
+    </div>
+    <div class="annual-layout rv">
+      <div class="annual-grid-side">
+        <div class="annual-grid-header">
+          <div class="aghq q1">Q1 · Apr–Jun</div>
+          <div class="aghq">Q2 · Jul–Sep</div>
+          <div class="aghq">Q3 · Oct–Dec</div>
+          <div class="aghq">Q4 · Jan–Mar</div>
+        </div>
+        <div class="annual-months-grid" id="annual-months-grid">
+          <!-- Built by JS -->
+        </div>
+      </div>
+      <div class="annual-side-panel" id="annual-side-panel">
+        <div class="asp-empty">← Click a month to see its activities</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SEC 7 — ACTIVITY MATRIX ══ -->
+<section id="matrix">
+  <div class="container">
+    <div class="sec-header rv">
+      <span class="eyebrow">Section 7 · Activity Categorisation Matrix</span>
+      <h2 class="sec-title">Four quadrants.<br><em>One target state.</em></h2>
+      <p class="sec-intro">Every HRBP activity falls into one of four quadrants defined by Frequency (Recurring vs. Triggered) and Nature (Strategic vs. Operational). Click any quadrant to expand its activity list.</p>
+    </div>
+    <div class="matrix-pct-strip rv">
+      <div class="mps-card target"><span class="mps-pct">65%</span><div class="mps-label">Recurring · Strategic<br>Target Zone</div></div>
+      <div class="mps-card careful"><span class="mps-pct">20%</span><div class="mps-label">Triggered · Strategic<br>Manage Carefully</div></div>
+      <div class="mps-card sys"><span class="mps-pct">15%</span><div class="mps-label">Recurring · Operational<br>Systematise</div></div>
+      <div class="mps-card min"><span class="mps-pct">&lt;15%</span><div class="mps-label">Triggered · Operational<br>Minimise</div></div>
+    </div>
+    <div class="rv" style="overflow:hidden;border:1px solid var(--light-grey);">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);background:var(--off-white);border-bottom:1px solid var(--light-grey);">
+        <div style="padding:10px 20px;font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);border-right:1px solid var(--light-grey);">← RECURRING (Planned Cadence)</div>
+        <div style="padding:10px 20px;font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--dark-grey);">TRIGGERED (Event-Driven) →</div>
+      </div>
+      <div class="matrix-inner" id="matrix-inner">
+        <div class="mx-row-label strategic-lbl">Strategic</div>
+        <div class="mx-cell" id="mx-rs" onclick="toggleMatrix('mx-rs')">
+          <div class="mx-cell-bg"></div>
+          <div class="mx-cell-header">
+            <div class="mx-cell-badge" style="color:var(--red);"><span class="pct">65%</span> of HRBP time</div>
+            <div class="mx-cell-title">Recurring + Strategic</div>
+            <div class="mx-cell-subtitle">Target Zone — click to expand</div>
+          </div>
+          <div class="mx-cell-items" id="mx-rs-items">
+            <ul>
+              <li>Annual KRA / goal-setting cycle</li>
+              <li>Monthly talent health dashboard review</li>
+              <li>Quarterly 9-Box talent calibration</li>
+              <li>Annual engagement survey launch and action planning</li>
+              <li>Succession planning review (bi-annual)</li>
+              <li>Workforce plan for next FY (Q4)</li>
+              <li>Mid-year and annual performance review facilitation</li>
+              <li>Weekly manager 1:1 check-ins (proactive relationship management)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mx-cell" id="mx-ts" onclick="toggleMatrix('mx-ts')">
+          <div class="mx-cell-bg"></div>
+          <div class="mx-cell-header">
+            <div class="mx-cell-badge" style="color:var(--dark-grey);"><span class="pct">20%</span> of HRBP time</div>
+            <div class="mx-cell-title">Triggered + Strategic</div>
+            <div class="mx-cell-subtitle">Manage Carefully — click to expand</div>
+          </div>
+          <div class="mx-cell-items" id="mx-ts-items">
+            <ul>
+              <li>Organisational restructuring support (role redesign, reporting change)</li>
+              <li>HiPo retention conversation (triggered by resignation or competing offer)</li>
+              <li>Cross-BU talent movement facilitated by HRBP</li>
+              <li>Business leader capability coaching (triggered by 360 feedback or team crisis)</li>
+              <li>Change management support for new business initiative</li>
+              <li>BU-level people strategy refresh (triggered by leadership change)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mx-row-label operational-lbl">Operational</div>
+        <div class="mx-cell" id="mx-ro" onclick="toggleMatrix('mx-ro')" style="border-top:1px solid var(--light-grey);">
+          <div class="mx-cell-bg"></div>
+          <div class="mx-cell-header">
+            <div class="mx-cell-badge" style="color:var(--mid-grey);"><span class="pct">15%</span> of HRBP time</div>
+            <div class="mx-cell-title">Recurring + Operational</div>
+            <div class="mx-cell-subtitle">Systematise — click to expand</div>
+          </div>
+          <div class="mx-cell-items" id="mx-ro-items">
+            <ul>
+              <li>Monthly headcount and attrition report preparation</li>
+              <li>Payroll input submission (new joins, exits, promotions)</li>
+              <li>Monthly statutory compliance check (PF ECR, ESI challan)</li>
+              <li>Weekly recruitment pipeline status update</li>
+              <li>HRMS data hygiene and movement updates (daily)</li>
+              <li>End-of-day done/doing/stuck note to HR Head (daily)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mx-cell" id="mx-to" onclick="toggleMatrix('mx-to')" style="border-top:1px solid var(--light-grey);">
+          <div class="mx-cell-bg"></div>
+          <div class="mx-cell-header">
+            <div class="mx-cell-badge" style="color:rgba(200,16,46,.5);"><span class="pct">&lt;15%</span> of HRBP time</div>
+            <div class="mx-cell-title">Triggered + Operational</div>
+            <div class="mx-cell-subtitle">Minimise — click to expand</div>
+          </div>
+          <div class="mx-cell-items" id="mx-to-items">
+            <ul>
+              <li>Grievance resolution and escalation handling</li>
+              <li>Emergency hire for critical vacancy (plant stoppage risk)</li>
+              <li>Employee relations investigation support</li>
+              <li>Ad hoc HR queries from employees or managers</li>
+              <li>Urgent FFS processing (resigned employee complaint)</li>
+              <li>Statutory notice response (PF Inspector, Labour Department)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rv" style="margin-top:24px;background:rgba(200,16,46,.04);border:1px solid rgba(200,16,46,.15);border-left:3px solid var(--red);padding:18px 24px;font-size:13px;line-height:1.75;color:var(--dark-grey);">
+      <strong>Diagnostic signal:</strong> If an HRBP is spending more than 15% of their time in the Triggered-Operational quadrant, it signals either (a) the operational rhythm has broken down and is generating emergencies, or (b) the HRBP is being used as a transactional HR generalist rather than a strategic partner. Both require intervention.
+    </div>
+  </div>
+</section>
+
+<!-- ══ SEC 8 — KEY METRICS ══ -->
+<section id="metrics">
+  <div class="container">
+    <div class="sec-header rv">
+      <span class="eyebrow">Section 8 · Key Metrics an HRBP Tracks</span>
+      <h2 class="sec-title">12 metrics. Every one<br><em>with a threshold and a trigger.</em></h2>
+      <p class="sec-intro">Metrics without thresholds are observations. Metrics with thresholds are governance instruments. The 12 below constitute the minimum monitoring set for every HRBP at Arvind.</p>
+    </div>
+    <div class="metrics-context rv">
+      <strong>Review cadence:</strong> Six metrics — attrition, PMS completion, headcount variance, FFS clearance rate, succession bench coverage, and absenteeism — are reviewed at the <strong>monthly HR Head 1:1</strong>. The remaining six are reviewed at the <strong>quarterly CHRO governance pack</strong>.
+    </div>
+    <div class="tab-wrap rv" id="metrics-tabs">
+      <button class="tab-btn active" onclick="switchTab('metrics',this,'met-monthly')">Monthly · HR Head 1:1 (6 metrics)</button>
+      <button class="tab-btn" onclick="switchTab('metrics',this,'met-quarterly')">Quarterly · CHRO Pack (6 metrics)</button>
+    </div>
+    <div class="tab-panel active" id="met-monthly">
+      <div class="metric-cards-grid">
+        <div class="metric-card"><div class="metric-card-label">Monthly · HR Head 1:1</div><div class="metric-card-name">Monthly Attrition Rate</div><div class="metric-card-def">Voluntary E and above grade exits in the month ÷ average headcount for the month, expressed as a percentage.</div><div class="metric-card-meta"><span class="metric-tag freq">Monthly</span><span class="metric-tag owner">HRBP</span></div><div class="metric-threshold"><strong>&gt; 5%/month</strong> → written retention action plan. <strong>&gt; 10%</strong> → CHRO escalation.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Monthly · HR Head 1:1</div><div class="metric-card-name">PMS Completion Rate</div><div class="metric-card-def">% of E and above grade employees with completed KRAs, mid-year reviews, or annual appraisals documented in HRMS (as applicable to month).</div><div class="metric-card-meta"><span class="metric-tag freq">Monthly (PMS cycle)</span><span class="metric-tag owner">HRBP</span></div><div class="metric-threshold"><strong>&lt; 95%</strong> by deadline → HR Head escalation. <strong>&lt; 85%</strong> → formal governance failure.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Monthly · HR Head 1:1</div><div class="metric-card-name">Headcount vs. Approved Manpower Plan</div><div class="metric-card-def">Actual headcount compared to approved manpower plan per BU and grade band, expressed as variance percentage.</div><div class="metric-card-meta"><span class="metric-tag freq">Monthly</span><span class="metric-tag owner">HRBP</span></div><div class="metric-threshold"><strong>Variance &gt; 3%</strong> → explanation to HR Head. <strong>&gt; 5%</strong> → CHRO approval before correction.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Monthly · HR Head 1:1</div><div class="metric-card-name">Absenteeism Rate</div><div class="metric-card-def">% of scheduled production hours lost to unplanned E and above grade absenteeism; split by department and day of week.</div><div class="metric-card-meta"><span class="metric-tag freq">Weekly / Monthly</span><span class="metric-tag owner">HRBP</span></div><div class="metric-threshold"><strong>&gt; 5% on any shift</strong> → same-day escalation. <strong>Chronic (3+ weeks &gt; 5%)</strong> → formal counselling process.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Monthly · HR Head 1:1</div><div class="metric-card-name">Succession Bench Coverage</div><div class="metric-card-def">% of critical roles (M3 and above) with at least one identified internal successor (ready-now or 1–2 year horizon) documented in succession tracker.</div><div class="metric-card-meta"><span class="metric-tag freq">Quarterly</span><span class="metric-tag owner">HRBP + CHRO</span></div><div class="metric-threshold"><strong>&lt; 80%</strong> → board-level talent risk. <strong>&lt; 60%</strong> → immediate cross-BU succession planning intervention.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Monthly · HR Head 1:1</div><div class="metric-card-name">Time-to-Fill</div><div class="metric-card-def">Calendar days from requisition approval to offer acceptance for E and above grade roles; split by level and BU.</div><div class="metric-card-meta"><span class="metric-tag freq">Monthly</span><span class="metric-tag owner">HRBP + TA Lead</span></div><div class="metric-threshold"><strong>&gt; 30 days (M1–M2)</strong> or <strong>&gt; 45 days (M3+)</strong> → TA escalation meeting triggered.</div></div>
+      </div>
+    </div>
+    <div class="tab-panel" id="met-quarterly">
+      <div class="metric-cards-grid">
+        <div class="metric-card"><div class="metric-card-label">Quarterly · CHRO Pack</div><div class="metric-card-name">Regrettable Attrition Rate</div><div class="metric-card-def">Attrition among employees rated High Performer (A-rating) or HiPo in the last 9-Box. The most strategically significant attrition metric an HRBP tracks.</div><div class="metric-card-meta"><span class="metric-tag freq">Quarterly</span><span class="metric-tag owner">HRBP + CHRO</span></div><div class="metric-threshold"><strong>&gt; 5% of HiPo population/quarter</strong>. Any individual regrettable exit → post-mortem with HR Head within 48 hours.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Quarterly · CHRO Pack</div><div class="metric-card-name">Employee Engagement Score</div><div class="metric-card-def">BU-level engagement score from quarterly pulse or annual survey vs. enterprise average; expressed as absolute score and gap.</div><div class="metric-card-meta"><span class="metric-tag freq">Quarterly</span><span class="metric-tag owner">HRBP</span></div><div class="metric-threshold"><strong>BU &lt; company average</strong> → mandatory action plan within 30 days. <strong>Gap &gt; 0.5 points</strong> → CHRO flag.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Quarterly · CHRO Pack</div><div class="metric-card-name">Manager Effectiveness Score</div><div class="metric-card-def">Composite from direct-report pulse surveys, 360 feedback, and HRBP 1:1 observations; measures quality of people management in the BU.</div><div class="metric-card-meta"><span class="metric-tag freq">Quarterly</span><span class="metric-tag owner">HRBP</span></div><div class="metric-threshold"><strong>Score &lt; 3.0/5.0 for two consecutive quarters</strong> → structured coaching referral. Persistent low scores → HR Head escalation.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Quarterly · CHRO Pack</div><div class="metric-card-name">IDP Completion Rate</div><div class="metric-card-def">% of identified HiPos and succession candidates with a current, documented, and manager-signed IDP in HRMS.</div><div class="metric-card-meta"><span class="metric-tag freq">Quarterly</span><span class="metric-tag owner">HRBP</span></div><div class="metric-threshold"><strong>&lt; 80% among HiPos</strong> → succession quality failure. Any HiPo without IDP within 60 days of 9-Box → flagged in monthly HR review.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Quarterly · CHRO Pack</div><div class="metric-card-name">HRBP to Employee Span of Control</div><div class="metric-card-def">Ratio of HRBP coverage to E and above grade employee population; indicates whether the HRBP is operationally over-stretched.</div><div class="metric-card-meta"><span class="metric-tag freq">Annual (reviewed quarterly)</span><span class="metric-tag owner">CHRO</span></div><div class="metric-threshold"><strong>Ideal: 1 HRBP per 400–500 employees.</strong> Above 700 → headcount review required.</div></div>
+        <div class="metric-card"><div class="metric-card-label">Quarterly · CHRO Pack</div><div class="metric-card-name">HRBP Activity Split (Strategic vs. Operational)</div><div class="metric-card-def">Self-reported and manager-validated split of HRBP time across the four activity matrix quadrants; tracked against the 65/20/15/&lt;15 target.</div><div class="metric-card-meta"><span class="metric-tag freq">Quarterly</span><span class="metric-tag owner">HRBP + HR Head</span></div><div class="metric-threshold"><strong>Triggered-Operational &gt; 15%</strong> → rhythm review with HR Head. Recurring-Strategic &lt; 50% → intervention required.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CLOSING SECTION ══ -->
+<section id="closing">
+  <div class="container">
+    <span class="closing-eyebrow rv">Operating Rhythm · Professional Commitment</span>
+    <h2 class="closing-statement rv">An HRBP who works to a rhythm has <em>decided to be proactive.</em> An HRBP without a rhythm is one who will be defined by <em>whatever landed in their inbox</em> this morning.</h2>
+    <div class="closing-line rv"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div style="margin-bottom:16px;"><img src="data:image/png;base64,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" alt="Arvind" style="height:40px;width:auto;opacity:.85;"></div>
+
+        <p class="footer-credit"><strong>HRBP Playbook 2026</strong><br>Prepared by Rishi Raj<br>HR Strategy Intern · Summer Internship Programme 2026<br>Sponsored by CHRO, Arvind Limited<br><span style="margin-top:8px;display:block;">Last updated: May 2026</span></p>
+      </div>
+      <div>
+        <div class="footer-col-title">Playbook Sections</div>
+        <ul class="footer-links">
+          <li><a href="#">Home &amp; Landing</a></li>
+          <li><a href="#">Company Overview</a></li>
+          <li><a href="#">Role Charter</a></li>
+          <li><a href="#">Engagement Model</a></li>
+          <li><a href="#">Operating Rhythm</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">This Page</div>
+        <ul class="footer-links">
+          <li><a href="#what-is">What Is a Rhythm</a></li>
+          <li><a href="#daily">Daily Rhythm</a></li>
+          <li><a href="#weekly">Weekly Rhythm</a></li>
+          <li><a href="#monthly">Monthly Rhythm</a></li>
+          <li><a href="#quarterly">Quarterly Rhythm</a></li>
+          <li><a href="#annual">Annual Calendar</a></li>
+          <li><a href="#matrix">Activity Matrix</a></li>
+          <li><a href="#metrics">Key Metrics</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Note</div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:24px;">
+          <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:0;">This Operating Rhythm document is reviewed annually in March and signed off by the CHRO before April 1 of the new financial year.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">© 2026 Arvind Limited · HRBP Playbook · Internal Document</div>
+      <div class="footer-bottom-right">Operating Rhythm · Sections 1–8 · Summer 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+// NAVBAR
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',window.scrollY>20);
+  document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);
+});
+
+// SUBNAV
+gsap.registerPlugin(ScrollTrigger);
+const snavBtns=document.querySelectorAll('.snav-btn');
+const secs=['what-is','daily','weekly','monthly','quarterly','annual','matrix','metrics'];
+secs.forEach((id,i)=>{
+  ScrollTrigger.create({trigger:'#'+id,start:'top 55%',end:'bottom 55%',
+    onEnter:()=>snavBtns.forEach((b,j)=>b.classList.toggle('active',i===j)),
+    onEnterBack:()=>snavBtns.forEach((b,j)=>b.classList.toggle('active',i===j))
+  });
+});
+
+// REVEALS
+document.querySelectorAll('.rv').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power2.out',
+    scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+});
+gsap.from('.hero-title',{y:30,opacity:0,duration:1,ease:'power3.out',delay:.35});
+gsap.from('.hero-body',{y:20,opacity:0,duration:.8,ease:'power2.out',delay:.55});
+
+// DAILY CARDS
+function toggleDaily(header){
+  const arrow=header.querySelector('.daily-card-arrow');
+  const body=header.nextElementSibling;
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  arrow.classList.toggle('open',!open);
+}
+
+// WEEKLY TABS
+function switchWeek(btn,id){
+  document.querySelectorAll('.week-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.week-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// GENERIC TAB SWITCHER
+function switchTab(group,btn,panelId){
+  const wrap=btn.closest('.tab-wrap');
+  wrap.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  // find sibling panels
+  const nextEl=wrap.nextElementSibling;
+  // get all panels until next tab-wrap
+  let el=nextEl;
+  while(el){
+    if(el.classList.contains('tab-panel')) el.classList.remove('active');
+    el=el.nextElementSibling;
+  }
+  document.getElementById(panelId).classList.add('active');
+}
+
+// MONTHLY / QUARTERLY OUTPUT TOGGLES
+function toggleOutput(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  btn.textContent=open?'See Output →':'Hide Output ↑';
+}
+function toggleQacOutput(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  btn.textContent=open?'See Output →':'Hide Output ↑';
+}
+
+// ANNUAL CALENDAR DATA
+const annualData={
+  'April':{q:'Q1',qc:'q1c',activities:[
+    {title:'OKR Setting — E and above grade',biz:'OKR cycle begins; goals aligned to business targets before April 30; Cycle Closure from prior year runs concurrently'},
+    {title:'BU people plan submitted to CHRO',biz:'Annual planning cycle; secures budget and headcount approvals for the year'},
+    {title:'Apprentice / trainee / new batch joins — Day 1 induction',biz:'New academic cycle; talent pipeline seeding'},
+    {title:'Annual Assessment sign-off — final ratings locked by April 30',biz:'PMS cycle peak; ratings feed into increment matrix'},
+  ]},
+  'May':{q:'Q1',qc:'q1c',activities:[
+    {title:'Cycle Closure completion check — prior-year ratings locked in HRMS',biz:'PM cycle governance; delayed closure creates rating disputes'},
+    {title:'Campus hire onboarding — MBA and engineering batch joins',biz:'Campus hiring cycle; first engagement with new management trainees'},
+    {title:'Q1 talent pipeline review — succession map updated',biz:'Proactive succession management; identifies gaps early'},
+    {title:'Annual increment letters issued — E and above grade',biz:'Talent retention trigger; top performers at highest attrition risk in this window'},
+  ]},
+  'June':{q:'Q1',qc:'q1c',activities:[
+    {title:'Mid-Q1 attrition heat map shared with HR Head and CHRO',biz:'Early warning signal; identifies BUs with trend reversal before it compounds'},
+    {title:'Q1 quarterly governance review — CHRO quarterly pack',biz:'Strategic review of Q1 performance vs. people plan'},
+  ]},
+  'July':{q:'Q2',qc:'q2c',activities:[
+    {title:'Q1 Check-In — E and above grade (TM + Manager)',biz:'PM cycle accountability; surfaces blockers before Mid-Year Review'},
+    {title:'First 9-Box talent calibration',biz:'Succession management; HiPo identification; IDP initiation'},
+    {title:'Engagement survey instrument finalised; launch planned for August',biz:'Advance preparation ensures high response rates'},
+  ]},
+  'August':{q:'Q2',qc:'q2c',activities:[
+    {title:'Annual engagement survey launched — all grades and BUs',biz:'Organisational health measurement; feeds H2 action planning'},
+    {title:'Mid-Year Review preparation — participant lists confirmed, HRMS forms activated',biz:'Advance preparation ensures zero-delay launch in September'},
+    {title:'Succession bench update — mid-year review of critical role coverage',biz:'Proactive talent management; ensures business continuity planning is current'},
+  ]},
+  'September':{q:'Q2',qc:'q2c',activities:[
+    {title:'Engagement survey results compiled; BU action plans drafted',biz:'Closes survey loop; HR Head commitment to actions mandatory before month-end'},
+    {title:'L&D mid-year review — H2 training calendar released to BUs',biz:'H2 training aligned to capability gaps identified in 9-Box'},
+    {title:'Q2 quarterly governance review — CHRO pack submitted',biz:'Mid-year performance vs. plan; workforce plan adjusted if needed'},
+    {title:'Mid-Year Review launched — E and above grade',biz:'Sep–Oct window gives structured feedback before H2 business sprint'},
+  ]},
+  'October':{q:'Q3',qc:'q3c',activities:[
+    {title:'Mid-Year Review follow-up — H2 development actions confirmed',biz:'H2 development commitments locked; at-risk performers identified'},
+    {title:'Mid-Year Review cycle completed — deadline: October 31',biz:'All feedforward documentation locked before H2 planning'},
+  ]},
+  'November':{q:'Q3',qc:'q3c',activities:[
+    {title:'Annual Assessment preparation — calibration panel finalised',biz:'Advance setup ensures zero-delay launch of Annual Assessment in March'},
+    {title:'H2 talent review — succession bench updated post Mid-Year Review',biz:'Development plan progress tracked; early attrition risk flags raised'},
+  ]},
+  'December':{q:'Q3',qc:'q3c',activities:[
+    {title:'Annual Assessment readiness confirmed — HRMS forms activated',biz:'PM cycle discipline; confirmed readiness prevents last-minute delays'},
+    {title:'Revised CTC updated in HRMS; payroll updated effective January',biz:'Data integrity; all downstream payroll systems draw from HRMS'},
+    {title:'Annual succession planning presentation to CHRO',biz:'Strategic people review; cross-BU succession moves approved'},
+    {title:'Q3 quarterly governance review — CHRO pack',biz:'Q3 performance vs. plan; Q4 priorities confirmed'},
+  ]},
+  'January':{q:'Q4',qc:'q4c',activities:[
+    {title:'Annual HR budget for next FY submitted to Finance',biz:'HR budget cycle; headcount costs, L&D investment, HR technology spend planned'},
+    {title:'Workforce plan for next FY — BU headcount requisitions raised',biz:'Business continuity planning; prevents hiring delay when new FY begins'},
+    {title:'Q3 Check-In — E and above grade; course correction before Annual Assessment',biz:'Final opportunity to surface H2 performance gaps before Annual Assessment'},
+  ]},
+  'February':{q:'Q4',qc:'q4c',activities:[
+    {title:'Operating Rhythm document review and refresh for next FY',biz:'Annual governance; ensures rhythm evolves with business changes'},
+    {title:'Annual exit interview aggregate analysis presented to CHRO',biz:'Full-year attrition insight; systemic issues identified for retention plan'},
+    {title:'Q4 in-person governance meeting — CHRO, HR Heads, all HRBPs',biz:'Strategic alignment before year-end; cross-BU talent movement decisions finalised'},
+  ]},
+  'March':{q:'Q4',qc:'q4c',activities:[
+    {title:'All pending FFS settlements completed before March 31',biz:'Year-end closure; unsettled FFS beyond 30 days is a statutory wage dispute risk'},
+    {title:'HRBP Operating Rhythm document for next FY signed off by CHRO',biz:'Governance discipline; rhythm reviewed, refined, and committed annually'},
+    {title:'Annual Assessment launched — E and above grade (full-cycle evaluation)',biz:'Highest-stakes PM event; ratings feed directly into increment matrix and promotions'},
+  ]},
+};
+
+const monthOrder=['April','May','June','July','August','September','October','November','December','January','February','March'];
+let activeMonth=null;
+
+(function buildCalendar(){
+  const grid=document.getElementById('annual-months-grid');
+  monthOrder.forEach(m=>{
+    const d=annualData[m];
+    const cell=document.createElement('div');
+    cell.className='month-cell';
+    cell.dataset.month=m;
+    cell.innerHTML=`
+      <div class="mc-qtr ${d.qc}">${d.q}</div>
+      <div class="mc-name">${m}</div>
+      <div class="mc-preview">${d.activities[0].title}</div>
+      <span class="mc-count">${d.activities.length} items</span>`;
+    cell.addEventListener('click',()=>selectMonth(m,cell));
+    grid.appendChild(cell);
+  });
+})();
+
+function selectMonth(month,cell){
+  document.querySelectorAll('.month-cell').forEach(c=>{
+    c.classList.remove('active');
+    c.querySelector('.mc-count').classList.remove('active-count');
+  });
+  cell.classList.add('active');
+  cell.querySelector('.mc-count').classList.add('active-count');
+  activeMonth=month;
+  const d=annualData[month];
+  const panel=document.getElementById('annual-side-panel');
+  let html=`<div class="asp-month">${month}</div><div class="asp-qtr">${d.q} · Arvind Financial Year</div>`;
+  d.activities.forEach((a,i)=>{
+    html+=`<div class="asp-activity">
+      <div class="asp-activity-num">Activity ${i+1} of ${d.activities.length}</div>
+      <div class="asp-activity-title">${a.title}</div>
+      <div class="asp-activity-biz">${a.biz}</div>
+    </div>`;
+  });
+  panel.innerHTML=html;
+}
+
+// MATRIX INTERACTION
+const matrixCells=['mx-rs','mx-ts','mx-ro','mx-to'];
+function toggleMatrix(id){
+  const isOpen=document.getElementById(id+'-items').classList.contains('open');
+  // close all
+  matrixCells.forEach(cid=>{
+    document.getElementById(cid).classList.remove('active-cell','dimmed');
+    document.getElementById(cid+'-items').classList.remove('open');
+  });
+  if(!isOpen){
+    document.getElementById(id+'-items').classList.add('open');
+    document.getElementById(id).classList.add('active-cell');
+    matrixCells.filter(c=>c!==id).forEach(cid=>document.getElementById(cid).classList.add('dimmed'));
+  }
+}
+</script>
+</body>
+</html>

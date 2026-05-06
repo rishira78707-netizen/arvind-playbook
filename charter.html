@@ -1,0 +1,2603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Role Charter — Arvind Limited · HRBP Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --red:#C8102E;--red-dark:#a00e24;--white:#FFFFFF;--off-white:#F7F7F5;
+  --light-grey:#EAEAEA;--mid-grey:#B7B7B7;--dark-grey:#2D2D2D;--black:#000;
+  --font-display:"Playfair Display",Georgia,serif;
+  --font-body:"Raleway",Arial,sans-serif;
+  --nav-h:60px;--max-w:1200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--font-body);color:var(--dark-grey);background:var(--white);overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
+#cur-r{position:fixed;width:26px;height:26px;border:1.5px solid rgba(200,16,46,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+a,button{cursor:none;}
+
+/* UTILITY */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+section{position:relative;}
+.rv{opacity:0;transform:translateY(28px);}
+.section-eyebrow{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:block;}
+.section-title{font-family:var(--font-display);font-size:clamp(26px,2.8vw,40px);font-weight:600;color:var(--dark-grey);line-height:1.2;}
+.section-title em{font-style:italic;color:var(--red);}
+.section-intro{font-size:14px;line-height:1.85;color:rgba(45,45,45,.65);max-width:580px;margin-top:14px;}
+.section-header{margin-bottom:52px;}
+
+/* ── NAVBAR ── */
+#navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--light-grey);display:flex;align-items:center;z-index:1000;transition:box-shadow .3s;}
+#navbar.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.08);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo-text{font-family:var(--font-body);font-size:12px;font-weight:700;color:var(--dark-grey);letter-spacing:.12em;text-transform:uppercase;}
+.nav-logo-text span{color:var(--red);}
+.nav-links{display:flex;align-items:center;gap:0;list-style:none;}
+.nav-links a{display:block;padding:6px 11px;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid-grey);text-decoration:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--dark-grey);border-bottom-color:var(--red);}
+
+/* ── PAGE HERO ── */
+#page-hero{padding-top:calc(var(--nav-h) + 80px);padding-bottom:80px;background:var(--off-white);position:relative;overflow:hidden;}
+#page-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red) 0%,transparent 60%);}
+#page-hero::after{content:'';position:absolute;top:-40%;right:-5%;width:32%;height:160%;background:rgba(200,16,46,.03);transform:skewX(-14deg);pointer-events:none;}
+.hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:end;}
+.hero-breadcrumb{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.hero-breadcrumb::before{content:'';width:20px;height:1px;background:var(--red);}
+.hero-breadcrumb a{color:var(--mid-grey);text-decoration:none;transition:color .2s;}
+.hero-breadcrumb a:hover{color:var(--red);}
+.hero-breadcrumb span{color:var(--red);}
+.hero-title{font-family:var(--font-display);font-size:clamp(30px,3.8vw,54px);font-weight:600;line-height:1.08;color:var(--dark-grey);margin-bottom:20px;}
+.hero-title em{font-style:italic;color:var(--red);}
+.hero-body{font-size:14px;line-height:1.85;color:rgba(45,45,45,.65);max-width:460px;}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.hero-meta-card{background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--red);padding:22px 20px;}
+.hero-meta-card.alt{border-top-color:var(--dark-grey);}
+.hmc-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:8px;}
+.hmc-val{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--dark-grey);}
+.hmc-sub{font-size:11px;color:var(--mid-grey);margin-top:4px;}
+
+/* ── SECTION SUB-NAV ── */
+#section-nav{position:sticky;top:var(--nav-h);z-index:500;background:var(--white);border-bottom:2px solid var(--light-grey);overflow-x:auto;}
+.section-nav-inner{display:flex;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+.snav-btn{padding:13px 16px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;display:block;margin-bottom:-2px;}
+.snav-btn:hover{color:var(--dark-grey);}
+.snav-btn.active{color:var(--red);border-bottom-color:var(--red);}
+
+/* ══════════════════════════════════
+   SECTION 1 · ROLE PHILOSOPHY
+   Cinematic scroll commitments
+══════════════════════════════════ */
+#philosophy{padding:0;background:var(--dark-grey);position:relative;}
+.philosophy-intro{padding:100px 0 60px;background:var(--dark-grey);}
+.philosophy-intro .section-eyebrow{color:rgba(200,16,46,.8);}
+.philosophy-intro .section-title{color:var(--white);}
+.philosophy-intro .section-intro{color:rgba(255,255,255,.55);}
+.model-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;}
+.model-card{padding:28px 24px;background:rgba(255,255,255,.04);border-top:2px solid rgba(255,255,255,.08);transition:background .3s,border-color .3s;}
+.model-card:hover{background:rgba(255,255,255,.07);border-top-color:var(--red);}
+.model-card-tag{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,16,46,.7);margin-bottom:10px;}
+.model-card-title{font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--white);margin-bottom:8px;}
+.model-card-body{font-size:12px;line-height:1.7;color:rgba(255,255,255,.45);}
+
+/* Scroll-cinematic commitments */
+#commitments-wrap{position:relative;}
+#commitments-sticky{top:var(--nav-h);height:calc(100vh - var(--nav-h));overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.commit-bg{position:absolute;inset:0;background:var(--dark-grey);}
+.commit-progress{position:absolute;left:48px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:10;}
+.cp-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s,transform .4s;}
+.cp-dot.active{background:var(--red);transform:scale(1.5);}
+.commit-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .6s;}
+.commit-slide.active{opacity:1;}
+.commit-content{max-width:820px;padding:0 80px;text-align:center;}
+.commit-num{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,16,46,.6);margin-bottom:20px;}
+.commit-title{font-family:var(--font-display);font-size:clamp(28px,4vw,52px);font-weight:600;color:var(--white);margin-bottom:24px;line-height:1.1;}
+.commit-title em{font-style:italic;color:var(--red);}
+.commit-body{font-size:15px;line-height:1.8;color:rgba(255,255,255,.55);max-width:640px;margin:0 auto;}
+.commit-line{width:40px;height:2px;background:var(--red);margin:28px auto 0;}
+
+/* ══════════════════════════════════
+   SECTION 2 · PURPOSE STATEMENT
+══════════════════════════════════ */
+#purpose{padding:100px 0;background:var(--white);}
+.purpose-statement-wrap{position:relative;padding:40px 48px;background:var(--dark-grey);margin-bottom:56px;}
+.purpose-statement-wrap::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red);}
+.purpose-statement{font-family:var(--font-display);font-size:clamp(18px,2.2vw,28px);font-weight:400;line-height:1.5;color:var(--white);}
+.purpose-statement strong{font-weight:700;color:var(--white);}
+.purpose-phrase{display:inline;position:relative;color:var(--white);}
+.purpose-phrase.annotated{color:var(--red);font-weight:600;cursor:default;border-bottom:1px dashed rgba(200,16,46,.5);}
+.annotation-tip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);background:var(--dark-grey);border:1px solid rgba(200,16,46,.3);border-left:3px solid var(--red);padding:14px 18px;width:280px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.4);}
+.annotation-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--dark-grey);}
+.purpose-phrase.annotated:hover .annotation-tip{opacity:1;}
+.annotation-tip-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.annotation-tip-text{font-size:11px;line-height:1.6;color:rgba(255,255,255,.7);}
+
+.purpose-table{width:100%;border-collapse:collapse;}
+.purpose-table thead th{background:var(--dark-grey);color:var(--white);padding:12px 16px;text-align:left;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;}
+.purpose-table thead th:first-child{background:var(--red);width:240px;}
+.purpose-table tbody td{padding:14px 16px;border-bottom:1px solid var(--light-grey);font-size:13px;line-height:1.6;vertical-align:top;}
+.purpose-table tbody tr:nth-child(even) td{background:var(--off-white);}
+.purpose-table tbody tr:hover td{background:rgba(200,16,46,.03);}
+.purpose-table tbody td:first-child{font-weight:700;color:var(--dark-grey);font-size:12px;}
+
+/* ══════════════════════════════════
+   SECTION 3 · ROLE SCOPE
+══════════════════════════════════ */
+#scope{padding:100px 0;background:var(--off-white);}
+#scope::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red) 0%,transparent 60%);}
+.scope-tabs-wrap{display:flex;gap:0;border-bottom:2px solid var(--light-grey);margin-bottom:40px;}
+.scope-tab-btn{padding:12px 28px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mid-grey);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;display:flex;align-items:center;gap:8px;}
+.scope-tab-btn .stb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.scope-tab-btn[data-tab="owns"] .stb-dot{background:var(--red);}
+.scope-tab-btn[data-tab="influences"] .stb-dot{background:var(--dark-grey);}
+.scope-tab-btn[data-tab="outofscope"] .stb-dot{background:var(--mid-grey);}
+.scope-tab-btn.active,.scope-tab-btn:hover{color:var(--dark-grey);}
+.scope-tab-btn.active{border-bottom-color:var(--red);color:var(--red);}
+.scope-panel{display:none;}
+.scope-panel.active{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.scope-items{display:grid;grid-template-columns:1fr;gap:2px;}
+.scope-item{background:var(--white);border-left:3px solid var(--light-grey);transition:border-left-color .2s;}
+.scope-item.owns-item{border-left-color:rgba(200,16,46,.25);}
+.scope-item.influences-item{border-left-color:rgba(45,45,45,.2);}
+.scope-item.outofscope-item{border-left-color:rgba(183,183,183,.4);}
+.scope-item:hover{border-left-color:var(--red);}
+.scope-item-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.scope-item-title{font-size:13px;font-weight:700;color:var(--dark-grey);}
+.scope-item-arrow{font-size:12px;color:var(--mid-grey);transition:transform .25s;}
+.scope-item-arrow.open{transform:rotate(90deg);}
+.scope-item-body{display:none;padding:0 20px 16px;font-size:12px;line-height:1.75;color:rgba(45,45,45,.7);border-top:1px solid var(--light-grey);}
+.scope-item-body.open{display:block;}
+
+/* ══════════════════════════════════
+   SECTION 4 · RESPONSIBILITIES
+══════════════════════════════════ */
+#responsibilities{padding:100px 0;background:var(--white);}
+.ratio-bar-wrap{background:var(--off-white);border:1px solid var(--light-grey);padding:28px 32px;margin-bottom:56px;display:flex;align-items:center;gap:40px;}
+.ratio-labels{display:flex;gap:24px;flex-shrink:0;}
+.ratio-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;}
+.ratio-dot{width:10px;height:10px;border-radius:50%;}
+.ratio-bar-outer{flex:1;height:14px;background:var(--light-grey);border-radius:7px;overflow:hidden;}
+.ratio-bar-inner{height:100%;background:linear-gradient(to right,var(--red) 65%,var(--dark-grey) 65%);border-radius:7px;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+.ratio-note{font-size:11px;color:var(--mid-grey);flex-shrink:0;}
+.resp-tabs-wrap{display:flex;gap:0;border-bottom:2px solid var(--light-grey);margin-bottom:40px;}
+.resp-tab-btn{padding:12px 24px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mid-grey);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;}
+.resp-tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.resp-panel{display:none;}
+.resp-panel.active{display:block;animation:fadeUp .3s ease;}
+.resp-grid{display:grid;grid-template-columns:1fr;gap:2px;}
+.resp-card{background:var(--off-white);border-left:3px solid var(--light-grey);padding:24px 24px;transition:border-left-color .3s,background .25s;}
+.resp-card:hover{background:var(--white);border-left-color:var(--red);}
+.resp-card-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.resp-card-title{font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--dark-grey);margin-bottom:10px;}
+.resp-card-body{font-size:12px;line-height:1.75;color:rgba(45,45,45,.7);}
+
+/* ══════════════════════════════════
+   SECTION 5 · DECISION RIGHTS
+══════════════════════════════════ */
+#decision-rights{padding:100px 0;background:var(--off-white);}
+#decision-rights::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red) 0%,transparent 60%);}
+.dr-intro-note{background:var(--white);border:1px solid var(--light-grey);border-left:3px solid var(--red);padding:18px 24px;margin-bottom:40px;font-size:12px;line-height:1.7;color:var(--dark-grey);}
+.dr-tabs-wrap{display:flex;flex-wrap:wrap;gap:0;border-bottom:2px solid var(--light-grey);margin-bottom:40px;overflow-x:auto;}
+.dr-tab-btn{padding:11px 18px;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .2s,border-color .2s;}
+.dr-tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.dr-panel{display:none;}
+.dr-panel.active{display:block;animation:fadeUp .3s ease;}
+.dr-table{width:100%;border-collapse:collapse;font-size:12px;}
+.dr-table thead th{background:var(--dark-grey);color:var(--white);padding:11px 13px;text-align:left;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+.dr-table thead th:first-child{background:var(--red);width:220px;}
+.dr-table tbody td{padding:13px 13px;border-bottom:1px solid var(--light-grey);vertical-align:top;line-height:1.55;}
+.dr-table tbody tr:nth-child(even) td{background:rgba(247,247,245,.7);}
+.dr-table tbody tr:hover td{background:var(--white);}
+.dr-owns{font-weight:700;color:var(--red);}
+.dr-influences{color:var(--dark-grey);}
+.dr-supports{color:var(--mid-grey);}
+.dr-na{color:rgba(183,183,183,.5);font-size:10px;}
+.dr-final{font-weight:700;color:var(--dark-grey);font-size:11px;}
+
+/* ══════════════════════════════════
+   SECTION 6 · RACI MATRIX
+══════════════════════════════════ */
+#raci{padding:100px 0;background:var(--white);}
+.raci-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px;background:var(--off-white);padding:20px 24px;border:1px solid var(--light-grey);}
+.raci-legend-item{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--dark-grey);}
+.rl-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:11px;font-weight:800;color:var(--white);flex-shrink:0;}
+.rl-ar{background:var(--red);}
+.rl-a{background:var(--dark-grey);}
+.rl-r{background:#4A5568;}
+.rl-c{background:#718096;}
+.rl-i{background:var(--mid-grey);}
+.rl-na{background:var(--light-grey);color:var(--mid-grey);}
+.raci-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:var(--red);color:var(--white);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .2s;margin-bottom:40px;}
+.raci-cta:hover{background:var(--red-dark);}
+.raci-cta::after{content:"→";font-size:13px;}
+.raci-phase-tabs{display:flex;flex-wrap:wrap;gap:0;border-bottom:2px solid var(--light-grey);margin-bottom:32px;overflow-x:auto;}
+.rpt-btn{padding:10px 15px;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--mid-grey);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .2s,border-color .2s;}
+.rpt-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.raci-phase-panel{display:none;}
+.raci-phase-panel.active{display:block;animation:fadeUp .3s ease;}
+.raci-table{width:100%;border-collapse:collapse;font-size:11.5px;}
+.raci-table thead th{background:var(--dark-grey);color:var(--white);padding:10px 13px;text-align:center;font-size:8.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+.raci-table thead th:first-child{background:var(--red);text-align:left;width:34%;}
+.raci-table thead th:last-child{text-align:left;font-size:8px;}
+.raci-table tbody td{padding:10px 13px;border-bottom:1px solid var(--light-grey);text-align:center;vertical-align:middle;}
+.raci-table tbody td:first-child{text-align:left;font-weight:600;font-size:12px;color:var(--dark-grey);}
+.raci-table tbody td:last-child{text-align:left;font-size:10px;color:var(--mid-grey);}
+.raci-table tbody tr:nth-child(even) td{background:rgba(247,247,245,.6);}
+.raci-table tbody tr:hover td{background:rgba(200,16,46,.03);}
+.rb{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:24px;border-radius:12px;font-size:10px;font-weight:800;padding:0 7px;}
+.rb-ar{background:rgba(200,16,46,.1);color:var(--red);}
+.rb-a{background:rgba(45,45,45,.1);color:var(--dark-grey);}
+.rb-r{background:rgba(74,85,104,.1);color:#4A5568;}
+.rb-c{background:rgba(113,128,150,.12);color:#555;}
+.rb-i{background:rgba(183,183,183,.2);color:#888;}
+.rb-na{color:rgba(183,183,183,.5);font-size:11px;}
+.grade-pill{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 7px;border-radius:2px;}
+.grade-e{background:rgba(200,16,46,.07);color:var(--red);}
+.grade-s{background:rgba(45,45,45,.07);color:var(--dark-grey);}
+.grade-all{background:rgba(113,128,150,.1);color:#555;}
+
+/* ══════════════════════════════════
+   SECTION 7 · ROLE DIFFERENTIATION
+   Comparison tool
+══════════════════════════════════ */
+#differentiation{padding:100px 0;background:var(--off-white);}
+#differentiation::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red) 0%,transparent 60%);}
+.compare-selector{display:flex;align-items:center;gap:16px;margin-bottom:40px;flex-wrap:wrap;}
+.compare-selector label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--dark-grey);}
+.compare-select{padding:10px 16px;font-family:var(--font-body);font-size:12px;font-weight:700;color:var(--dark-grey);background:var(--white);border:1px solid var(--light-grey);border-bottom:2px solid var(--red);outline:none;cursor:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23C8102E'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px;}
+.compare-vs{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--mid-grey);font-style:italic;}
+
+/* Paginated comparison */
+.compare-nav{display:flex;align-items:center;gap:16px;margin-bottom:32px;}
+.compare-nav-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--dark-grey);color:var(--white);border:none;font-size:16px;transition:background .2s;}
+.compare-nav-btn:hover{background:var(--red);}
+.compare-nav-btn:disabled{background:var(--light-grey);color:var(--mid-grey);}
+.compare-page-info{font-size:11px;font-weight:700;color:var(--mid-grey);letter-spacing:.1em;}
+.compare-grid{display:grid;grid-template-columns:200px 1fr 1fr;gap:2px;}
+.cg-dim-col{display:flex;flex-direction:column;gap:2px;}
+.cg-role-col{display:flex;flex-direction:column;gap:2px;}
+.cg-header{padding:16px 18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+.cg-header.dim-header{background:var(--dark-grey);color:var(--white);justify-content:flex-start;}
+.cg-header.role-header{background:var(--red);color:var(--white);}
+.cg-header.role-header-alt{background:var(--dark-grey);color:var(--white);}
+.cg-dim-cell{background:var(--off-white);padding:18px 18px;border-bottom:1px solid var(--light-grey);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);display:flex;align-items:flex-start;}
+.cg-role-cell{background:var(--white);padding:18px 18px;border-bottom:1px solid var(--light-grey);font-size:12px;line-height:1.65;color:var(--dark-grey);}
+.cg-role-cell.alt-bg{background:rgba(247,247,245,.7);}
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+#footer{background:var(--dark-grey);padding:72px 0 40px;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-tagline{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px;}
+.footer-credit{font-size:12px;line-height:1.9;color:rgba(255,255,255,.4);}
+.footer-credit strong{color:rgba(255,255,255,.7);}
+.footer-col-title{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:10px;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:8px;}
+.footer-links a:hover{color:var(--white);}
+.footer-links a::before{content:"→";font-size:10px;color:var(--red);}
+.feedback-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:24px;}
+.feedback-box p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:16px;}
+.feedback-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid rgba(200,16,46,.3);padding-bottom:2px;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.07);}
+.footer-bottom-left,.footer-bottom-right{font-size:11px;color:rgba(255,255,255,.25);}
+
+/* back to top */
+#back-top{position:fixed;bottom:32px;right:32px;width:44px;height:44px;background:var(--red);display:flex;align-items:center;justify-content:center;z-index:900;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(16px);}
+#back-top.visible{opacity:1;pointer-events:all;transform:translateY(0);}
+#back-top svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;}
+
+@media(max-width:1024px){
+  .nav-links{display:none;}
+  .hero-inner,.footer-top,.compare-grid,.model-strip{grid-template-columns:1fr;}
+  .container,.nav-inner,.section-nav-inner{padding:0 24px;}
+  .compare-grid{grid-template-columns:140px 1fr 1fr;}
+  .hero-meta{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-r"></div>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <img src="data:image/png;base64,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" alt="Arvind" style="height:44px;width:auto;">
+      <span class="nav-logo-text">HRBP <span>Playbook</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">index.html</a></li>
+      <li><a href="#">company.html</a></li>
+      <li><a href="#">stakeholders.html</a></li>
+      <li><a href="#" class="active">Role Charter</a></li>
+      <li><a href="#">engagement.html</a></li>
+      <li><a href="#">rhythm.html</a></li>
+      <li><a href="#">processes.html</a></li>
+      <li><a href="#">dashboard.html</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="page-hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-breadcrumb">
+          <a href="#">Home</a> &nbsp;/&nbsp; <a href="#">Company</a> &nbsp;/&nbsp; <span>Role Charter</span>
+        </div>
+        <h1 class="hero-title">Defining the <em>HRBP Role</em><br>at Arvind Limited</h1>
+        <p class="hero-body">Role clarity is where HRBP effectiveness begins. This charter defines the philosophy, scope, responsibilities, and decision rights that govern how the HRBP function operates across Arvind's business units.</p>
+      </div>
+      <div class="hero-meta rv">
+        <div class="hero-meta-card">
+          <div class="hmc-label">Target Operating Split</div>
+          <div class="hmc-val">65<span style="font-size:14px;font-weight:400;color:var(--mid-grey)">%</span></div>
+          <div class="hmc-sub">Strategic work · Target ratio</div>
+        </div>
+        <div class="hero-meta-card alt">
+          <div class="hmc-label">Current Reality</div>
+          <div class="hmc-val">70–75<span style="font-size:14px;font-weight:400;color:var(--mid-grey)">%</span></div>
+          <div class="hmc-sub">Time spent on out-of-scope tasks</div>
+        </div>
+        <div class="hero-meta-card">
+          <div class="hmc-label">RACI Processes Mapped</div>
+          <div class="hmc-val">167</div>
+          <div class="hmc-sub">Across 14 HR lifecycle phases</div>
+        </div>
+        <div class="hero-meta-card alt">
+          <div class="hmc-label">Operating Framework</div>
+          <div class="hmc-val" style="font-size:16px;">Ulrich Model</div>
+          <div class="hmc-sub">HRBP · COE · GCC structure</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION SUB-NAV ══ -->
+<div id="section-nav">
+  <div class="section-nav-inner">
+    <a class="snav-btn active" href="#philosophy">Role Philosophy</a>
+    <a class="snav-btn" href="#purpose">Purpose Statement</a>
+    <a class="snav-btn" href="#scope">Role Scope</a>
+    <a class="snav-btn" href="#responsibilities">Key Responsibilities</a>
+    <a class="snav-btn" href="#decision-rights">Decision Rights Framework</a>
+    <a class="snav-btn" href="#raci">RACI Matrix</a>
+    <a class="snav-btn" href="#differentiation">Role Differentiation — HRBP vs HOD (IR) vs COE vs GCC</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     SEC 1 · ROLE PHILOSOPHY
+══════════════════════════ -->
+<section id="philosophy">
+  <div class="philosophy-intro">
+    <div class="container">
+      <div class="section-header rv">
+        <span class="section-eyebrow" style="color:rgba(200,16,46,.8)">Section 1 · Role Foundation</span>
+        <h2 class="section-title" style="color:var(--white)">Built on the <em>Ulrich Model.</em><br>Measured by business outcomes.</h2>
+        <p class="section-intro" style="color:rgba(255,255,255,.55)">The HRBP at Arvind is not a generalist HR function. It is the people-strategy engine of the business unit — embedded, accountable, and evaluated on impact rather than process completion. Three functions, one model.</p>
+      </div>
+      <div class="model-strip rv">
+        <div class="model-card">
+          <div class="model-card-tag">Function 01</div>
+          <div class="model-card-title">HR Business Partners</div>
+          <div class="model-card-body">Embedded in business units. Focused on business outcomes, workforce strategy, and data-driven decision support. Physically and mentally part of the business, not a visitor.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-card-tag">Function 02</div>
+          <div class="model-card-title">Centres of Excellence</div>
+          <div class="model-card-body">Specialist programme design. Own enterprise-wide HR frameworks, policies, and capabilities. COE outputs apply to all BUs — designed centrally, deployed everywhere.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-card-tag">Function 03</div>
+          <div class="model-card-title">Global Capability Centre</div>
+          <div class="model-card-body">Transactional delivery at scale. Payroll, letters, HRIS maintenance, statutory compliance. High-volume, accuracy-critical, rule-based execution. Frees HRBPs to focus on strategy.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCROLL-CINEMATIC COMMITMENTS -->
+  <div id="commitments-wrap">
+    <div id="commitments-sticky">
+      <div class="commit-bg"></div>
+      <div class="commit-progress">
+        <div class="cp-dot active" data-idx="0"></div>
+        <div class="cp-dot" data-idx="1"></div>
+        <div class="cp-dot" data-idx="2"></div>
+        <div class="cp-dot" data-idx="3"></div>
+        <div class="cp-dot" data-idx="4"></div>
+      </div>
+
+      <div class="commit-slide active" data-slide="0">
+        <div class="commit-content">
+          <div class="commit-num">Operating Commitment 01 of 05</div>
+          <h3 class="commit-title">Business first,<br><em>HR second.</em></h3>
+          <p class="commit-body">Every recommendation, conversation, and intervention starts from a business problem — not an HR process. The HRBP understands the BU's commercial context, cost pressures, and people risks before proposing any solution.</p>
+          <div class="commit-line"></div>
+        </div>
+      </div>
+
+      <div class="commit-slide" data-slide="1">
+        <div class="commit-content">
+          <div class="commit-num">Operating Commitment 02 of 05</div>
+          <h3 class="commit-title">Outcomes over<br><em>activities.</em></h3>
+          <p class="commit-body">The HRBP is measured by whether attrition came down, succession bench improved, and business leaders made better people decisions — not by the number of appraisals facilitated or forms processed.</p>
+          <div class="commit-line"></div>
+        </div>
+      </div>
+
+      <div class="commit-slide" data-slide="2">
+        <div class="commit-content">
+          <div class="commit-num">Operating Commitment 03 of 05</div>
+          <h3 class="commit-title">Presence<br><em>earns influence.</em></h3>
+          <p class="commit-body">Authority in this role is relational, not structural. Influence is built by attending business reviews, knowing the P&L, walking the shopfloor, and consistently bringing data-backed insight before the business leader asks for it.</p>
+          <div class="commit-line"></div>
+        </div>
+      </div>
+
+      <div class="commit-slide" data-slide="3">
+        <div class="commit-content">
+          <div class="commit-num">Operating Commitment 04 of 05</div>
+          <h3 class="commit-title">Dependency<br><em>is failure.</em></h3>
+          <p class="commit-body">A strong HRBP makes the plant head a better people manager — not a more dependent one. If a business leader cannot make a talent decision without the HRBP doing the work for them, the model is not functioning correctly.</p>
+          <div class="commit-line"></div>
+        </div>
+      </div>
+
+      <div class="commit-slide" data-slide="4">
+        <div class="commit-content">
+          <div class="commit-num">Operating Commitment 05 of 05</div>
+          <h3 class="commit-title">Data over<br><em>opinion.</em></h3>
+          <p class="commit-body">HRBPs at Arvind are expected to bring workforce data — attrition trends, performance distributions, succession bench status — to every substantive conversation. Recommendations without data carry limited weight in a manufacturing leadership forum.</p>
+          <div class="commit-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SEC 2 · PURPOSE STATEMENT
+══════════════════════════ -->
+<section id="purpose">
+  <div class="container">
+    <div class="section-header rv">
+      <span class="section-eyebrow">1.2 · Purpose Statement</span>
+      <h2 class="section-title">The single point of accountability<br>for <em>people outcomes.</em></h2>
+      <p class="section-intro">Hover over the highlighted phrases to understand what each means in practice at Arvind.</p>
+    </div>
+    <div class="purpose-statement-wrap rv">
+      <p class="purpose-statement">
+        The HRBP at Arvind Limited is the
+        <span class="purpose-phrase annotated">single point of accountability for people outcomes<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">No ambiguity about who owns people outcomes in a BU. The HRBP cannot pass accountability to HOD (IR) or COE when a talent outcome fails.</div></span></span>
+        at the business unit level. The role
+        <span class="purpose-phrase annotated">translates organisational intent into workforce action<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">Converts Arvind's annual HR strategy into a BU-specific people agenda, making enterprise priorities operational at the unit level.</div></span></span>,
+        <span class="purpose-phrase annotated">enables leaders to make better and more informed people decisions<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">The HRBP coaches and equips managers rather than managing people on their behalf. Decision capability improves; dependence does not increase.</div></span></span>,
+        and ensures that HR's contribution to business performance is
+        <span class="purpose-phrase annotated">measurable, visible, and credible<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">HR impact is tracked via a defined scorecard, presented at business reviews, and attributable to specific HRBP interventions.</div></span></span>.
+      </p>
+    </div>
+    <div class="rv">
+      <table class="purpose-table">
+        <thead>
+          <tr>
+            <th>Phrase</th>
+            <th>What it means in practice</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Single point of accountability</td>
+            <td>No ambiguity about who owns people outcomes in a BU. The HRBP cannot pass accountability to HOD (IR) or COE when a talent outcome fails.</td>
+          </tr>
+          <tr>
+            <td>Embedded strategic partner</td>
+            <td>Physical and psychological presence in the business, not a corporate HR function visiting the plant. The HRBP attends BU reviews, knows the P&amp;L, and is the first call a HR head makes.</td>
+          </tr>
+          <tr>
+            <td>Translates organisational intent into workforce action</td>
+            <td>Converts Arvind's annual HR strategy into a BU-specific people agenda, making enterprise priorities operational at the unit level.</td>
+          </tr>
+          <tr>
+            <td>Enables leaders to make better people decisions</td>
+            <td>The HRBP coaches and equips managers rather than managing people on their behalf. Decision capability improves; dependence does not increase.</td>
+          </tr>
+          <tr>
+            <td>Measurable, visible, and credible</td>
+            <td>HR impact is tracked via a defined scorecard, presented at business reviews, and attributable to specific HRBP interventions.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SEC 3 · ROLE SCOPE
+══════════════════════════ -->
+<section id="scope">
+  <div class="container">
+    <div class="section-header rv">
+      <span class="section-eyebrow">1.3 · Role Scope</span>
+      <h2 class="section-title">What the HRBP <em>owns, influences,</em><br>and must never do.</h2>
+      <p class="section-intro">Diagnostic interviews indicate HRBPs currently spend 70–75% of their time on activities that fall outside the scope defined below. This table is the reference for all scope decisions.</p>
+    </div>
+    <div class="scope-tabs-wrap rv">
+      <button class="scope-tab-btn active" data-tab="owns" onclick="switchScopeTab(this)">
+        <span class="stb-dot"></span>Owns
+      </button>
+      <button class="scope-tab-btn" data-tab="influences" onclick="switchScopeTab(this)">
+        <span class="stb-dot"></span>Influences
+      </button>
+      <button class="scope-tab-btn" data-tab="outofscope" onclick="switchScopeTab(this)">
+        <span class="stb-dot"></span>Out of Scope
+      </button>
+    </div>
+
+    <div class="scope-panel active" id="sp-owns">
+      <div class="scope-items">
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Workforce planning and headcount forecasting</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">For E and above grade employees — leading annual headcount planning for the BU in partnership with the plant head and finance. Producing evidence-based workforce plans accounting for attrition forecasts, skill gaps, and business growth targets.</div></div>
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Performance calibration facilitation</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">For all E+ grade employees — facilitating the full PMS cycle from KRA alignment through mid-year review to annual calibration. Ensuring rating distributions are equitable and data-driven. Coaching managers on structured developmental feedback.</div></div>
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Succession planning for critical and senior roles</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Owning succession bench mapping for all critical and senior roles (M and above). Conducting bi-annual 9-box calibration with the plant head. Ensuring every critical role has at least one identified internal successor with a documented development plan.</div></div>
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Talent acquisition (E and above): JD review, interviews, offer approval</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Participating in shortlisting, interviewing, and offer approval for E and above grade roles. Reviewing job descriptions for accuracy and business relevance. Managing business leader expectations on timelines and owning candidate experience.</div></div>
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Employee engagement diagnosis and action planning</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">At BU level — analysing engagement and pulse survey data. Identifying root causes rather than surface scores. Building and owning a quarterly action plan with the HR head. Tracking progress at every monthly one-on-one.</div></div>
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Manager capability coaching</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Identifying people management capability gaps among BU managers. Working with the L&amp;D COE to nominate targeted interventions. Conducting individual coaching conversations on feedback, underperformance handling, and team trust.</div></div>
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">HiPo identification, 9-box calibration, individual development plans</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Identifying and nominating HiPos for leadership programmes, cross-functional projects, and stretch assignments in coordination with the L&amp;D COE. Tracking IDP progress and updating the succession bench accordingly.</div></div>
+        <div class="scope-item owns-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Business review participation with people agenda ownership</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Serving as the primary intelligence channel from the BU to the CHRO. Surfacing ground-level workforce signals — cultural shifts, risks, compensation equity concerns, leadership capability gaps — before they escalate.</div></div>
+      </div>
+    </div>
+
+    <div class="scope-panel" id="sp-influences">
+      <div class="scope-items">
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor attrition patterns indicating BU-level systemic risk</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP monitors and interprets shopfloor attrition patterns as a signal of BU-level systemic risk — advising HOD (IR) on intervention but not owning the resolution process.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor cultural issues — advises HOD (IR) on intervention</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Where shopfloor cultural issues indicate BU-level risk, the HRBP advises HOD (IR) on the appropriate intervention. HRBP provides the strategic lens; HOD (IR) executes on the ground.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">L&D programme design — HRBP provides skill gap data to COE</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP owns training needs identification at BU level and surfaces skill gap data to the L&amp;D COE. The COE owns programme architecture, content, and facilitators. HRBP does not design programmes.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Compensation benchmarking inputs — surfaces equity gaps</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP surfaces compensation equity gaps within the BU for E and above grade employees. COE-C&amp;B owns the benchmarking methodology and designs the correction mechanism. HRBP provides the BU context; COE provides the solution.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Cross-BU talent movements — recommends; CHRO and COE decide</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP identifies cross-BU talent movement opportunities and recommends candidates. CHRO and COE own the decision and execution. HRBP provides the BU talent context but does not unilaterally move employees across units.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Policy exceptions — HRBP can request; COE approves or rejects</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Where business circumstances warrant a policy exception, the HRBP is authorised to formally request one. The COE holds approval authority. HRBP cannot grant exceptions unilaterally.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Vendor and agency management for TA — HRBP provides requirements</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP provides BU-specific role requirements and quality feedback on candidates to COE-TA. COE manages vendor relationships, contracts, and SLAs. HRBP is the intelligence source; COE manages the relationship.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Org design advisory — HRBP advises; BU Head and CHRO approve</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP advises the HR head on team structure, role design, and reporting relationships during growth, restructuring, or leadership change. Provides workforce impact analysis before structural decisions are finalised. BU Head and CHRO hold final approval authority.</div></div>
+      </div>
+    </div>
+
+    <div class="scope-panel" id="sp-outofscope">
+      <div class="scope-items">
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Payroll processing, salary queries, PF/ESIC administration</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All payroll processing, salary query resolution, and PF/ESIC administration belongs to GCC (Shared Services). HRBP involvement in these activities is a misallocation of strategic capacity and must be redirected immediately.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor attendance tracking and leave management</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Shopfloor attendance tracking and leave management for shopfloor grade employees belongs to HOD (IR) and Plant HR. HRBP is not involved in day-to-day attendance administration.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Letter issuance — GCC</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Experience letters, relieving letters, salary certificates, and all HR documentation issuance is handled by GCC. HRBP is informed of letters issued but does not generate or release them.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor disciplinary proceedings and domestic enquiries — HOD (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All shopfloor disciplinary proceedings, domestic enquiry processes, show cause notices, and suspension decisions belong exclusively to HOD (IR) and the IR team. HRBP is informed of outcomes but does not participate in the process.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Union negotiations, collective bargaining, and labour law compliance</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All union interaction, collective bargaining, works committee negotiations, and labour law compliance belongs to HOD (IR). HRBP is informed of outcomes. Involvement beyond this boundary creates dual accountability and weakens IR management.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">HRIS data entry and record maintenance — GCC</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All HRIS data entry, employee record maintenance, and system updates belong to GCC. HRBP consults and reviews data but does not maintain records. Asking an HRBP to update HRIS is a misuse of the role.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Contract labour documentation and statutory compliance — HOD (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Contract labour management, documentation, statutory compliance for contract workers, and Factory Act compliance belongs to HOD (IR). HRBP is not involved in contract labour administration.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Canteen, transport, and facility-related employee welfare — HOD (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All facility-related welfare activities — canteen management, transport arrangements, accommodation, and shopfloor welfare programmes — belong to HOD (IR). These are operationally important but outside the HRBP's remit.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SEC 4 · RESPONSIBILITIES
+══════════════════════════ -->
+<section id="responsibilities">
+  <div class="container">
+    <div class="section-header rv">
+      <span class="section-eyebrow">1.4 · Key Responsibilities</span>
+      <h2 class="section-title">Strategic and operational.<br><em>In the right ratio.</em></h2>
+      <p class="section-intro">Responsibilities split into strategic and operational categories. The target ratio is 65% strategic to 35% operational — this governs weekly prioritisation decisions.</p>
+    </div>
+    <div class="ratio-bar-wrap rv">
+      <div class="ratio-labels">
+        <div class="ratio-label"><div class="ratio-dot" style="background:var(--red)"></div>Strategic — 65%</div>
+        <div class="ratio-label"><div class="ratio-dot" style="background:var(--dark-grey)"></div>Operational — 35%</div>
+      </div>
+      <div class="ratio-bar-outer"><div class="ratio-bar-inner" id="ratio-bar"></div></div>
+      <div class="ratio-note">Target weekly allocation</div>
+    </div>
+    <div class="resp-tabs-wrap rv">
+      <button class="resp-tab-btn active" onclick="switchRespTab(this,'rt-strategic')">Strategic Responsibilities (8)</button>
+      <button class="resp-tab-btn" onclick="switchRespTab(this,'rt-operational')">Operational Responsibilities (7)</button>
+    </div>
+    <div class="resp-panel active" id="rt-strategic">
+      <div class="resp-grid">
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Workforce Strategy &amp; Planning</div><div class="resp-card-body">Lead annual headcount planning for the BU in partnership with the plant head and finance. Produce an evidence-based workforce plan accounting for attrition forecasts, skill gaps, and business growth targets. Present the BU people plan at the CHRO's annual review.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Talent Health Management</div><div class="resp-card-body">Maintain a talent health data covering attrition risk by grade, high-potential status, succession bench coverage, and critical role vacancy age. Update monthly and present at BU business reviews.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Succession Planning</div><div class="resp-card-body">Own succession bench mapping for all critical and senior roles (M and above). Conduct bi-annual 9-box calibration with the plant head. Ensure every critical role has at least one identified internal successor with a documented development plan.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Performance Ecosystem Ownership</div><div class="resp-card-body">Facilitate the full PMS cycle for E and above grade employees — from KRA alignment through mid-year review to annual calibration. Ensure rating distributions are equitable and data-driven. Coach managers on structured developmental feedback.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Manager Capability Development</div><div class="resp-card-body">Identify people management capability gaps among BU managers. Work with the L&amp;D COE to nominate targeted interventions. Conduct individual coaching conversations on feedback, underperformance handling, and team trust.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Engagement Diagnosis &amp; Action</div><div class="resp-card-body">Analyse BU-level engagement and pulse survey data. Identify root causes rather than surface scores. Build and own a quarterly action plan with the HR head. Track progress at every monthly one-on-one.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Organisational Design Advisory</div><div class="resp-card-body">Advise the HR head on team structure, role design, and reporting relationships during growth, restructuring, or leadership change. Provide workforce impact analysis before structural decisions are finalised.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">CHRO Intelligence Feed</div><div class="resp-card-body">Serve as the primary intelligence channel from the BU to the CHRO. Surface ground-level workforce signals — cultural shifts, risks, compensation equity concerns, leadership capability gaps — before they escalate.</div></div>
+      </div>
+    </div>
+    <div class="resp-panel" id="rt-operational">
+      <p style="font-size:12px;color:var(--mid-grey);margin-bottom:24px;font-style:italic;">These responsibilities are necessary but must be managed efficiently and should not displace strategic priorities. Where possible, delegate, systematise, or transition to the appropriate function.</p>
+      <div class="resp-grid">
+        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">E+ Grade Talent Acquisition Facilitation</div><div class="resp-card-body">Participate in shortlisting, interviewing, and offer approval for E and above grade roles. Review job descriptions for accuracy and business relevance. Manage business leader expectations on timelines and own candidate experience.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Onboarding Management</div><div class="resp-card-body">Facilitate Day 1 induction for new joiners (E and above grade). Own the 30/60/90-day check-in process. Monitor probation progress and conduct structured probation review conversations.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">PMS Process Execution</div><div class="resp-card-body">Coordinate the PMS calendar for the BU — goal-setting submissions, mid-year review completion, and appraisal form submission. Track completion rates and escalate non-compliance to the plant head.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">HiPo Programme Nominations</div><div class="resp-card-body">Identify and nominate HiPos for leadership programmes, cross-functional projects, and stretch assignments in coordination with the L&amp;D COE. Track IDP progress and update the succession bench accordingly.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Exit Management</div><div class="resp-card-body">Conduct exit interviews for all E and above grade separations. Analyse themes quarterly and present aggregated insights to the plant head and CHRO. Lead retention conversations for at-risk high performers before resignation.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Monthly Reporting</div><div class="resp-card-body">Produce and share the BU people dashboard monthly, covering the 10 HRBP KPIs defined in the operating rhythm part of this playbook. This report is shared with both the BU Head HR and the CHRO.</div></div>
+        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Stakeholder Coordination</div><div class="resp-card-body">Coordinate with COE leads (TA, L&amp;D, C&amp;B) on BU-specific programme inputs, nominations, and data requests. Ensure no programme reaches the BU without prior HRBP context-setting.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SEC 5 · DECISION RIGHTS
+══════════════════════════ -->
+<section id="decision-rights">
+  <div class="container">
+    <div class="section-header rv">
+      <span class="section-eyebrow">Section 2 · Decision Rights &amp; Accountability</span>
+      <h2 class="section-title">Who owns which decision.<br><em>No ambiguity.</em></h2>
+      <p class="section-intro">For each HR decision domain, the table specifies whether the HRBP Owns, Influences, or Supports. The accountability column identifies who is ultimately answerable for the outcome.</p>
+    </div>
+    <div class="dr-intro-note rv">
+      <strong>Reading guide:</strong> <span class="dr-owns">Owns</span> = the HRBP decides without seeking approval. <span class="dr-influences">Influences</span> = HRBP input formally shapes the decision, but another party holds final authority. <span class="dr-supports" style="color:var(--mid-grey)">Supports</span> = HRBP provides data, logistics, or coordination only — no decision input. <strong>NA</strong> = not involved.
+    </div>
+    <div class="dr-tabs-wrap rv">
+      <button class="dr-tab-btn active" onclick="switchDrTab(this,'dr-talent')">Talent &amp; Acquisition</button>
+      <button class="dr-tab-btn" onclick="switchDrTab(this,'dr-performance')">Performance &amp; L&D</button>
+      <button class="dr-tab-btn" onclick="switchDrTab(this,'dr-comp')">Compensation &amp; Succession</button>
+      <button class="dr-tab-btn" onclick="switchDrTab(this,'dr-er')">Employee Relations &amp; IR</button>
+      <button class="dr-tab-btn" onclick="switchDrTab(this,'dr-ops')">Operations &amp; Design</button>
+    </div>
+
+    <div class="dr-panel active" id="dr-talent">
+      <table class="dr-table">
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Workforce Planning</strong></td><td class="dr-owns">Owns — BU headcount plan and attrition forecast</td><td class="dr-supports">Supports (Shopfloor grade WFP data)</td><td class="dr-influences">Owns (enterprise WFP framework and tools)</td><td class="dr-supports">Supports (finance inputs)</td><td class="dr-final">BU Head (headcount budget), CHRO (enterprise plan)</td></tr>
+          <tr><td><strong>Talent Acquisition — E and above grade</strong></td><td class="dr-owns">Owns — drives process, conducts HR interviews</td><td class="dr-na">NA</td><td class="dr-influences">Owns (sourcing process, vendor, JD standards)</td><td class="dr-owns">Owns (final hire decision)</td><td class="dr-final">HRBP (process quality), BU Head (hire decision)</td></tr>
+          <tr><td><strong>Talent Acquisition — M+</strong></td><td class="dr-influences">Influences — validates JD, reviews shortlist</td><td class="dr-na">NA</td><td class="dr-owns">Owns (design policies, implementation done by GCC)</td><td class="dr-supports">Supports (technical interview input)</td><td class="dr-final">COE-TA (policies), HOD (IR) (offer and joining)</td></tr>
+          <tr><td><strong>Talent Acquisition — Shopfloor</strong></td><td class="dr-na">NA (informed of volumes only)</td><td class="dr-owns">Owns (end-to-end)</td><td class="dr-supports">Supports (process standards only)</td><td class="dr-influences">Influences (headcount approval)</td><td class="dr-final">HOD (IR) (process), BU Head (headcount)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dr-panel" id="dr-performance">
+      <table class="dr-table">
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Performance Management — E &amp; above grade</strong></td><td class="dr-owns">Owns &amp; facilitates calibration, manages PMS cycle, initiates PIP</td><td class="dr-na">NA</td><td class="dr-owns">Owns (framework design, bell-curve guidelines, HRIS setup)</td><td class="dr-influences">Influences (rating input for direct reports)</td><td class="dr-final">HRBP (process and calibration quality)</td></tr>
+          <tr><td><strong>Performance Management — Shopfloor Grade</strong></td><td class="dr-na">NA (aggregated data quarterly only)</td><td class="dr-owns">Owns (appraisal process and records)</td><td class="dr-owns">Owns (framework)</td><td class="dr-influences">Influences (shopfloor performance expectations)</td><td class="dr-final">HOD (IR)</td></tr>
+          <tr><td><strong>L&amp;D — Nominations</strong></td><td class="dr-owns">Owns — nominates M-grade for all programmes based on IDP and 9-box</td><td class="dr-influences">Influences (mandatory training compliance — shopfloor workers)</td><td class="dr-supports">Supports (nominations delivered to COE)</td><td class="dr-influences">Influences (time-release approval)</td><td class="dr-final">HRBP (nomination quality and follow-through)</td></tr>
+          <tr><td><strong>L&amp;D — Design</strong></td><td class="dr-influences">Influences — provides BU skill gap data and business context</td><td class="dr-supports">Supports (logistical coordination at plant)</td><td class="dr-owns">Owns (programme architecture, content, facilitators)</td><td class="dr-supports">Supports (subject-matter input)</td><td class="dr-final">COE-L&amp;D (programme design and effectiveness)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dr-panel" id="dr-comp">
+      <table class="dr-table">
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Compensation — Annual Increments</strong></td><td class="dr-influences">Influences — input on individual performance context</td><td class="dr-supports">Supports (attendance and input accuracy)</td><td class="dr-owns">Owns (increment framework, band management, letters)</td><td class="dr-influences">Influences (budget approval)</td><td class="dr-final">COE-C&amp;B (framework), HR Head (final approval)</td></tr>
+          <tr><td><strong>Compensation — Equity Review</strong></td><td class="dr-owns">Owns — identifies and escalates equity gaps within BU for E and above grade</td><td class="dr-owns">Owns — identifies and escalates equity gaps for shopfloor workers</td><td class="dr-owns">Owns (benchmarking and correction mechanism)</td><td class="dr-influences">Influences (budget approval for correction)</td><td class="dr-final">CHRO (final equity decisions)</td></tr>
+          <tr><td><strong>Succession Planning</strong></td><td class="dr-owns">Owns — drives 9-box calibration, bench assessment, development planning</td><td class="dr-owns">Owns (for shopfloor workers)</td><td class="dr-supports">Supports (enterprise succession tools and templates)</td><td class="dr-influences">Influences (validates readiness of direct reports)</td><td class="dr-final">HRBP (BU bench), CHRO (cross-BU succession)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dr-panel" id="dr-er">
+      <table class="dr-table">
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Employee Relations — E &amp; above grade</strong></td><td class="dr-owns">Owns — coaches manager, facilitates informal resolution, initiates formal process</td><td class="dr-na">NA</td><td class="dr-supports">Supports (policy reference)</td><td class="dr-influences">Influences (decision on formal action)</td><td class="dr-final">HRBP (process), HR Head (formal disciplinary decision)</td></tr>
+          <tr><td><strong>Employee Relations — Shopfloor Grade</strong></td><td class="dr-na">NA (informed of patterns after resolution)</td><td class="dr-owns">Owns (grievance registration, investigation, resolution)</td><td class="dr-supports">Supports (POSH policy, compliance framework)</td><td class="dr-influences">Influences (workplace decision context)</td><td class="dr-final">HOD (IR) (process), HR Head (formal escalation)</td></tr>
+          <tr><td><strong>IR and Labour Compliance</strong></td><td class="dr-na">NA</td><td class="dr-owns">Owns (union interaction, statutory compliance, IR management)</td><td class="dr-owns">Owns (policy framework for compliance)</td><td class="dr-supports">Supports (operations context)</td><td class="dr-final">HOD (IR) (day-to-day), Legal and IR team (formal proceedings)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dr-panel" id="dr-ops">
+      <table class="dr-table">
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Organisational Design</strong></td><td class="dr-owns">Owns — advises on structure, role design, reporting lines; flags risks</td><td class="dr-supports">Supports (ground-level workforce context)</td><td class="dr-supports">Supports (benchmarking reference)</td><td class="dr-owns">Owns (structural decision)</td><td class="dr-final">BU Head and CHRO (final structural decisions)</td></tr>
+          <tr><td><strong>HRBP Scorecard and People Dashboard</strong></td><td class="dr-owns">Owns — produces, maintains, and presents at BU reviews monthly</td><td class="dr-owns">Owns (for shopfloor workers)</td><td class="dr-supports">Supports (dashboard templates and benchmarks)</td><td class="dr-influences">Influences (reviews and provides business feedback)</td><td class="dr-final">CHRO (enterprise review)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SEC 6 · RACI MATRIX
+══════════════════════════ -->
+<section id="raci">
+  <div class="container">
+    <div class="section-header rv">
+      <span class="section-eyebrow">2.2 · RACI Matrix — Hire-to-Retire Process Map</span>
+      <h2 class="section-title">167 processes. 14 phases.<br><em>No grey areas.</em></h2>
+      <p class="section-intro">Responsibilities across all major HR processes mapped below. Grade differentiation (E grade & Shopfloor grade) is explicit where ownership materially changes. Processes are organised by lifecycle phase.</p>
+    </div>
+
+    <div class="raci-legend rv">
+      <div class="raci-legend-item"><span class="rl-badge rl-ar">A/R</span>Accountable + Responsible — leads and executes</div>
+      <div class="raci-legend-item"><span class="rl-badge rl-a">A</span>Accountable only — owns governance, not execution</div>
+      <div class="raci-legend-item"><span class="rl-badge rl-r">R</span>Responsible — executes, not accountable</div>
+      <div class="raci-legend-item"><span class="rl-badge rl-c">C</span>Consulted — provides input, does not decide</div>
+      <div class="raci-legend-item"><span class="rl-badge rl-i">I</span>Informed — receives outcome info only</div>
+      <div class="raci-legend-item"><span class="rl-badge rl-na">—</span>Not involved</div>
+    </div>
+
+    <div class="rv" style="margin-bottom:32px;">
+      <a href="https://docs.google.com/spreadsheets/d/1a9umj1O7ck-ZVpAPcktxdFUTFJ4bZORv-YHsc1soJ50/edit?gid=1802993" target="_blank" class="raci-cta">View Full Detailed RACI in Google Sheets</a>
+    </div>
+
+    <div class="raci-phase-tabs rv" id="raci-tabs"></div>
+    <div id="raci-panels"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SEC 7 · DIFFERENTIATION
+══════════════════════════ -->
+<section id="differentiation">
+  <div class="container">
+    <div class="section-header rv">
+      <span class="section-eyebrow">2.3 · Role Differentiation</span>
+      <h2 class="section-title">HRBP vs HOD (IR) vs COE vs GCC.<br><em>Same organisation. Different worlds.</em></h2>
+      <p class="section-intro">Select any two roles to compare them side by side across 13 operating dimensions. Use the pagination to move through dimension groups.</p>
+    </div>
+
+    <div class="compare-selector rv">
+      <label>Compare</label>
+      <select class="compare-select" id="role-a" onchange="renderComparison()">
+        <option value="0">HRBP</option>
+        <option value="1">HOD (IR) — Plant HR</option>
+        <option value="2">COE</option>
+        <option value="3">GCC — Shared Services</option>
+      </select>
+      <span class="compare-vs">vs</span>
+      <select class="compare-select" id="role-b" onchange="renderComparison()">
+        <option value="0">HRBP</option>
+        <option value="1" selected>HOD (IR) — Plant HR</option>
+        <option value="2">COE</option>
+        <option value="3">GCC — Shared Services</option>
+      </select>
+    </div>
+
+    <div class="compare-nav rv">
+      <button class="compare-nav-btn" id="prev-btn" onclick="changePage(-1)" disabled>‹</button>
+      <span class="compare-page-info" id="page-info">Dimensions 1–4 of 13</span>
+      <button class="compare-nav-btn" id="next-btn" onclick="changePage(1)">›</button>
+    </div>
+
+    <div class="compare-grid rv" id="compare-grid"></div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div style="margin-bottom:16px;"><img src="data:image/png;base64,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" alt="Arvind" style="height:40px;width:auto;opacity:.85;"></div>
+        <p class="footer-credit"><strong>HRBP Playbook 2026</strong><br>Prepared by Rishi Raj<br>HR Strategy Intern · Summer Internship Programme 2026<br>Sponsored by CHRO, Arvind Limited<br><span style="margin-top:8px;display:block;">Last updated: May 2026</span></p>
+      </div>
+      <div>
+        <div class="footer-col-title">Playbook Sections</div>
+        <ul class="footer-links">
+          <li><a href="#">Home &amp; Landing</a></li>
+          <li><a href="#">Company Overview</a></li>
+          <li><a href="#">Key Stakeholders</a></li>
+          <li><a href="#">Role Charter</a></li>
+          <li><a href="#">90-Day Plan</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">This Page</div>
+        <ul class="footer-links">
+          <li><a href="#philosophy">Role Philosophy</a></li>
+          <li><a href="#purpose">Purpose Statement</a></li>
+          <li><a href="#scope">Role Scope</a></li>
+          <li><a href="#responsibilities">Key Responsibilities</a></li>
+          <li><a href="#decision-rights">Decision Rights</a></li>
+          <li><a href="#raci">RACI Matrix</a></li>
+          <li><a href="#differentiation">Role Differentiation</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="feedback-box">
+          <p>For the full detailed RACI matrix across all 167 hire-to-retire processes, access the Google Sheets version.</p>
+          <a href="https://docs.google.com/spreadsheets/d/1a9umj1O7ck-ZVpAPcktxdFUTFJ4bZORv-YHsc1soJ50/edit?gid=1802993" target="_blank" class="feedback-link">Full RACI Spreadsheet →</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">© 2026 Arvind Limited · HRBP Playbook · Internal Document</div>
+      <div class="footer-bottom-right">Role Charter · Section 1 &amp; 2 · Summer 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+// ── NAVBAR ──
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',window.scrollY>20);
+  document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);
+});
+
+// ── SUBNAV ──
+gsap.registerPlugin(ScrollTrigger);
+const snavBtns=document.querySelectorAll('.snav-btn');
+const sections=['philosophy','purpose','scope','responsibilities','decision-rights','raci','differentiation'];
+sections.forEach((id,i)=>{
+  ScrollTrigger.create({trigger:'#'+id,start:'top 55%',end:'bottom 55%',
+    onEnter:()=>snavBtns.forEach((b,j)=>b.classList.toggle('active',i===j)),
+    onEnterBack:()=>snavBtns.forEach((b,j)=>b.classList.toggle('active',i===j))
+  });
+});
+
+// ── REVEALS ──
+document.querySelectorAll('.rv').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power2.out',
+    scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+});
+
+// ── HERO ENTRANCE ──
+gsap.from('.hero-breadcrumb',{y:20,opacity:0,duration:.9,ease:'power3.out',delay:.2});
+gsap.from('.hero-title',{y:30,opacity:0,duration:1,ease:'power3.out',delay:.4});
+gsap.from('.hero-body',{y:20,opacity:0,duration:.8,ease:'power2.out',delay:.6});
+
+// ── CINEMATIC COMMITMENTS (autoplay) ──
+(function(){
+  const slides=document.querySelectorAll('.commit-slide');
+  const dots=document.querySelectorAll('.cp-dot');
+  const total=slides.length;
+  let current=0;
+  let timer=null;
+
+  function setSlide(idx){
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current=(idx+total)%total;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function startAutoplay(){
+    timer=setInterval(()=>setSlide(current+1), 3200);
+  }
+
+  // Start autoplay when section scrolls into view
+  ScrollTrigger.create({
+    trigger:'#commitments-sticky',
+    start:'top 80%',
+    once:true,
+    onEnter:()=>startAutoplay()
+  });
+
+  // Allow dot clicks to manually jump + reset timer
+  dots.forEach((dot,i)=>{
+    dot.addEventListener('click',()=>{
+      clearInterval(timer);
+      setSlide(i);
+      startAutoplay();
+    });
+  });
+})();
+
+// ── RATIO BAR ANIMATE ──
+ScrollTrigger.create({
+  trigger:'#ratio-bar',start:'top 85%',once:true,
+  onEnter:()=>{document.getElementById('ratio-bar').style.width='100%';}
+});
+
+// ── SCOPE TAB ──
+function switchScopeTab(btn){
+  document.querySelectorAll('.scope-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.scope-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sp-'+btn.dataset.tab).classList.add('active');
+}
+function toggleScope(header){
+  const arrow=header.querySelector('.scope-item-arrow');
+  const body=header.nextElementSibling;
+  const open=body.classList.contains('open');
+  // close all in same panel
+  header.closest('.scope-panel').querySelectorAll('.scope-item-body').forEach(b=>{b.classList.remove('open');});
+  header.closest('.scope-panel').querySelectorAll('.scope-item-arrow').forEach(a=>{a.classList.remove('open');});
+  if(!open){body.classList.add('open');arrow.classList.add('open');}
+}
+
+// ── RESP TAB ──
+function switchRespTab(btn,panelId){
+  document.querySelectorAll('.resp-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.resp-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+// ── DECISION RIGHTS TAB ──
+function switchDrTab(btn,panelId){
+  document.querySelectorAll('.dr-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.dr-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+// ── RACI DATA ──
+const raciData={
+  "Workforce Planning": [
+    {
+      "process": "Annual headcount planning (budgeted vs actual)",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I 2",
+      "BizLeader": "C 2",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Skill gap analysis for business unit",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Shopfloor workforce demand forecasting",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Attrition forecasting and risk flagging",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Contract / temp workforce planning",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Organisation structure review and redesign inputs",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Critical role identification",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Diversity and inclusion targets for BU",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Talent Acquisition": [
+    {
+      "process": "Job requisition initiation and approval",
+      "HRBP": "A",
+      "PlantHR": "I",
+      "COE": "R",
+      "GCC": "I",
+      "BizLeader": "A",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Job requisition initiation (shopfloor)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Job description creation and review",
+      "HRBP": "C",
+      "PlantHR": "C",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Internal job posting and communication",
+      "HRBP": "C",
+      "PlantHR": "C",
+      "COE": "A R",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "External job posting (portals, social media)",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Campus recruitment strategy and execution",
+      "HRBP": "C",
+      "PlantHR": "C",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Sourcing strategy for white collar roles",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Recruitment agency / vendor management",
+      "HRBP": "C",
+      "PlantHR": "I",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Resume screening (E1 and above)",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Resume screening (Shopfloor grade shopfloor)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Interview panel coordination",
+      "HRBP": "C",
+      "PlantHR": "C",
+      "COE": "A",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "HR interview conduct (E1 and above)",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "HR interview conduct (Shopfloor grade)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Technical / functional interview panel arrangement",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "A",
+      "GCC": "R",
+      "BizLeader": "R",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Background verification initiation and tracking",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "A R",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Reference check",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "A R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Offer letter creation and release",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "A",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Offer negotiation (E1 and above)",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Pre-joining engagement and candidate nurturing",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Offer rejection root cause analysis",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Pre-Joining & Onboarding": [
+    {
+      "process": "Pre-joining documentation collection",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Statutory enrollment (PF, ESIC, Gratuity)",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "IT access and systems setup coordination",
+      "HRBP": "C",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Day 1 induction programme",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Day 1 induction (shopfloor)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Plant and shopfloor orientation / tour",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "R",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Buddy programme assignment",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Role clarity and KRA discussion with new joiner",
+      "HRBP": "C",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "A R",
+      "Grade": "All"
+    },
+    {
+      "process": "30/60/90 day check-in with new joiner",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Probation monitoring and mid-probation review",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Probation confirmation letter",
+      "HRBP": "A",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Probation extension decision",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "New joiner experience feedback (pulse check)",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Goal Setting & Role Establishment": [
+    {
+      "process": "Annual KRA / KPI finalisation with employee",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "A R",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "KRA alignment to business objectives (BU level)",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Goal cascading from BU head to team",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "A R",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Target setting for shopfloor (production metrics)",
+      "HRBP": "-",
+      "PlantHR": "C",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "A R",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Role clarity documentation for new / changed roles",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Performance Management": [
+    {
+      "process": "Mid-year performance review facilitation",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Annual performance appraisal process management",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Shopfloor performance tracking",
+      "HRBP": "I",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Performance calibration sessions",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Rating normalisation / bell curve management",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "High performer identification",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Underperformer identification and early flagging",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Performance Improvement Plan (PIP) initiation",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "PIP progress monitoring and documentation",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "PIP closure \u2014 confirmation or separation recommendation",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Performance feedback coaching for managers",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Appraisal data entry and HRIS update",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Compensation & Benefits": [
+    {
+      "process": "Annual increment process coordination",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "A R",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Increment letter generation and release",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "A",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Promotion-linked pay revision recommendation",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Benefits enrollment and management",
+      "HRBP": "-",
+      "PlantHR": "-",
+      "COE": "A R",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Variable pay / bonus calculation inputs",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "A R",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Market benchmarking inputs for C&B review",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Reward and recognition nominations (BU level)",
+      "HRBP": "A R",
+      "PlantHR": "C",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Long service awards coordination",
+      "HRBP": "C",
+      "PlantHR": "C",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Statutory compliance \u2014 PF, ESIC, PT, TDS",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Salary advance / loan request processing",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Reimbursement processing",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Compensation equity review within BU",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Learning & Development": [
+    {
+      "process": "Training needs identification (BU level)",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "L&D calendar planning and alignment to BU priorities",
+      "HRBP": "C",
+      "PlantHR": "I",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Functional / technical training nomination",
+      "HRBP": "C",
+      "PlantHR": "I",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "R",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Behavioural / leadership training nomination",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Mandatory / statutory training (safety, POSH, compliance)",
+      "HRBP": "-",
+      "PlantHR": "A R (For Plant)",
+      "COE": "C",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Training attendance and completion tracking",
+      "HRBP": "I",
+      "PlantHR": "R (For plant)",
+      "COE": "A",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Training effectiveness evaluation (BU level)",
+      "HRBP": "A R",
+      "PlantHR": "C",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "All"
+    },
+    {
+      "process": "On-the-job training and shadowing coordination",
+      "HRBP": "I",
+      "PlantHR": "R (For plant)",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "A R",
+      "Grade": "All"
+    },
+    {
+      "process": "Leadership development programme nomination",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "External training / conference approval",
+      "HRBP": "A",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "R",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "New manager assimilation programme",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Mentoring / coaching programme coordination",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Individual Development Plan (IDP) facilitation",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Talent Management & Succession": [
+    {
+      "process": "High potential (HiPo) identification and assessment",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "9-box grid calibration for BU",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Succession planning for critical roles",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Bench strength assessment per critical role",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Career pathing conversations with HiPos",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Internal mobility / transfer initiation",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Stretch assignment and rotational programme",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Talent review presentation to BU leadership",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Talent pipeline review",
+      "HRBP": "C",
+      "PlantHR": "I",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Critical role vacancy risk reporting",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Employee Engagement": [
+    {
+      "process": "Annual employee engagement survey design",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "A R",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Annual engagement survey communication and administration",
+      "HRBP": "A R",
+      "PlantHR": "R (For plant)",
+      "COE": "R",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Engagement survey results analysis (BU level)",
+      "HRBP": "A R",
+      "PlantHR": "R (For plant)",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "All"
+    },
+    {
+      "process": "Action planning post-engagement survey",
+      "HRBP": "A R",
+      "PlantHR": "R (For plant)",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "All"
+    },
+    {
+      "process": "Pulse surveys (quarterly check-ins)",
+      "HRBP": "A R",
+      "PlantHR": "R (For plant)",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Stay interviews",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Skip-level meetings facilitation",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "R",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Town halls and leadership communication support",
+      "HRBP": "I",
+      "PlantHR": "R (For Plant)",
+      "COE": "I",
+      "GCC": "R",
+      "BizLeader": "A R",
+      "Grade": "All"
+    },
+    {
+      "process": "Culture and values initiatives at BU level",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Diversity and inclusion initiatives",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Employee welfare programmes (plant-level)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Informal grievance resolution (early stage)",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Employee Relations": [
+    {
+      "process": "Formal grievance registration and acknowledgement",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Grievance investigation and resolution",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Disciplinary action initiation (shopfloor)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Disciplinary action initiation (E and above grade)",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Show cause notice / warning letter issuance",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Domestic enquiry process",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Suspension decision (pending enquiry)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Termination for cause recommendation",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Union / works committee negotiations",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Industrial unrest / labour tension management",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Labour court / legal matter coordination",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "POSH complaint registration and IC committee",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "POSH awareness training coordination",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "A",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Statutory & Compliance": [
+    {
+      "process": "PF and ESIC administration",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Gratuity management",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Maternity and paternity benefit processing",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Factory Act compliance and audit",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Contract labour management and compliance",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Minimum wages compliance",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Labour licence renewal",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Statutory registers and records maintenance",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Government inspection and audit support",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    }
+  ],
+  "HR Operations & Admin": [
+    {
+      "process": "Attendance management",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Leave management and approval tracking",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "R",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Payroll inputs submission",
+      "HRBP": "-",
+      "PlantHR": "R",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Payroll processing",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Payroll query resolution",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "HR letters (experience, relieving, NOC, salary certificate)",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "HRIS employee data management and updates",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Organisation chart maintenance",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Employee self-service platform support",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "ID card and access card management",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Transport and accommodation requests",
+      "HRBP": "I",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "All"
+    },
+    {
+      "process": "Canteen and facility management",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    }
+  ],
+  "Transfers & Role Changes": [
+    {
+      "process": "Interdepartmental transfer initiation",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Inter-plant transfer management",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Interstate transfer (documentation, compliance)",
+      "HRBP": "C",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Deputation and secondment management",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Promotion process facilitation and communication",
+      "HRBP": "A R",
+      "PlantHR": "C",
+      "COE": "C",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Demotion process and documentation",
+      "HRBP": "A R",
+      "PlantHR": "C",
+      "COE": "I",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Acting / officiating arrangements",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Role redesign and JD update",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    }
+  ],
+  "Separation & Exit": [
+    {
+      "process": "Resignation receipt and acknowledgement",
+      "HRBP": "A",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Resignation receipt (Shopfloor grade)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Retention conversation and counter-offer decision",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Notice period management and buyout",
+      "HRBP": "A",
+      "PlantHR": "C",
+      "COE": "I",
+      "GCC": "R",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Exit interview conduct",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Exit interview conduct (Shopfloor grade)",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "I",
+      "GCC": "-",
+      "BizLeader": "I",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Exit survey administration and analysis",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Attrition insights reporting to BU head",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Knowledge transfer oversight",
+      "HRBP": "A R",
+      "PlantHR": "I",
+      "COE": "I",
+      "GCC": "I",
+      "BizLeader": "C",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Clearance process coordination",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Full and final settlement",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Relieving letter and experience certificate",
+      "HRBP": "I",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Retrenchment process management",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "C",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Voluntary Retirement Scheme (VRS) coordination",
+      "HRBP": "-",
+      "PlantHR": "A R",
+      "COE": "C",
+      "GCC": "-",
+      "BizLeader": "C",
+      "Grade": "Shopfloor grade"
+    },
+    {
+      "process": "Retirement process and superannuation",
+      "HRBP": "C",
+      "PlantHR": "-",
+      "COE": "I",
+      "GCC": "A R",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "Alumni engagement programme",
+      "HRBP": "A R",
+      "PlantHR": "-",
+      "COE": "C",
+      "GCC": "I",
+      "BizLeader": "I",
+      "Grade": "E and above grade"
+    },
+    {
+      "process": "A R = Accountable + Responsible",
+      "HRBP": "HRBP leads and executes",
+      "PlantHR": "",
+      "COE": "",
+      "GCC": "",
+      "BizLeader": "",
+      "Grade": ""
+    },
+    {
+      "process": "I   = Informed",
+      "HRBP": "HRBP receives outcome info only",
+      "PlantHR": "",
+      "COE": "",
+      "GCC": "",
+      "BizLeader": "",
+      "Grade": ""
+    },
+    {
+      "process": "C   = Consulted",
+      "HRBP": "HRBP provides input, does not decide",
+      "PlantHR": "",
+      "COE": "",
+      "GCC": "",
+      "BizLeader": "",
+      "Grade": ""
+    },
+    {
+      "process": "A   = Accountable only",
+      "HRBP": "HRBP owns governance, not execution",
+      "PlantHR": "",
+      "COE": "",
+      "GCC": "",
+      "BizLeader": "",
+      "Grade": ""
+    }
+  ]
+}
+;
+
+(function buildRaci(){
+  const tabs=document.getElementById('raci-tabs');
+  const panels=document.getElementById('raci-panels');
+  const phases=Object.keys(raciData);
+  phases.forEach((phase,i)=>{
+    // tab btn
+    const btn=document.createElement('button');
+    btn.className='rpt-btn'+(i===0?' active':'');
+    btn.textContent=phase;
+    btn.onclick=()=>{
+      document.querySelectorAll('.rpt-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.raci-phase-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('raci-panel-'+i).classList.add('active');
+    };
+    tabs.appendChild(btn);
+    // panel
+    const panel=document.createElement('div');
+    panel.className='raci-phase-panel'+(i===0?' active':'');
+    panel.id='raci-panel-'+i;
+    const rows=raciData[phase].filter(r=>r.process&&!r.process.includes('= Accountable'));
+    let html=`<table class="raci-table"><thead><tr>
+      <th>Process / Activity</th>
+      <th>HRBP</th><th>Plant HR</th><th>COE</th><th>GCC</th><th>Biz Leader</th>
+      <th>Grade</th></tr></thead><tbody>`;
+    rows.forEach(r=>{
+      html+=`<tr>
+        <td>${r.process}</td>
+        <td>${badge(r.HRBP)}</td>
+        <td>${badge(r.PlantHR)}</td>
+        <td>${badge(r.COE)}</td>
+        <td>${badge(r.GCC)}</td>
+        <td>${badge(r.BizLeader)}</td>
+        <td>${gradePill(r.Grade)}</td>
+      </tr>`;
+    });
+    html+=`</tbody></table>`;
+    panel.innerHTML=html;
+    panels.appendChild(panel);
+  });
+})();
+
+function badge(v){
+  if(!v||v==='-'||v==='') return '<span class="rb-na">—</span>';
+  const clean=v.trim();
+  if(clean.startsWith('A R')||clean==='A/R') return `<span class="rb rb-ar">${clean}</span>`;
+  if(clean.startsWith('A')) return `<span class="rb rb-a">${clean}</span>`;
+  if(clean.startsWith('R')) return `<span class="rb rb-r">${clean}</span>`;
+  if(clean.startsWith('C')) return `<span class="rb rb-c">${clean}</span>`;
+  if(clean.startsWith('I')) return `<span class="rb rb-i">${clean}</span>`;
+  return `<span class="rb rb-i">${clean}</span>`;
+}
+function gradePill(g){
+  if(!g) return '';
+  if(g.toLowerCase().includes('shopfloor')) return `<span class="grade-pill grade-s">Shopfloor</span>`;
+  if(g.toLowerCase().includes('all')) return `<span class="grade-pill grade-all">All</span>`;
+  return `<span class="grade-pill grade-e">E & above</span>`;
+}
+
+// ── ROLE DIFFERENTIATION ──
+const roles=['HRBP','HOD (IR) — Plant HR','COE','GCC — Shared Services'];
+const dims=[
+  {label:'Core Purpose',data:['Translate business strategy into measurable people outcomes at BU level','Manage HR operations, IR, and statutory compliance on the ground at the plant','Design and own enterprise-wide HR frameworks, programmes, and policies','Deliver HR transactions accurately, efficiently, and at scale']},
+  {label:'Who They Serve',data:['Management layer (E1–BM) — HODs, business leaders and senior employees','Entire plant workforce, with heaviest focus on shopfloor','The entire organisation — COE outputs apply to all BUs and locations','Every employee requiring a letter, payroll answer, or system update']},
+  {label:'Where They Sit',data:['Embedded in the BU — physically and mentally part of the business, not a visitor','At the plant — on the shopfloor, visible to workers, present in factory operations','At corporate / HQ level — centrally positioned, not plant-based','Central GCC hub — may operate remotely from plants']},
+  {label:'Time Horizon',data:['Medium to long-term: quarters and annual cycles — workforce planning, succession','Short-term: daily and weekly — operational management, compliance deadlines, IR incidents','Long-term: programme design cycles, policy revisions, capability frameworks (12–24 months)','Immediate: same-day or SLA-driven — transactions resolved within defined turnaround times']},
+  {label:'Nature of Work',data:['Advisory, diagnostic, consultative — conversations, workshops, analysis, recommendations','Operational, administrative, procedural — execution, records, day-to-day management','Design, governance, standards — building systems and frameworks others use','Transactional, process-driven — high-volume, accuracy-critical, rule-based tasks']},
+  {label:'Relationship Type',data:['Deep, trust-based partnership with plant heads and functional leaders','Functional and transactional — known for reliability, compliance, and operational support','Indirect — business experiences COE through programmes, not direct day-to-day partnership','Service-provider relationship — employees contact only when they need something specific']},
+  {label:'Success Metric',data:['Attrition rate, HiPo retention, succession bench coverage, manager effectiveness score, engagement score vs. company average','Statutory compliance score, grievance resolution TAT, IR incidents, attendance accuracy, contract labour compliance','Programme effectiveness (Kirkpatrick L1–L4), quality of hire, C&B equity index, time-to-deploy, policy adherence rate','SLA adherence rate, payroll error rate (target: near zero), first-contact resolution rate, HRIS data accuracy, cost per transaction']},
+  {label:'Decision Authority',data:['Recommends and influences; formal decision authority for E and above grade PMS, succession, and PIP initiation','Decides on operational and compliance matters at the plant; limited authority on strategic or M-grade matters','Decides on programme design, policy standards, and process architecture; no BU-level decision authority','No discretionary authority — executes within pre-defined rules, SLAs, and approvals only']},
+  {label:'Primary Reporting',data:['Functionally to HR Head / CHRO; operationally aligned to BU / Plant Head','Reports to Plant Head with dotted line to HR function; strong local accountability','Reports to COE functional head (Head of TA / L&D / C&B)','Reports to GCC Manager / HR Operations Head']},
+  {label:'Arvind-Specific Context',data:['Currently spending 70–75% of time on operational tasks; this playbook defines the target operating model','Strongest at IR and shopfloor management; needs cleaner HRBP boundary to prevent role duplication','Currently designing programmes without sufficient HRBP input on BU-level needs — a gap this model addresses','Currently non-existent at Arvind — this is the target state model']},
+  {label:'A Good Day Looks Like',data:['Sat in a BU business review, surfaced a workforce risk, and got a decision made','Zero pending grievances, attendance 100% accurate, no IR escalation, shopfloor workforce stable and informed','A new leadership programme running consistently across 5 plants with measurable behaviour change','100 queries resolved within SLA, payroll submitted error-free, all letters issued on time — and no HRBP asked to help']},
+  {label:'What Must Not Happen',data:['HRBP processing payroll queries, issuing letters, handling PF forms, or doing shopfloor attendance work','HOD (IR) making succession decisions, attending M-grade calibration sessions, or acting as HRBP substitute','COE engaging directly with plant heads on strategic people decisions, bypassing the HRBP entirely','GCC providing HR advice, making policy exceptions, or becoming a workaround for broken processes']},
+  {label:'Collaboration with HRBP',data:['—','HRBP advises on BU strategy; Plant HR executes on ground. Boundary must be clear and respected.','HRBP provides BU skill gap data and context; COE uses it to design programmes. Gap currently exists.','HRBP is informed of GCC outputs (letters, payroll). HRBP should never be asked to fill GCC gaps.']}
+];
+const PAGE_SIZE=4;
+let currentPage=0;
+
+function renderComparison(){
+  const a=parseInt(document.getElementById('role-a').value);
+  const b=parseInt(document.getElementById('role-b').value);
+  const grid=document.getElementById('compare-grid');
+  const start=currentPage*PAGE_SIZE;
+  const end=Math.min(start+PAGE_SIZE,dims.length);
+  const pageDims=dims.slice(start,end);
+  const aIsHrbp=a===0,bIsHrbp=b===0;
+
+  let html=`
+    <div class="cg-dim-col">
+      <div class="cg-header dim-header">Dimension</div>
+      ${pageDims.map(d=>`<div class="cg-dim-cell">${d.label}</div>`).join('')}
+    </div>
+    <div class="cg-role-col">
+      <div class="cg-header role-header">${roles[a]}</div>
+      ${pageDims.map((d,i)=>`<div class="cg-role-cell${i%2===1?' alt-bg':''}">${d.data[a]}</div>`).join('')}
+    </div>
+    <div class="cg-role-col">
+      <div class="cg-header role-header-alt">${roles[b]}</div>
+      ${pageDims.map((d,i)=>`<div class="cg-role-cell${i%2===0?' alt-bg':''}">${d.data[b]}</div>`).join('')}
+    </div>`;
+  grid.innerHTML=html;
+
+  document.getElementById('page-info').textContent=`Dimensions ${start+1}–${end} of ${dims.length}`;
+  document.getElementById('prev-btn').disabled=currentPage===0;
+  document.getElementById('next-btn').disabled=end>=dims.length;
+}
+function changePage(dir){
+  const maxPage=Math.ceil(dims.length/PAGE_SIZE)-1;
+  currentPage=Math.max(0,Math.min(maxPage,currentPage+dir));
+  renderComparison();
+}
+renderComparison();
+</script>
+</body>
+</html>
