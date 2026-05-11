@@ -1010,7 +1010,7 @@ function buildChecklist(checklist,sopRaw){
 // TAB 3 — SOP & DECISION TREE
 function fillSOPTab(p){
   const sopHTML=buildSOPFlow(p.sop_steps,p.sop_raw);
-  const dtHTML=buildDecisionTree(p.decision_tree,p.decision_tree);
+  const dtHTML=buildDecisionTree(p.decision_tree,p.dt_raw||p.sop_raw);
   document.getElementById('t-sop').innerHTML=`
     <div style="margin-bottom:48px;">
       <div class="detail-card-label" style="margin-bottom:16px;">Detailed SOP — Step by Step Process Flow</div>
@@ -1064,18 +1064,23 @@ function buildSOPFlow(steps,rawText){
 
 function buildDecisionTree(nodes,rawText){
   if(!nodes||!nodes.length){
-    if(!rawText)return '<div class="empty-note">No decision tree data available.</div>';
-    const sep=rawText.includes('→')?'→':'->';
-    const parts=rawText.split(new RegExp('\\s*'+sep.replace('>','\\>')+'\\s*')).map(s=>s.trim()).filter(s=>s.length>5);
+    if(!rawText||rawText.trim()===''||rawText.toLowerCase()==='out of scope')
+      return '<div class="empty-note">No decision tree data available for this process.</div>';
+    const rt=rawText.trim();
+    let parts=[];
+    if(rt.includes('→'))parts=rt.split('→').map(s=>s.trim()).filter(s=>s.length>3);
+    else if(rt.includes('->'))parts=rt.split('->').map(s=>s.trim()).filter(s=>s.length>3);
+    else if(rt.includes('\n'))parts=rt.split(/\n+/).map(s=>s.trim()).filter(s=>s.length>3);
+    else if(rt.includes(';'))parts=rt.split(';').map(s=>s.trim()).filter(s=>s.length>3);
+    else parts=[rt];
     nodes=parts.map(t=>{
-      const isD=/\bif\b|\bconfirm\b|\bwhether\b|\bfor each\b|\bis evidence\b/i.test(t);
-      return {type:isD?'decision':'action',text:t};
+      const clean=t.replace(/^\s*[\d\.\)\-\u2022]+\s*/,'').trim();
+      const isD=/\bif\b|\bcheck\b|\bverify\b|\bconfirm\b|\bwhether\b|\bfor each\b|\bdoes\b|\bhas\b|\bare\b/i.test(clean);
+      return {type:isD?'decision':'action',text:clean||t};
     });
   }
   if(!nodes||!nodes.length)return '<div class="empty-note">No decision tree available.</div>';
 
-  // Build SVG
-  const maxTextLen=Math.max(...nodes.map(n=>n.text.length));
   const W=Math.max(700,Math.min(1000,nodes.length*60+200));
   const CX=W/2;
   const NODE_W=200;const NODE_H=56;
@@ -1084,29 +1089,25 @@ function buildDecisionTree(nodes,rawText){
   let svgParts=[];let y=30;let prevCX=CX;let prevBottom=0;
 
   nodes.forEach((node,i)=>{
-    // Arrow from previous
     if(i>0){
-      svgParts.push(`<line x1="${prevCX}" y1="${prevBottom}" x2="${CX}" y2="${y}" stroke="#D0D0D0" stroke-width="1.5" marker-end="url(#arr)"/>`);
+      svgParts.push('<line x1="'+prevCX+'" y1="'+prevBottom+'" x2="'+CX+'" y2="'+y+'" stroke="#D0D0D0" stroke-width="1.5" marker-end="url(#arr)"/>');
     }
-
     if(node.type==='decision'){
       const hw=DEC_W/2,hh=DEC_H/2;
-      svgParts.push(`<polygon points="${CX},${y} ${CX+hw},${y+hh} ${CX},${y+DEC_H} ${CX-hw},${y+hh}" fill="white" stroke="#C8102E" stroke-width="2"/>`);
+      svgParts.push('<polygon points="'+CX+','+y+' '+(CX+hw)+','+(y+hh)+' '+CX+','+(y+DEC_H)+' '+(CX-hw)+','+(y+hh)+'" fill="white" stroke="#C8102E" stroke-width="2"/>');
       const lines=wrapText(node.text,26);
-      lines.slice(0,3).forEach((l,li)=>{
+      lines.slice(0,3).forEach(function(l,li){
         const ty=y+hh+(li-(lines.length-1)/2)*13;
-        svgParts.push(`<text x="${CX}" y="${ty}" text-anchor="middle" font-size="9" font-weight="700" font-family="Raleway,sans-serif" fill="#C8102E">${escSVG(l)}</text>`);
+        svgParts.push('<text x="'+CX+'" y="'+ty+'" text-anchor="middle" font-size="9" font-weight="700" font-family="Raleway,sans-serif" fill="#C8102E">'+escSVG(l)+'</text>');
       });
-      // Check for if/else split in text
       const hasBranch=/;\s*if\s|;\s*else/i.test(node.text)||/if\s+yes|if\s+no/i.test(node.text);
       if(hasBranch){
-        // Draw Yes/No branches
         const branchY=y+DEC_H+20;
         const bxL=CX-180;const bxR=CX+180;
-        svgParts.push(`<line x1="${CX-hw/2}" y1="${y+hh}" x2="${bxL}" y2="${branchY}" stroke="rgba(46,125,50,.5)" stroke-width="1.2" stroke-dasharray="4,3"/>`);
-        svgParts.push(`<line x1="${CX+hw/2}" y1="${y+hh}" x2="${bxR}" y2="${branchY}" stroke="rgba(200,16,46,.5)" stroke-width="1.2" stroke-dasharray="4,3"/>`);
-        svgParts.push(`<text x="${CX-hw/2-10}" y="${y+hh+12}" text-anchor="end" font-size="9" font-weight="800" font-family="Raleway,sans-serif" fill="#2E7D32">Yes</text>`);
-        svgParts.push(`<text x="${CX+hw/2+10}" y="${y+hh+12}" text-anchor="start" font-size="9" font-weight="800" font-family="Raleway,sans-serif" fill="#C8102E">No</text>`);
+        svgParts.push('<line x1="'+(CX-hw/2)+'" y1="'+(y+hh)+'" x2="'+bxL+'" y2="'+branchY+'" stroke="rgba(46,125,50,.5)" stroke-width="1.2" stroke-dasharray="4,3"/>');
+        svgParts.push('<line x1="'+(CX+hw/2)+'" y1="'+(y+hh)+'" x2="'+bxR+'" y2="'+branchY+'" stroke="rgba(200,16,46,.5)" stroke-width="1.2" stroke-dasharray="4,3"/>');
+        svgParts.push('<text x="'+(CX-hw/2-10)+'" y="'+(y+hh+12)+'" text-anchor="end" font-size="9" font-weight="800" font-family="Raleway,sans-serif" fill="#2E7D32">Yes</text>');
+        svgParts.push('<text x="'+(CX+hw/2+10)+'" y="'+(y+hh+12)+'" text-anchor="start" font-size="9" font-weight="800" font-family="Raleway,sans-serif" fill="#C8102E">No</text>');
         y+=DEC_H+60;
       }
       prevCX=CX;prevBottom=y+DEC_H;y+=YGAP;
@@ -1117,32 +1118,17 @@ function buildDecisionTree(nodes,rawText){
       const textColor=isFirst?'white':'#2D2D2D';
       const lines=wrapText(node.text,28);
       const actualH=Math.max(NODE_H,lines.length*16+20);
-      svgParts.push(`<rect x="${CX-NODE_W/2}" y="${y}" width="${NODE_W}" height="${actualH}" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`);
-      lines.slice(0,4).forEach((l,li)=>{
+      svgParts.push('<rect x="'+(CX-NODE_W/2)+'" y="'+y+'" width="'+NODE_W+'" height="'+actualH+'" rx="3" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2"/>');
+      lines.slice(0,4).forEach(function(l,li){
         const ty=y+actualH/2+(li-(lines.length-1)/2)*14;
-        svgParts.push(`<text x="${CX}" y="${ty}" text-anchor="middle" font-size="9.5" font-weight="${isFirst?'800':'600'}" font-family="Raleway,sans-serif" fill="${textColor}">${escSVG(l)}</text>`);
+        svgParts.push('<text x="'+CX+'" y="'+ty+'" text-anchor="middle" font-size="9.5" font-weight="'+(isFirst?'800':'600')+'" font-family="Raleway,sans-serif" fill="'+textColor+'">'+escSVG(l)+'</text>');
       });
       prevCX=CX;prevBottom=y+actualH;y+=YGAP;
     }
   });
 
   const svgH=y+20;
-  return `<div class="dt-wrap">
-    <svg width="100%" viewBox="0 0 ${W} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px;">
-      <defs>
-        <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-          <polygon points="0 0,8 3,0 6" fill="#C8C8C8"/>
-        </marker>
-      </defs>
-      ${svgParts.join('')}
-    </svg>
-    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--light-grey);">
-      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><div style="width:18px;height:13px;background:#2D2D2D;border-radius:2px;"></div>Start</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><div style="width:18px;height:13px;background:white;border:2px solid #EAEAEA;border-radius:2px;"></div>Action Step</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><svg width="18" height="13" viewBox="0 0 18 13"><polygon points="9,0 18,6.5 9,13 0,6.5" fill="white" stroke="#C8102E" stroke-width="2"/></svg>Decision Point</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><div style="width:18px;height:13px;background:rgba(200,16,46,.06);border:2px solid #C8102E;border-radius:2px;"></div>End / Output</div>
-    </div>
-  </div>`;
+  return '<div class="dt-wrap"><svg width="100%" viewBox="0 0 '+W+' '+svgH+'" xmlns="http://www.w3.org/2000/svg" style="max-width:'+W+'px;"><defs><marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C8C8C8"/></marker></defs>'+svgParts.join('')+'</svg><div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--light-grey);"><div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><div style="width:18px;height:13px;background:#2D2D2D;border-radius:2px;"></div>Start</div><div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><div style="width:18px;height:13px;background:white;border:2px solid #EAEAEA;border-radius:2px;"></div>Action Step</div><div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><svg width="18" height="13" viewBox="0 0 18 13"><polygon points="9,0 18,6.5 9,13 0,6.5" fill="white" stroke="#C8102E" stroke-width="2"/></svg>Decision Point</div><div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mid-grey);"><div style="width:18px;height:13px;background:rgba(200,16,46,.06);border:2px solid #C8102E;border-radius:2px;"></div>End / Output</div></div></div>';
 }
 
 function wrapText(text,maxLen){
@@ -1304,7 +1290,7 @@ function handleUpload(e){
   const reader=new FileReader();
   reader.onload=evt=>{
     try{
-      const wb=XLSX.read(evt.target.result,{type:'binary'});
+      const wb=XLSX.read(new Uint8Array(evt.target.result),{type:'array'});
       const wsName=wb.SheetNames.find(s=>s.trim()==='Master Playbook');
       if(!wsName){document.getElementById('upload-status').innerHTML='<span style="color:var(--red);">Error: "Master Playbook" sheet not found.</span>';return;}
       const ws=wb.Sheets[wsName];
@@ -1338,7 +1324,7 @@ function handleUpload(e){
           handoff_raw:g('Role Handoffs'),handoff_steps:[],
           sla:g('SLA'),output:g('Output'),escalation:g('Escalation'),risks:g('Risks'),
           templates:g('Templates'),sop_raw:sop,sop_steps:sopSteps,
-          decision_tree:[],checklist:{},red_flags:g('Red-Flag'),
+          dt_raw:g('Decision Tree / HRBP Logic'),decision_tree:[],checklist:{},red_flags:g('Red-Flag'),
           loopholes:g('Current Loopholes'),suggestions:g('Suggestions'),
           out_of_scope:oos,
           analogy_headline:'This process is like a relay race',
@@ -1355,7 +1341,7 @@ function handleUpload(e){
       document.getElementById('upload-status').innerHTML=`<span style="color:var(--green);font-weight:700;">✓ Loaded ${newProcs.length} processes from ${escH(file.name)}</span>`;
     }catch(err){document.getElementById('upload-status').innerHTML=`<span style="color:var(--red);">Error: ${escH(err.message)}</span>`;}
   };
-  reader.readAsBinaryString(file);
+  reader.readAsArrayBuffer(file);
 }
 
 function updateUploadStrip(){
