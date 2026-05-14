@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard — Arvind Limited · HRBP Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+
+:root{
+  --red:#C8102E;--red-dark:#a00e24;--white:#FFFFFF;--off-white:#F7F7F5;
+  --light-grey:#EAEAEA;--mid-grey:#B7B7B7;--dark-grey:#2D2D2D;
+  --green:#2E7D32;--amber:#F57F17;--green-bg:rgba(46,125,50,.08);
+  --amber-bg:rgba(245,127,23,.08);--red-bg:rgba(200,16,46,.08);
+  --font-display:"Playfair Display",Georgia,serif;
+  --font-body:"Raleway",Arial,sans-serif;
+  --nav-h:64px;--max-w:1280px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);color:var(--dark-grey);background:var(--white);overflow-x:hidden;cursor:none;}
+#cur{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-r{position:fixed;width:26px;height:26px;border:1.5px solid rgba(200,16,46,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+a,button,select,input{cursor:none;}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+section{position:relative;}
+.rv{opacity:0;transform:translateY(24px);}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:block;}
+.sec-title{font-family:var(--font-display);font-size:clamp(24px,2.6vw,38px);font-weight:600;color:var(--dark-grey);line-height:1.2;}
+.sec-title em{font-style:italic;color:var(--red);}
+.sec-intro{font-size:13px;line-height:1.85;color:rgba(45,45,45,.65);max-width:640px;margin-top:12px;}
+.sec-header{margin-bottom:48px;}
+
+/* RAG */
+.rag-r{color:var(--red);font-weight:800;}
+.rag-a{color:var(--amber);font-weight:800;}
+.rag-g{color:var(--green);font-weight:800;}
+.rag-dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.rag-dot.r{background:var(--red);}
+.rag-dot.a{background:var(--amber);}
+.rag-dot.g{background:var(--green);}
+.rag-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:2px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+.rag-pill.r{background:var(--red-bg);color:var(--red);}
+.rag-pill.a{background:var(--amber-bg);color:var(--amber);}
+.rag-pill.g{background:var(--green-bg);color:var(--green);}
+
+/* NAV */
+#navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--light-grey);display:flex;align-items:center;z-index:1000;transition:box-shadow .3s;}
+#navbar.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.08);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-img{height:44px;width:auto;display:block;}
+.nav-divider{width:1px;height:28px;background:var(--light-grey);}
+.nav-playbook-tag{font-size:11px;font-weight:700;color:var(--mid-grey);letter-spacing:.14em;text-transform:uppercase;}
+.nav-playbook-tag span{color:var(--red);}
+.nav-links{display:flex;align-items:center;list-style:none;}
+.nav-links a{display:block;padding:6px 9px;font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid-grey);text-decoration:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--dark-grey);border-bottom-color:var(--red);}
+
+/* LAYER SWITCHER */
+#layer-switcher{position:sticky;top:var(--nav-h);z-index:600;background:var(--dark-grey);border-bottom:3px solid var(--red);}
+.ls-inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+.ls-tabs{display:flex;}
+.ls-tab{padding:16px 28px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-3px;transition:color .2s,border-color .2s;display:flex;align-items:center;gap:8px;}
+.ls-tab:hover{color:rgba(255,255,255,.7);}
+.ls-tab.active{color:var(--white);border-bottom-color:var(--red);}
+.ls-tab-badge{font-size:8px;font-weight:800;padding:2px 6px;border-radius:2px;background:rgba(255,255,255,.1);}
+.ls-tab.active .ls-tab-badge{background:var(--red);}
+.ls-right{display:flex;align-items:center;gap:12px;}
+.bu-select{padding:6px 28px 6px 12px;font-family:var(--font-body);font-size:11px;font-weight:700;color:var(--white);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;letter-spacing:.06em;}
+.bu-select option{background:var(--dark-grey);color:var(--white);}
+
+/* SUBNAV */
+#section-nav{position:sticky;top:calc(var(--nav-h) + 53px);z-index:500;background:var(--white);border-bottom:2px solid var(--light-grey);overflow-x:auto;}
+.section-nav-inner{display:flex;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
+.snav-btn{padding:11px 13px;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--mid-grey);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;display:block;margin-bottom:-2px;}
+.snav-btn:hover{color:var(--dark-grey);}
+.snav-btn.active{color:var(--red);border-bottom-color:var(--red);}
+
+/* LAYER PANELS */
+.layer-panel{display:none;}
+.layer-panel.active{display:block;}
+
+/* HERO */
+#page-hero{padding-top:calc(var(--nav-h) + 120px + 36px);padding-bottom:64px;background:var(--off-white);position:relative;overflow:hidden;}
+#page-hero::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+#page-hero::after{content:"";position:absolute;top:-40%;right:-5%;width:32%;height:160%;background:rgba(200,16,46,.03);transform:skewX(-14deg);pointer-events:none;}
+.hero-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:end;}
+.hero-breadcrumb{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.hero-breadcrumb::before{content:"";width:20px;height:1px;background:var(--red);}
+.hero-breadcrumb a{color:var(--mid-grey);text-decoration:none;}
+.hero-breadcrumb span{color:var(--red);}
+.hero-title{font-family:var(--font-display);font-size:clamp(26px,3.2vw,46px);font-weight:600;line-height:1.1;color:var(--dark-grey);margin-bottom:18px;}
+.hero-title em{font-style:italic;color:var(--red);}
+.hero-body{font-size:13px;line-height:1.85;color:rgba(45,45,45,.65);max-width:460px;}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.hmc{background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--red);padding:18px 16px;}
+.hmc.alt{border-top-color:var(--dark-grey);}
+.hmc-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px;}
+.hmc-val{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--dark-grey);}
+.hmc-sub{font-size:10px;color:var(--mid-grey);margin-top:3px;line-height:1.4;}
+
+/* ══ DASHBOARD PHILOSOPHY ══ */
+#philosophy{padding:80px 0;background:var(--white);}
+.phil-statement{background:var(--dark-grey);padding:36px 44px;position:relative;margin-bottom:48px;}
+.phil-statement::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red);}
+.phil-text{font-family:var(--font-display);font-size:clamp(16px,1.8vw,22px);font-weight:400;font-style:italic;line-height:1.55;color:var(--white);}
+.phil-source{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,16,46,.7);margin-top:16px;}
+.phil-axes{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:48px;}
+.phil-axis{background:var(--off-white);padding:28px 24px;border-top:3px solid var(--light-grey);transition:border-top-color .3s;}
+.phil-axis:hover{border-top-color:var(--red);}
+.phil-axis-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.phil-axis-title{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--dark-grey);margin-bottom:8px;}
+.phil-axis-body{font-size:12px;line-height:1.75;color:rgba(45,45,45,.7);}
+.framework-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.fw-card{background:var(--off-white);padding:24px 20px;border-left:3px solid var(--light-grey);transition:border-left-color .3s;}
+.fw-card:hover{border-left-color:var(--red);}
+.fw-card-num{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.fw-card-title{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--dark-grey);margin-bottom:6px;}
+.fw-card-body{font-size:12px;line-height:1.7;color:rgba(45,45,45,.7);}
+
+/* ══ TALENT HEALTH SCORE ══ */
+#ths-section{padding:64px 0;background:var(--dark-grey);position:relative;}
+#ths-section::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.ths-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.ths-card{background:rgba(255,255,255,.04);padding:32px 28px;text-align:center;border-top:3px solid rgba(255,255,255,.08);transition:border-top-color .3s,background .3s;}
+.ths-card:hover{background:rgba(255,255,255,.07);border-top-color:var(--red);}
+.ths-bu-name{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px;}
+.ths-score-wrap{position:relative;display:inline-block;margin-bottom:12px;}
+.ths-score{font-family:var(--font-display);font-size:56px;font-weight:700;line-height:1;display:block;}
+.ths-score.green{color:#66BB6A;}
+.ths-score.amber{color:#FFB300;}
+.ths-score.red{color:var(--red);}
+.ths-outof{font-size:14px;font-weight:400;color:rgba(255,255,255,.3);margin-left:4px;}
+.ths-trend{font-size:12px;font-weight:700;margin-top:4px;}
+.ths-trend.up{color:#66BB6A;}
+.ths-trend.down{color:var(--red);}
+.ths-trend.flat{color:rgba(255,255,255,.4);}
+.ths-breakdown{margin-top:16px;display:flex;flex-direction:column;gap:6px;}
+.ths-cluster-row{display:flex;align-items:center;justify-content:space-between;font-size:10px;}
+.ths-cluster-name{color:rgba(255,255,255,.45);text-align:left;}
+.ths-cluster-bar{flex:1;height:3px;background:rgba(255,255,255,.1);margin:0 10px;border-radius:2px;overflow:hidden;}
+.ths-cluster-fill{height:100%;border-radius:2px;transition:width 1s ease;}
+.ths-cluster-val{color:rgba(255,255,255,.6);font-weight:700;width:24px;text-align:right;}
+
+/* ══ CHRO VIEW RAG GRID ══ */
+#chro-rag{padding:80px 0;background:var(--white);}
+.rag-table-wrap{overflow-x:auto;}
+.rag-table{width:100%;border-collapse:collapse;}
+.rag-table thead th{background:var(--dark-grey);color:var(--white);padding:11px 14px;text-align:center;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+.rag-table thead th:first-child{background:var(--red);text-align:left;width:220px;}
+.rag-table tbody td{padding:12px 14px;border-bottom:1px solid var(--light-grey);text-align:center;vertical-align:middle;}
+.rag-table tbody td:first-child{text-align:left;font-size:11px;font-weight:700;color:var(--dark-grey);}
+.rag-table tbody tr:nth-child(even) td{background:rgba(247,247,245,.6);}
+.rag-table tbody tr.cluster-divider td{background:var(--off-white);font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--mid-grey);padding:8px 14px;}
+.rag-cell{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 10px;border-radius:2px;font-size:11px;font-weight:800;min-width:80px;transition:transform .2s,box-shadow .2s;}
+.rag-cell.r{background:var(--red-bg);color:var(--red);}
+.rag-cell.a{background:var(--amber-bg);color:var(--amber);}
+.rag-cell.g{background:var(--green-bg);color:var(--green);}
+.rag-cell.na{background:rgba(183,183,183,.1);color:var(--mid-grey);font-size:10px;}
+/* Hover tooltip */
+.rag-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--dark-grey);border:1px solid rgba(200,16,46,.3);border-left:3px solid var(--red);padding:12px 14px;width:260px;font-size:11px;line-height:1.6;color:rgba(255,255,255,.8);z-index:200;pointer-events:none;opacity:0;transition:opacity .2s;text-align:left;font-weight:400;}
+.rag-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--dark-grey);}
+.rag-cell:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(0,0,0,.12);}
+.rag-cell:hover .rag-tooltip{opacity:1;}
+/* Click expand */
+.rag-action-panel{display:none;padding:16px 20px;background:var(--off-white);border-left:3px solid var(--red);margin-top:2px;font-size:12px;line-height:1.75;color:var(--dark-grey);}
+.rag-action-panel.open{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.rag-action-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+
+/* CHRO ACTION REQUIRED */
+.chro-actions-box{background:rgba(200,16,46,.04);border:1px solid rgba(200,16,46,.15);border-left:4px solid var(--red);padding:24px 28px;margin-top:32px;}
+.chro-actions-title{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+.chro-action-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(200,16,46,.1);}
+.chro-action-item:last-child{border-bottom:none;}
+.chro-action-rag{flex-shrink:0;}
+.chro-action-text{font-size:12px;line-height:1.6;color:var(--dark-grey);}
+
+/* ══ HR HEAD VIEW ══ */
+/* Metric cards grid */
+#metric-clusters{padding:80px 0;background:var(--off-white);}
+#metric-clusters::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.cluster-section{margin-bottom:56px;}
+.cluster-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:14px;border-bottom:2px solid var(--light-grey);}
+.cluster-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--dark-grey);}
+.cluster-weight{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;background:rgba(200,16,46,.08);color:var(--red);}
+.cluster-pl{font-size:11px;color:var(--mid-grey);font-style:italic;}
+.metric-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;}
+@media(max-width:900px){.metric-cards{grid-template-columns:repeat(2,1fr);}}
+.metric-card{background:var(--white);border-top:3px solid var(--light-grey);cursor:pointer;transition:border-top-color .3s,box-shadow .3s;position:relative;}
+.metric-card.r{border-top-color:var(--red);}
+.metric-card.a{border-top-color:var(--amber);}
+.metric-card.g{border-top-color:var(--green);}
+.metric-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.07);}
+.mc-body{padding:14px 14px 10px;}
+.mc-id{font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--mid-grey);margin-bottom:6px;}
+.mc-name{font-size:12px;font-weight:700;color:var(--dark-grey);margin-bottom:6px;line-height:1.3;}
+.mc-value-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.mc-value{font-family:var(--font-display);font-size:24px;font-weight:700;}
+.mc-value.r{color:var(--red);}
+.mc-value.a{color:var(--amber);}
+.mc-value.g{color:var(--green);}
+.mc-value.na{color:var(--mid-grey);font-size:14px;}
+.mc-trend{font-size:11px;font-weight:700;}
+.mc-trend.up{color:var(--green);}
+.mc-trend.down{color:var(--red);}
+.mc-trend.flat{color:var(--mid-grey);}
+/* sparkline */
+.mc-sparkline{height:32px;width:100%;margin-bottom:10px;}
+.mc-footer{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;background:var(--off-white);border-top:1px solid var(--light-grey);}
+.mc-freq{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);}
+.mc-click-hint{font-size:9px;color:rgba(200,16,46,.6);font-weight:700;}
+
+/* MODAL */
+#metric-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;padding:24px;}
+#metric-modal-overlay.open{display:flex;}
+#metric-modal{background:var(--white);max-width:680px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+.modal-header{background:var(--dark-grey);padding:24px 28px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;}
+.modal-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--white);}
+.modal-id{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(200,16,46,.7);margin-bottom:6px;}
+.modal-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;padding:0;transition:color .2s;flex-shrink:0;margin-top:4px;}
+.modal-close:hover{color:var(--white);}
+.modal-body{padding:28px;}
+.modal-section{margin-bottom:24px;}
+.modal-section-label{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.modal-section-text{font-size:13px;line-height:1.75;color:var(--dark-grey);}
+.modal-rag-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.modal-rag-table th{background:var(--off-white);padding:8px 12px;text-align:left;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);}
+.modal-rag-table td{padding:10px 12px;border-bottom:1px solid var(--light-grey);}
+.modal-rag-table tr.r td:first-child{border-left:3px solid var(--red);}
+.modal-rag-table tr.a td:first-child{border-left:3px solid var(--amber);}
+.modal-rag-table tr.g td:first-child{border-left:3px solid var(--green);}
+.modal-biz-box{background:var(--dark-grey);padding:18px 22px;border-left:3px solid var(--red);}
+.modal-biz-text{font-size:12px;line-height:1.75;color:rgba(255,255,255,.75);font-style:italic;}
+.modal-current{display:flex;align-items:center;gap:16px;background:var(--off-white);padding:16px 20px;margin-bottom:8px;}
+.modal-current-input{font-family:var(--font-body);font-size:20px;font-weight:700;color:var(--dark-grey);background:none;border:none;border-bottom:2px solid var(--light-grey);outline:none;width:120px;padding:4px 0;transition:border-color .2s;}
+.modal-current-input:focus{border-bottom-color:var(--red);}
+.modal-current-unit{font-size:12px;color:var(--mid-grey);}
+.modal-save-btn{padding:8px 20px;background:var(--red);color:var(--white);border:none;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;margin-top:12px;}
+.modal-save-btn:hover{background:var(--red-dark);}
+
+/* ATTRITION COST CALCULATOR */
+.calc-wrap{background:var(--off-white);border:1px solid var(--light-grey);padding:24px;margin-top:16px;}
+.calc-label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dark-grey);margin-bottom:12px;}
+.calc-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.calc-field label{font-size:10px;font-weight:700;color:var(--mid-grey);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:6px;}
+.calc-field input{width:100%;padding:10px 12px;font-family:var(--font-body);font-size:14px;font-weight:700;color:var(--dark-grey);border:1px solid var(--light-grey);border-bottom:2px solid var(--dark-grey);background:var(--white);outline:none;transition:border-color .2s;}
+.calc-field input:focus{border-bottom-color:var(--red);}
+.calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.calc-result{background:var(--white);padding:14px 16px;border-top:3px solid var(--red);text-align:center;}
+.calc-result-val{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--red);display:block;}
+.calc-result-lbl{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);margin-top:4px;}
+
+/* SUCCESSION TABLE */
+.succession-wrap{margin-top:16px;}
+.succession-table{width:100%;border-collapse:collapse;font-size:12px;}
+.succession-table thead th{background:var(--dark-grey);color:var(--white);padding:10px 12px;text-align:left;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+.succession-table thead th:first-child{background:var(--red);}
+.succession-table tbody td{padding:10px 12px;border-bottom:1px solid var(--light-grey);}
+.succession-table tbody tr:hover td{background:var(--off-white);}
+.succession-table input,.succession-table select{font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--dark-grey);background:none;border:none;border-bottom:1px solid var(--light-grey);outline:none;width:100%;padding:2px 0;transition:border-color .2s;}
+.succession-table input:focus,.succession-table select:focus{border-bottom-color:var(--red);}
+.readiness-now{color:var(--green);font-weight:800;}
+.readiness-1{color:var(--amber);font-weight:800;}
+.readiness-2{color:var(--red);font-weight:800;}
+.add-row-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:none;border:1px solid var(--light-grey);font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);margin-top:8px;transition:border-color .2s,color .2s;}
+.add-row-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* BELL CURVE CHART */
+.bellcurve-wrap{margin-top:16px;}
+.bc-inputs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.bc-input-item{display:flex;flex-direction:column;gap:4px;}
+.bc-input-item label{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mid-grey);}
+.bc-input-item input{width:72px;padding:8px 10px;font-family:var(--font-body);font-size:13px;font-weight:700;border:1px solid var(--light-grey);border-bottom:2px solid var(--dark-grey);outline:none;transition:border-color .2s;text-align:center;}
+.bc-input-item input:focus{border-bottom-color:var(--red);}
+.bc-warning{font-size:11px;color:var(--amber);font-weight:700;margin-bottom:8px;display:none;}
+.bc-chart{display:flex;align-items:flex-end;gap:4px;height:120px;margin-top:8px;}
+.bc-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.bc-bar{width:100%;background:var(--light-grey);border-radius:2px 2px 0 0;transition:height .6s ease,background .3s;}
+.bc-bar.warning{background:var(--amber);}
+.bc-bar.danger{background:var(--red);}
+.bc-bar-label{font-size:9px;font-weight:800;color:var(--mid-grey);text-align:center;letter-spacing:.08em;}
+.bc-bar-pct{font-size:10px;font-weight:800;color:var(--dark-grey);}
+
+/* ACTION TRACKER */
+#action-tracker{padding:80px 0;background:var(--white);}
+.at-controls{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.at-add-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--red);color:var(--white);border:none;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;}
+.at-add-btn:hover{background:var(--red-dark);}
+.at-filter-select{padding:8px 28px 8px 12px;font-family:var(--font-body);font-size:11px;font-weight:700;color:var(--dark-grey);background:var(--white);border:1px solid var(--light-grey);border-bottom:2px solid var(--dark-grey);outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%232D2D2D'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+.at-table{width:100%;border-collapse:collapse;font-size:12px;}
+.at-table thead th{background:var(--dark-grey);color:var(--white);padding:10px 13px;text-align:left;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+.at-table thead th:first-child{background:var(--red);}
+.at-table tbody td{padding:12px 13px;border-bottom:1px solid var(--light-grey);vertical-align:middle;}
+.at-table tbody tr:hover td{background:var(--off-white);}
+.at-table input,.at-table select{font-family:var(--font-body);font-size:12px;color:var(--dark-grey);background:none;border:none;outline:none;width:100%;}
+.at-status{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:2px;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+.at-status.todo{background:rgba(183,183,183,.15);color:var(--dark-grey);}
+.at-status.inprog{background:var(--amber-bg);color:var(--amber);}
+.at-status.done{background:var(--green-bg);color:var(--green);}
+.at-status.slipped{background:var(--red-bg);color:var(--red);}
+.at-priority{display:inline-flex;padding:3px 8px;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+.at-priority.high{color:var(--red);}
+.at-priority.med{color:var(--amber);}
+.at-priority.low{color:var(--mid-grey);}
+.at-del-btn{background:none;border:none;color:var(--mid-grey);font-size:14px;padding:0;transition:color .2s;}
+.at-del-btn:hover{color:var(--red);}
+
+/* EXCEL UPLOAD */
+#data-upload{padding:80px 0;background:var(--off-white);}
+#data-upload::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.upload-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.upload-zone{border:2px dashed var(--light-grey);padding:40px 32px;text-align:center;transition:border-color .2s,background .2s;position:relative;}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--red);background:var(--red-bg);}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;width:100%;height:100%;}
+.upload-icon{font-size:32px;margin-bottom:12px;}
+.upload-title{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--dark-grey);margin-bottom:8px;}
+.upload-sub{font-size:12px;color:var(--mid-grey);line-height:1.6;}
+.upload-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:var(--red);color:var(--white);border:none;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-top:16px;transition:background .2s;}
+.upload-btn:hover{background:var(--red-dark);}
+.upload-status{margin-top:16px;font-size:12px;color:var(--dark-grey);}
+.upload-found{color:var(--green);font-weight:700;}
+.upload-missing{color:var(--amber);font-weight:700;}
+.format-card{background:var(--white);border:1px solid var(--light-grey);border-left:3px solid var(--red);padding:24px;}
+.format-title{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:12px;}
+.format-body{font-size:12px;line-height:1.75;color:var(--dark-grey);margin-bottom:16px;}
+.format-dl-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--dark-grey);color:var(--white);border:none;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;}
+.format-dl-btn:hover{background:var(--red);}
+.format-dl-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* SNAPSHOT */
+#snapshot-section{padding:48px 0;background:var(--white);border-top:1px solid var(--light-grey);}
+.snapshot-inner{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.snapshot-input{padding:10px 14px;font-family:var(--font-body);font-size:13px;font-weight:700;color:var(--dark-grey);border:1px solid var(--light-grey);border-bottom:2px solid var(--dark-grey);outline:none;transition:border-color .2s;width:200px;}
+.snapshot-input:focus{border-bottom-color:var(--red);}
+.snapshot-btn{padding:10px 24px;background:var(--red);color:var(--white);border:none;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;}
+.snapshot-btn:hover{background:var(--red-dark);}
+.snapshot-history{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.snapshot-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:var(--off-white);border:1px solid var(--light-grey);font-size:11px;font-weight:700;color:var(--dark-grey);}
+.snapshot-tag-del{background:none;border:none;color:var(--mid-grey);font-size:12px;padding:0;transition:color .2s;}
+.snapshot-tag-del:hover{color:var(--red);}
+.snapshot-load-btn{background:none;border:none;color:var(--red);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:underline;padding:0;}
+
+/* METRIC LIBRARY */
+#metric-library{padding:80px 0;background:var(--off-white);}
+#metric-library::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),transparent 60%);}
+.lib-grid{display:grid;grid-template-columns:1fr;gap:2px;}
+.lib-item{}
+.lib-item-header{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;background:var(--white);border-left:3px solid var(--light-grey);cursor:pointer;transition:border-left-color .2s,background .2s;}
+.lib-item-header:hover,.lib-item-header.open{border-left-color:var(--red);background:rgba(200,16,46,.02);}
+.lib-item-left{display:flex;align-items:center;gap:14px;}
+.lib-item-id{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red);width:28px;}
+.lib-item-name{font-size:13px;font-weight:700;color:var(--dark-grey);}
+.lib-item-cluster{font-size:10px;font-weight:700;color:var(--mid-grey);}
+.lib-item-arrow{font-size:14px;color:var(--mid-grey);transition:transform .25s;}
+.lib-item-header.open .lib-item-arrow{transform:rotate(90deg);}
+.lib-item-body{display:none;padding:20px 22px 24px;background:var(--off-white);border-left:3px solid var(--red);}
+.lib-item-body.open{display:grid;grid-template-columns:1fr 1fr;gap:24px;animation:fadeUp .3s ease;}
+.lib-detail-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.lib-detail-text{font-size:12px;line-height:1.7;color:var(--dark-grey);}
+.lib-rag-mini{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.lib-rag-badge{font-size:10px;font-weight:800;padding:3px 10px;}
+.lib-rag-badge.g{background:var(--green-bg);color:var(--green);}
+.lib-rag-badge.a{background:var(--amber-bg);color:var(--amber);}
+.lib-rag-badge.r{background:var(--red-bg);color:var(--red);}
+
+/* GOVERNANCE WEAVE */
+.governance-note{background:var(--white);border:1px solid var(--light-grey);border-left:3px solid var(--dark-grey);padding:16px 20px;margin-top:24px;display:flex;align-items:center;gap:14px;}
+.governance-note-icon{font-size:16px;flex-shrink:0;}
+.governance-note-text{font-size:12px;line-height:1.65;color:rgba(45,45,45,.7);}
+.governance-note-text strong{color:var(--dark-grey);}
+
+/* NON-NEGOTIABLES */
+#non-neg{padding:80px 0;background:var(--white);}
+.nn-accordion{display:flex;flex-direction:column;gap:2px;}
+.nn-item-header{display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--off-white);border-left:3px solid var(--light-grey);cursor:pointer;transition:border-left-color .2s,background .2s;}
+.nn-item-header:hover,.nn-item-header.open{border-left-color:var(--red);background:rgba(200,16,46,.03);}
+.nn-item-num{font-family:var(--font-display);font-size:22px;font-weight:700;color:rgba(200,16,46,.3);width:32px;flex-shrink:0;}
+.nn-item-title{font-size:13px;font-weight:700;color:var(--dark-grey);flex:1;}
+.nn-item-arrow{font-size:14px;color:var(--mid-grey);transition:transform .25s;}
+.nn-item-header.open .nn-item-arrow{transform:rotate(90deg);}
+.nn-item-body{display:none;padding:20px 24px 24px 72px;background:var(--white);border-left:3px solid var(--red);font-size:13px;line-height:1.8;color:rgba(45,45,45,.75);}
+.nn-item-body.open{display:block;animation:fadeUp .3s ease;}
+
+/* EXPORT PDF BTN */
+.export-pdf-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--dark-grey);color:var(--white);border:none;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;}
+.export-pdf-btn:hover{background:var(--red);}
+.export-pdf-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* FOOTER */
+#footer{background:var(--dark-grey);padding:64px 0 36px;border-top:1px solid rgba(255,255,255,.07);}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-credit{font-size:12px;line-height:1.9;color:rgba(255,255,255,.4);}
+.footer-credit strong{color:rgba(255,255,255,.7);}
+.footer-col-title{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:9px;}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:7px;}
+.footer-links a:hover{color:var(--white);}
+.footer-links a::before{content:"→";font-size:10px;color:var(--red);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid rgba(255,255,255,.07);}
+.footer-bottom-left,.footer-bottom-right{font-size:11px;color:rgba(255,255,255,.25);}
+
+#back-top{position:fixed;bottom:32px;right:32px;width:44px;height:44px;background:var(--red);display:flex;align-items:center;justify-content:center;z-index:900;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(16px);border:none;}
+#back-top.visible{opacity:1;pointer-events:all;transform:translateY(0);}
+#back-top svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;}
+@media(max-width:1024px){
+  .nav-links,.hero-inner,.footer-top,.upload-layout,.lib-item-body.open{grid-template-columns:1fr;}
+  .container,.nav-inner,.section-nav-inner{padding:0 24px;}
+  .metric-cards,.ths-grid,.framework-grid{grid-template-columns:1fr 1fr;}
+  .ls-inner{padding:0 24px;}
+}
+
+/* HERO SUMMARY STRIP */
+.hero-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;background:var(--light-grey);}
+.hs-cell{background:var(--white);padding:18px 20px;}
+.hs-label{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px;}
+.hs-val{font-size:13px;font-weight:700;color:var(--dark-grey);line-height:1.4;}
+.hs-val em{font-style:normal;color:var(--red);}
+
+/* HOW TO USE — floating button + overlay */
+.how-to-btn {
+  position:fixed; bottom:32px; right:32px; z-index:9999;
+  display:flex; align-items:center; gap:8px;
+  padding:12px 20px; background:var(--dark-grey); color:var(--white);
+  font-family:var(--font-body); font-size:10px; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase;
+  border:none; box-shadow:0 4px 20px rgba(0,0,0,.25);
+  cursor:pointer; transition:background .2s, transform .2s;
+}
+.how-to-btn:hover { background:var(--red); transform:translateY(-2px); }
+.how-to-btn-icon { font-size:14px; }
+
+/* Overlay */
+.how-to-overlay {
+  position:fixed; inset:0; z-index:1100;
+  background:rgba(0,0,0,.6); backdrop-filter:blur(4px);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .25s;
+}
+.how-to-overlay.open { opacity:1; pointer-events:all; }
+.how-to-modal {
+  background:var(--white); max-width:640px; width:90%;
+  max-height:85vh; overflow-y:auto;
+  position:relative;
+}
+.how-to-modal-header {
+  background:var(--dark-grey); padding:28px 32px;
+  border-left:4px solid var(--red);
+}
+.how-to-modal-eyebrow { font-size:9px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:rgba(200,16,46,.8); margin-bottom:6px; }
+.how-to-modal-title { font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--white); }
+.how-to-modal-body { padding:32px; }
+.how-to-close {
+  position:absolute; top:16px; right:20px;
+  background:rgba(255,255,255,.1); border:none; color:var(--white);
+  font-size:18px; width:32px; height:32px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:background .2s;
+}
+.how-to-close:hover { background:rgba(255,255,255,.2); }
+.how-to-step {
+  display:flex; gap:16px; padding:16px 0;
+  border-bottom:1px solid var(--light-grey);
+}
+.how-to-step:last-child { border-bottom:none; }
+.how-to-step-num {
+  width:32px; height:32px; border-radius:50%; background:var(--dark-grey);
+  color:var(--white); font-family:var(--font-display); font-size:14px;
+  font-weight:700; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:2px;
+}
+.how-to-step-num.red { background:var(--red); }
+.how-to-step-content {}
+.how-to-step-title { font-size:13px; font-weight:800; color:var(--dark-grey); margin-bottom:4px; }
+.how-to-step-body { font-size:12px; line-height:1.7; color:var(--mid-grey); }
+
+/* PHIL AXIS REVEAL */
+.pa-reveal { cursor:pointer; padding:0; transition:border-color .2s, box-shadow .2s; }
+.pa-reveal:hover, .pa-reveal.open { box-shadow:0 2px 12px rgba(0,0,0,.06); }
+.pa-summary { display:flex; align-items:center; justify-content:space-between; padding:22px 24px; gap:16px; }
+.pa-toggle { width:28px; height:28px; border-radius:50%; border:1.5px solid var(--light-grey); display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--mid-grey); flex-shrink:0; transition:all .2s; }
+.pa-reveal.open .pa-toggle { background:var(--red); border-color:var(--red); color:var(--white); }
+.pa-body { max-height:0; overflow:hidden; padding:0 24px; font-size:13px; line-height:1.75; color:rgba(45,45,45,.7); transition:max-height .4s cubic-bezier(.22,1,.36,1), padding .3s; }
+.pa-reveal.open .pa-body { max-height:200px; padding:0 24px 20px; }
+
+/* METRIC LIBRARY — CLUSTER GROUPED */
+.lib-cluster-group { margin-bottom:2px; }
+.lib-cluster-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 22px; background:var(--dark-grey); cursor:pointer;
+  border-left:4px solid var(--red); transition:background .2s;
+}
+.lib-cluster-header:hover { background:#1a1a1a; }
+.lib-cluster-left { display:flex; align-items:center; gap:14px; }
+.lib-cluster-num {
+  width:28px; height:28px; border-radius:50%; background:var(--red);
+  color:var(--white); font-family:var(--font-display); font-size:13px;
+  font-weight:700; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.lib-cluster-name { font-size:14px; font-weight:700; color:var(--white); }
+.lib-cluster-meta { font-size:10px; font-weight:700; color:rgba(255,255,255,.4); margin-top:2px; letter-spacing:.06em; text-transform:uppercase; }
+.lib-cluster-chevron { font-size:18px; color:rgba(255,255,255,.4); transition:transform .25s; }
+.lib-cluster-body { display:none; }
+.lib-cluster-group.open .lib-cluster-body { display:block; }
+.lib-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media(max-width:700px){ .lib-detail-grid { grid-template-columns:1fr; } }
+</style>
+</style>
+</head>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- METRIC DETAIL MODAL -->
+<div id="metric-modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div id="metric-modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-id" id="modal-id"></div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <img src="data:image/png;base64,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" alt="Arvind" class="nav-logo-img">
+      <div class="nav-divider"></div>
+      <span class="nav-playbook-tag">HRBP <span>Playbook</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="company.html">Company</a></li>
+      <li><a href="stakeholders.html">People</a></li>
+      <li><a href="charter.html">Your Role</a></li>
+      <li><a href="engagement.html">How You Engage</a></li>
+      <li><a href="rhythm.html">Your Calendar</a></li>
+      <li><a href="processes.html">Processes</a></li>
+      <li><a href="dashboard.html" class="active">Your Dashboard</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- LAYER SWITCHER -->
+<div id="layer-switcher">
+  <div class="ls-inner">
+    <div class="ls-tabs">
+      <button class="ls-tab active" onclick="switchLayer('chro')">
+        <span>CHRO Executive View</span>
+        <span class="ls-tab-badge">Quarterly</span>
+      </button>
+      <button class="ls-tab" onclick="switchLayer('hrhead')">
+        <span>HR Head View</span>
+        <span class="ls-tab-badge">Monthly</span>
+      </button>
+      <button class="ls-tab" onclick="switchLayer('hrbp')">
+        <span>HRBP Working View</span>
+        <span class="ls-tab-badge">Weekly</span>
+      </button>
+    </div>
+    </div>
+    </div>
+
+<!-- SUBNAV -->
+<div id="section-nav">
+  <div class="section-nav-inner" id="snav-inner">
+    <a class="snav-btn active" href="#page-hero">Overview</a>
+    <a class="snav-btn" href="#philosophy">Philosophy</a>
+    <a class="snav-btn" href="#ths-section">Talent Health Score</a>
+    <a class="snav-btn" href="#chro-rag" data-layer="chro">CHRO View</a>
+    <a class="snav-btn" href="#metric-clusters" data-layer="hrhead">HR Head View</a>
+    <a class="snav-btn" href="#action-tracker">Action Tracker</a>
+    <a class="snav-btn" href="#data-upload">Data Upload</a>
+    <a class="snav-btn" href="#metric-library">Metric Library</a>
+    <a class="snav-btn" href="#non-neg">Five Non-Negotiables</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="page-hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-breadcrumb">
+          <a href="#">Home</a>&nbsp;/&nbsp;<a href="#">Rhythm</a>&nbsp;/&nbsp;<span>Dashboard</span>
+        </div>
+        <h1 class="hero-title">HRBP Impact Scorecard<br>&amp; <em>People Dashboard</em></h1>
+        <p class="hero-body">A governance instrument — not a report. Every review must end with at least one named decision. Three layers for three audiences, built on Darwinbox data, anchored to the Operating Rhythm.</p>
+      </div>
+      <div class="hero-meta rv">
+        <div class="hmc"><div class="hmc-label">Total Metrics</div><div class="hmc-val">20</div><div class="hmc-sub">Across 5 strategic clusters</div></div>
+        <div class="hmc alt"><div class="hmc-label">Dashboard Layers</div><div class="hmc-val">3</div><div class="hmc-sub">CHRO · HR Head · HRBP</div></div>
+        <div class="hmc"><div class="hmc-label">Governance Forums</div><div class="hmc-val">4</div><div class="hmc-sub">Anchored to Operating Rhythm</div></div>
+        <div class="hmc alt"><div class="hmc-label">Data Source</div><div class="hmc-val" style="font-size:16px;">Darwinbox</div><div class="hmc-sub">No parallel Excel systems</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-strip rv">
+    <div class="hs-cell">
+      <div class="hs-label">What this is</div>
+      <div class="hs-val">A governance instrument — 20 metrics across 5 clusters — built to force one decision every time it's reviewed.</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-label">When to use it</div>
+      <div class="hs-val">Before every business review. When attrition spikes. When the CHRO asks for a people health update.</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-label">Three layers</div>
+      <div class="hs-val"><em>CHRO view</em> for headlines · <em>HR Head view</em> for depth · <em>Action Tracker</em> for accountability.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYER PANELS -->
+<div id="layer-chro" class="layer-panel active">
+
+  
+
+
+  <!-- TALENT HEALTH SCORE -->
+  <section id="ths-section">
+    <div class="container">
+      <div style="padding-top:64px;padding-bottom:24px;">
+        <div class="rv" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+          <div>
+            <span class="eyebrow" style="color:rgba(200,16,46,.7);">Talent Health Score · Composite BU Rating</span>
+            <h2 style="font-family:var(--font-display);font-size:clamp(20px,2.2vw,30px);font-weight:600;color:var(--white);margin-top:8px;">One number. One view. One decision.</h2>
+          </div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);max-width:280px;line-height:1.65;">Weighted composite of all 5 clusters. Green=8–10, Amber=4–7, Red=0–3 per metric. Amber fixed at midpoint 5.5.</div>
+        </div>
+        <div class="ths-grid rv" id="ths-grid">
+          <!-- Built by JS -->
+        </div>
+        <div style="margin-top:20px;font-size:11px;color:rgba(255,255,255,.35);line-height:1.6;" class="rv">
+          Cluster weights: Workforce Stability 30% · Talent Pipeline 25% · Performance Ecosystem 20% · Engagement &amp; Retention 15% · Operational Governance 10%
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAG GRID -->
+  <section id="chro-rag">
+    <div class="container">
+      <div class="sec-header rv" style="margin-top:80px;">
+        <span class="eyebrow">CHRO Executive View · RAG Status Grid</span>
+        <h2 class="sec-title">Hover for insight.<br><em>Click to expand the action.</em></h2>
+        <p class="sec-intro">RAG status for the 6 headline metrics across all BUs. Each cell carries a pre-written business-language insight sentence and a recommended action for every Red metric.</p>
+        <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="export-pdf-btn" onclick="generateCHROPdf()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Generate CHRO Pack PDF
+          </button>
+        </div>
+      </div>
+      <div class="rag-table-wrap rv">
+        <table class="rag-table" id="rag-table"><!-- Built by JS --></table>
+      </div>
+      <div class="chro-actions-box rv" id="chro-actions-box">
+        <div class="chro-actions-title">CHRO Action Required</div>
+        <div id="chro-actions-list"><!-- Built by JS --></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /layer-chro -->
+
+<!-- HR HEAD LAYER -->
+<div id="layer-hrhead" class="layer-panel">
+  <section id="metric-clusters">
+    <div class="container" style="padding-top:80px;padding-bottom:80px;">
+      <div class="sec-header rv">
+        <span class="eyebrow">HR Head View · BU Deep-Dive</span>
+        <h2 class="sec-titl<p class="sec-intro">Which of your 20 metrics are currently in red — and do you know why? If you cannot answer that in under 30 seconds, this section is where you start.</p>
+      </div>
+      <div id="clusters-container"><!-- Built by JS --></div>
+      <div class="governance-note rv">
+        <span class="governance-note-icon">📋</span>
+        <div class="governance-note-text"><strong>Governance rule:</strong> This view is presented at the monthly HRBP → HR Head 1:1. One decision must be committed before the meeting ends. That decision is logged as the first action in the tracker below.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTION TRACKER -->
+  <section id="action-tracker">
+    <div class="container" style="padding-bottom:80px;">
+      <div class="sec-header rv">
+        <span class="eyebrow">Open Action Tracker</span>
+        <h2 class="sec-title">Actions from last review.<br><em>Every one with an owner.</em></h2>
+        <p class="sec-intro">All actions are tied to a metric, a priority, and a deadline. Status updates persist across sessions. Any action marked Slipped is automatically flagged at the next review.</p>
+      </div>
+      <div class="at-controls rv">
+        <button class="at-add-btn" onclick="addAction()">+ Add Action</button>
+        <select class="at-filter-select" id="at-filter" onchange="renderActions()">
+          <option value="all">All Statuses</option>
+          <option value="todo">To Do</option>
+          <option value="inprog">In Progress</option>
+          <option value="done">Completed</option>
+          <option value="slipped">Slipped</option>
+        </select>
+        <select class="at-filter-select" id="at-metric-filter" onchange="renderActions()">
+          <option value="all">All Metrics</option>
+          <option value="M1">M1 — Attrition Rate</option>
+          <option value="M2">M2 — Regrettable Attrition</option>
+          <option value="M3">M3 — Attrition by Tenure</option>
+          <option value="M4">M4 — Attrition Cost</option>
+          <option value="M5">M5 — Succession Coverage</option>
+          <option value="M6">M6 — HiPo Rate</option>
+          <option value="M7">M7 — IDP Completion</option>
+          <option value="M8">M8 — Critical Role Vacancy</option>
+          <option value="M9">M9 — PMS Completion</option>
+          <option value="M10">M10 — Bell Curve Health</option>
+          <option value="M11">M11 — Manager Effectiveness</option>
+          <option value="M12">M12 — Joiner Performance</option>
+          <option value="M13">M13 — Engagement Score</option>
+          <option value="M14">M14 — Stay Interview Rate</option>
+          <option value="M15">M15 — Exit Theme Tracker</option>
+          <option value="M16">M16 — Headcount vs Plan</option>
+          <option value="M17">M17 — FFS Clearance</option>
+          <option value="M18">M18 — HRBP:Employee Ratio</option>
+          <option value="M19">M19 — Absenteeism Rate</option>
+          <option value="M20">M20 — HR Budget Variance</option>
+        </select>
+      </div>
+      <div class="rv" style="overflow-x:auto;">
+        <table class="at-table" id="at-table">
+          <thead><tr>
+            <th>Action</th><th>Metric</th><th>Owner</th><th>Due Date</th>
+            <th>Priority</th><th>Status</th><th></th>
+          </tr></thead>
+          <tbody id="at-tbody"></tbody>
+        </table>
+      </div>
+      <div class="governance-note rv" style="margin-top:24px;">
+        <span class="governance-note-icon">⚖️</span>
+        <div class="governance-note-text"><strong>Reviewed at:</strong> Monthly HR Head 1:1 (Layer 2) and Quarterly CHRO Governance Pack (Layer 1). Any slipped action from the previous review is the first agenda item at the next.</div>
+      </div>
+    </div>
+  </section>
+</div><!-- /layer-hrhead -->
+
+<!-- HRBP WORKING VIEW -->
+<div id="layer-hrbp" class="layer-panel">
+  <section id="data-upload">
+    <div class="container" style="padding-top:80px;padding-bottom:80px;">
+      <div class="sec-header rv">
+        <span class="eyebrow">HRBP Working View · Data Management</span>
+        <h2 class="sec-title">Upload this month's data.<br><em>Dashboard populates automatically.</em></h2>
+        <p class="sec-intro">Upload your Darwinbox export using the Arvind HRBP Data Template. Metrics whose columns are found are populated automatically. Missing columns are flagged clearly.</p>
+      </div>
+      <div class="upload-layout rv">
+        <div>
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="excel-upload" accept=".xlsx,.xls" onchange="handleExcelUpload(event)">
+            <div class="upload-icon">📊</div>
+            <div class="upload-title">Drop your Excel file here</div>
+            <div class="upload-sub">Upload the completed Arvind HRBP Data Template (.xlsx)<br>Data persists until you upload a new file.</div>
+            <button class="upload-btn" onclick="document.getElementById('excel-upload').click();event.stopPropagation();">
+              Choose File
+            </button>
+          </div>
+          <div class="upload-status" id="upload-status"></div>
+        </div>
+        <div class="format-card rv">
+          <div class="format-title">Data Format Guide</div>
+          <div class="format-body">
+            The template has <strong>3 sheets</strong> — one per BU (Wovens &amp; Knits, Envisol, Advanced Materials). Each sheet has the same structure: <strong>Column A</strong> = Metric ID (M1–M20), <strong>Column B</strong> = Metric Name, <strong>Column C</strong> = Current Value, <strong>Column D</strong> = Unit. Do not change column order or metric IDs. Leave blank if data is unavailable — missing metrics will be flagged but will not break the upload.
+          </div>
+          <button class="format-dl-btn" onclick="downloadTemplate()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Excel Template
+          </button>
+        </div>
+      </div>
+
+      <!-- SNAPSHOT -->
+      <div style="margin-top:56px;" class="rv">
+        <div class="sec-header" style="margin-bottom:24px;">
+          <span class="eyebrow">Monthly Snapshot</span>
+          <h2 class="sec-title">Save this month. <em>Build the trend.</em></h2>
+          <p class="sec-intro">Snapshots build the sparklines across all metric cards. Each saved snapshot becomes a point on the 6-month trend line. Label it by month before saving.</p>
+        </div>
+        <div id="snapshot-section">
+          <div class="snapshot-inner">
+            <input class="snapshot-input" id="snapshot-label" placeholder="e.g. April 2026" type="text">
+            <button class="snapshot-btn" onclick="saveSnapshot()">Save Snapshot</button>
+          </div>
+          <div class="snapshot-history" id="snapshot-history" style="margin-top:16px;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /layer-hrbp -->
+
+<!-- METRIC LIBRARY (always visible) -->
+<section id="metric-library">
+  <div class="container" style="padding-top:80px;padding-bottom:80px;">
+    <div class="sec-header rv">
+      <span class="eyebrow">Metric Library · Reference</span>
+      <h2 class="sec-title">All 20 metrics. Formula,<br><em>thresholds, and business translation.</em></h2>
+      <p class="sec-intro">A permanent reference. Every metric defined with its formula, RAG thresholds, data source, and the exact business language to use when presenting it to the CHRO.</p>
+    </div>
+    <div class="lib-grid rv" id="lib-grid"><!-- Built by JS --></div>
+  </div>
+</section>
+
+<!-- FIVE NON-NEGOTIABLES -->
+<section id="non-neg">
+  <div class="container" style="padding-bottom:80px;">
+        <div style="background:rgba(200,16,46,.04);border-left:4px solid var(--red);padding:20px 28px;margin-bottom:32px;" class="rv">
+      <div style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">What HRBPs often miss</div>
+      <p style="font-size:13px;line-height:1.7;color:var(--dark-grey);max-width:680px;">The dashboard is not finished when the numbers are filled in. It is finished when the business leader names an action. Without that final step, you have produced a report — not a governance instrument.</p>
+    </div>
+<div class="sec-header rv">
+      <span class="eyebrow">Five Non-Negotiables</span>
+      <h2 class="sec-title">The rules that make<br><em>this dashboard work.</em></h2>
+      <p class="sec-intro">Five principles that govern how this dashboard is maintained, presented, and acted upon. Not guidelines — non-negotiables.</p>
+    </div>
+    <div class="nn-accordion rv" id="nn-accordion"><!-- Built by JS --></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div style="margin-bottom:14px;"><img src="data:image/png;base64,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" alt="Arvind" style="height:40px;width:auto;opacity:.85;"></div>
+        <p class="footer-credit"><strong>HRBP Playbook 2026</strong><br>Prepared by Rishi Raj<br>HR Strategy Intern · Summer Internship Programme 2026<br>Sponsored by CHRO, Arvind Limited<br><span style="margin-top:8px;display:block;">Last updated: May 2026</span></p>
+      </div>
+      <div>
+        <div class="footer-col-title">Playbook Sections</div>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Company Overview</a></li>
+          <li><a href="#">Role Charter</a></li>
+          <li><a href="#">Engagement Model</a></li>
+          <li><a href="#">Operating Rhythm</a></li>
+          <li><a href="#">Your Dashboard</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">This Page</div>
+        <ul class="footer-links">
+          <li><a href="#philosophy">Dashboard Philosophy</a></li>
+          <li><a href="#ths-section">Talent Health Score</a></li>
+          <li><a href="#chro-rag">CHRO View</a></li>
+          <li><a href="#metric-clusters">HR Head View</a></li>
+          <li><a href="#action-tracker">Action Tracker</a></li>
+          <li><a href="#metric-library">Metric Library</a></li>
+          <li><a href="#non-neg">Five Non-Negotiables</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Data</div>
+        <ul class="footer-links">
+          <li><a href="#data-upload">Upload Data</a></li>
+          <li><a href="#" onclick="downloadTemplate();return false;">Download Template</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">© 2026 Arvind Limited · HRBP Playbook · Internal Document</div>
+      <div class="footer-bottom-right">Dashboard · Governance Instrument · Summer 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+// ── NAVBAR + BACK-TOP
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);
+  document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);
+});
+
+// ── GSAP REVEALS
+gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll('.rv').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:.75,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+});
+gsap.from('.hero-title',{y:28,opacity:0,duration:.9,ease:'power3.out',delay:.3});
+gsap.from('.hero-body',{y:18,opacity:0,duration:.75,ease:'power2.out',delay:.5});
+
+// ── SUBNAV ACTIVE
+const snavBtns=document.querySelectorAll('.snav-btn');
+const snavSections=['page-hero','philosophy','ths-section','chro-rag','metric-clusters','action-tracker','data-upload','metric-library','non-neg'];
+snavSections.forEach((id,i)=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+  ScrollTrigger.create({trigger:el,start:'top 55%',end:'bottom 55%',
+    onEnter:()=>snavBtns.forEach((b,j)=>b.classList.toggle('active',i===j)),
+    onEnterBack:()=>snavBtns.forEach((b,j)=>b.classList.toggle('active',i===j))
+  });
+});
+
+// ════════════════════════════════════════════════════
+// METRIC DATA
+// ════════════════════════════════════════════════════
+const CLUSTERS=[
+  {id:'c1',name:'Workforce Stability',weight:.30,pl:'P&L Impact: Direct',
+   metrics:['M1','M2','M3','M4']},
+  {id:'c2',name:'Talent Pipeline',weight:.25,pl:'P&L Impact: Deferred but Critical',
+   metrics:['M5','M6','M7','M8']},
+  {id:'c3',name:'Performance Ecosystem',weight:.20,pl:'P&L Impact: Productivity',
+   metrics:['M9','M10','M11','M12']},
+  {id:'c4',name:'Engagement & Retention',weight:.15,pl:'P&L Impact: Predictive',
+   metrics:['M13','M14','M15']},
+  {id:'c5',name:'Operational Governance',weight:.10,pl:'P&L Impact: Compliance',
+   metrics:['M16','M17','M18','M19','M20']},
+];
+
+const METRICS={
+  M1:{name:'Monthly Attrition Rate',unit:'%',freq:'Monthly',owner:'HRBP',
+    formula:'Voluntary exits (E-grade+) ÷ avg headcount × 100',
+    thresholds:[{rag:'g',label:'Green',val:'≤3%'},{rag:'a',label:'Amber',val:'3–5%'},{rag:'r',label:'Red',val:'>5% → written plan within 48hrs; >10% → CHRO escalation'}],
+    biz:"Each percentage point of attrition in Wovens & Knits costs approximately ₹X in replacement cost. A 7% rate means the BU is spending ~₹48L/quarter replacing people it has already trained.",
+    source:'Darwinbox exits log',ragFn:(v)=>v<=3?'g':v<=5?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% monthly attrition — ${v>5?'written retention action plan required within 48 hours':'monitor and track trend'}`,
+    chroAction:(v,bu)=>v>5?`Attrition action plan for ${bu} to be presented by HRBP at next 1:1`:null,
+    special:'calc'},
+  M2:{name:'Regrettable Attrition Rate',unit:'%',freq:'Quarterly',owner:'HRBP + CHRO',
+    formula:'Exits among A/A+ rated OR HiPo employees ÷ total HiPo population × 100',
+    thresholds:[{rag:'g',label:'Green',val:'0%'},{rag:'a',label:'Amber',val:'1–5%'},{rag:'r',label:'Red',val:'>5% per quarter → post-mortem within 48hrs of each exit'}],
+    biz:"We lost [X] of our identified HiPo population this quarter. That is [Y] years of embedded institutional knowledge and [Z] succession slots that now have no internal candidate.",
+    source:'Darwinbox performance ratings + 9-Box log',ragFn:(v)=>v===0?'g':v<=5?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% regrettable attrition — each exit represents a succession gap and lost institutional knowledge`,
+    chroAction:(v,bu)=>v>5?`Post-mortem required for each HiPo exit in ${bu} — HRBP to schedule within 48hrs`:null},
+  M3:{name:'Attrition by Tenure Band',unit:'%',freq:'Monthly',owner:'HRBP',
+    formula:'% of exits in each band: 0–6m / 6–12m / 1–2yr / 2+yr',
+    thresholds:[{rag:'r',label:'Red',val:'>30% of exits in 0–6m band → onboarding review triggered'},{rag:'a',label:'Amber',val:'20–30% in 0–6m band → watch'},{rag:'g',label:'Green',val:'<20% in 0–6m band'}],
+    biz:"High early attrition (0–6m) = hiring/onboarding problem. Mid-tenure (1–2yr) = career development/compensation. Late-tenure (2+yr) = leadership/culture. Each demands a different intervention.",
+    source:'Darwinbox exits + tenure data',ragFn:(v)=>v>30?'r':v>20?'a':'g',
+    chroInsight:(v,bu)=>`${bu}: ${v}% of exits in 0–6 month band — ${v>30?'onboarding and hiring quality review required':'tenure distribution within acceptable range'}`,
+    chroAction:(v,bu)=>v>30?`Onboarding and hiring quality review triggered for ${bu}`:null},
+  M4:{name:'Attrition Cost Estimate',unit:'₹L',freq:'Monthly',owner:'HRBP',
+    formula:'Voluntary exits × 0.5 × average annual CTC of exiting grade',
+    thresholds:[{rag:'g',label:'Green',val:'<₹20L/month'},{rag:'a',label:'Amber',val:'₹20–50L/month'},{rag:'r',label:'Red',val:'>₹50L/month → P&L discussion with BU Head'}],
+    biz:"This is the Ather principle applied directly. A rupee number on attrition stops it being an HR problem and makes it a business problem. ₹48L in replacement cost lands differently than '6 people left'.",
+    source:'Calculated from Darwinbox exits + CTC data',ragFn:(v)=>v<20?'g':v<=50?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ₹${v}L in attrition replacement cost this month — cumulative cost to P&L requires BU-level attention`,
+    chroAction:(v,bu)=>v>50?`P&L discussion on attrition cost required — ${bu} HRBP to quantify for BU Head`:null,
+    special:'cost'},
+  M5:{name:'Succession Bench Coverage',unit:'%',freq:'Quarterly',owner:'HRBP + CHRO',
+    formula:'Critical roles (M3+) with named successor ÷ total critical roles × 100',
+    thresholds:[{rag:'g',label:'Green',val:'≥80%'},{rag:'a',label:'Amber',val:'65–80%'},{rag:'r',label:'Red',val:'<65% → cross-BU intervention; <50% → board-level risk flag'}],
+    biz:"3 of our 5 most critical roles have no ready-now successor. If any become vacant tomorrow, we are hiring externally into a leadership gap with a minimum 3-month productivity lag.",
+    source:'Darwinbox succession module',ragFn:(v)=>v>=80?'g':v>=65?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% succession coverage — ${v<65?'cross-BU succession planning intervention required immediately':v<80?'amber — build named successors for remaining gaps':'bench strength adequate'}`,
+    chroAction:(v,bu)=>v<65?`Cross-BU succession planning intervention for ${bu} — CHRO to convene within 30 days`:null,
+    special:'succession'},
+  M6:{name:'HiPo Identification Rate',unit:'%',freq:'Quarterly',owner:'HRBP',
+    formula:'Employees formally identified as HiPo in current 9-Box ÷ E-grade+ headcount × 100',
+    thresholds:[{rag:'g',label:'Green',val:'10–15% of E-grade population'},{rag:'a',label:'Amber',val:'6–9% or 16–20% (too low or criteria too loose)'},{rag:'r',label:'Red',val:'<5% or >20% — designation is meaningless or not happening'}],
+    biz:"If the number is 0% or 30%, something is wrong — either HiPo identification is not happening, or the criteria are too loose and the designation is meaningless.",
+    source:'Darwinbox 9-Box output',ragFn:(v)=>v>=10&&v<=15?'g':v>=6&&v<=20?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% HiPo rate — target is 10–15% of E-grade population`,
+    chroAction:(v,bu)=>v<5||v>20?`HiPo identification criteria review required for ${bu}`:null},
+  M7:{name:'IDP Completion Rate',unit:'%',freq:'Quarterly',owner:'HRBP',
+    formula:'HiPos + succession candidates with current, manager-signed IDP in Darwinbox ÷ total identified × 100',
+    thresholds:[{rag:'g',label:'Green',val:'≥80%'},{rag:'a',label:'Amber',val:'60–80%'},{rag:'r',label:'Red',val:'<60%; any HiPo without IDP 60 days post-9-Box → individually flagged'}],
+    biz:"We have identified 18 HiPos. Only 11 have active development plans. The other 7 are identified but unmanaged — which is the same as not identifying them.",
+    source:'Darwinbox IDP module',ragFn:(v)=>v>=80?'g':v>=60?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% IDP completion — ${v<60?'succession quality failure: identified HiPos are unmanaged':v<80?'amber — accelerate IDP sign-offs':'development plans active and current'}`,
+    chroAction:(v,bu)=>v<60?`IDP completion drive required in ${bu} — HRBP to close within 30 days`:null},
+  M8:{name:'Critical Role Vacancy Age',unit:'days',freq:'Monthly',owner:'HRBP + TA Lead',
+    formula:'Calendar days from approved requisition date for M3+ roles',
+    thresholds:[{rag:'g',label:'Green',val:'<45 days'},{rag:'a',label:'Amber',val:'45–60 days'},{rag:'r',label:'Red',val:'>60 days → CHRO briefing note on business impact'}],
+    biz:"Speed and quality of critical role closure is a direct HRBP accountability — not a TA accountability. The HRBP owns the urgency; TA owns the process.",
+    source:'Darwinbox ATS + requisition log',ragFn:(v)=>v<45?'g':v<=60?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: critical role open for ${v} days — ${v>60?'CHRO briefing note required on business impact':'within acceptable window'}`,
+    chroAction:(v,bu)=>v>60?`CHRO briefing note on business impact of critical vacancy in ${bu} required from HRBP`:null},
+  M9:{name:'PMS Completion Rate',unit:'%',freq:'Monthly (PMS cycle)',owner:'HRBP',
+    formula:'E-grade+ with completed KRAs/reviews/appraisals documented in Darwinbox ÷ total × 100',
+    thresholds:[{rag:'g',label:'Green',val:'≥95%'},{rag:'a',label:'Amber',val:'85–95%'},{rag:'r',label:'Red',val:'<85% = formal governance failure → HR Head escalation'}],
+    biz:"An 82% PMS completion rate means 1 in 5 managers have not set documented goals with their team. Those employees are working without direction — and will be rated at appraisal time without evidence.",
+    source:'Darwinbox PMS module',ragFn:(v)=>v>=95?'g':v>=85?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% PMS completion — ${v<85?'formal governance failure: plant head to be briefed and deadline set':v<95?'amber — non-compliant managers to be formally flagged':'all employees have documented goals'}`,
+    chroAction:(v,bu)=>v<85?`PMS compliance — plant head in ${bu} to be briefed with correction deadline`:null},
+  M10:{name:'Performance Distribution (Bell-Curve Health)',unit:'%',freq:'Quarterly',owner:'HRBP',
+    formula:'% of employees in each rating category tracked against enterprise-mandated distribution',
+    thresholds:[{rag:'r',label:'Red',val:'Top-box >30% OR bottom-box >15% → calibration review triggered'},{rag:'a',label:'Amber',val:'Top-box 25–30% or bottom-box 10–15%'},{rag:'g',label:'Green',val:'Top-box ≤25%, bottom-box ≤10%'}],
+    biz:"If 70% are rated Outstanding in a BU where attrition is 15%, ratings are not calibrated to reality. Conversely, if 40% are rated Below, you have a manager capability problem, not a talent problem.",
+    source:'Darwinbox PMS output',ragFn:(v)=>v>30?'r':v>25?'a':'g',
+    special:'bellcurve'},
+  M11:{name:'Manager Effectiveness Score',unit:'/5.0',freq:'Quarterly',owner:'HRBP',
+    formula:'Composite: (a) direct-report pulse score on manager quality + (b) team attrition vs BU avg + (c) PMS completion compliance of manager\'s team',
+    thresholds:[{rag:'g',label:'Green',val:'≥3.5/5.0'},{rag:'a',label:'Amber',val:'3.0–3.5'},{rag:'r',label:'Red',val:'<3.0 for 2 consecutive quarters → structured coaching plan'}],
+    biz:"This is the HRBP's most powerful metric. It directly measures the quality of people management — the one outcome the HRBP is most responsible for improving.",
+    source:'Pulse survey + Darwinbox attrition + PMS data',ragFn:(v)=>v>=3.5?'g':v>=3?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: avg manager effectiveness score ${v}/5.0 — ${v<3?'structured coaching programme required':'within range'}`,
+    chroAction:(v,bu)=>v<3?`Structured coaching referral required for low-scoring managers in ${bu}`:null},
+  M12:{name:'New Joiner Performance (30/60/90 Days)',unit:'%',freq:'Monthly',owner:'HRBP',
+    formula:'% of joiners in last cohort assessed as On Track / At Risk / Off Track at 30, 60, and 90-day check-in',
+    thresholds:[{rag:'g',label:'Green',val:'<10% At Risk at Day 60'},{rag:'a',label:'Amber',val:'10–20% At Risk at Day 60'},{rag:'r',label:'Red',val:'>20% At Risk at Day 60 → onboarding process review'}],
+    biz:"The HRBP is accountable for onboarding quality before probation ends — not just for filling the role.",
+    source:'HRBP 30/60/90 check-in log',ragFn:(v)=>v<10?'g':v<=20?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% of new joiners at risk at Day 60 — ${v>20?'onboarding process review required':'onboarding health acceptable'}`,
+    chroAction:(v,bu)=>v>20?`Onboarding process review required for ${bu} — HRBP to present findings`:null},
+  M13:{name:'Engagement Score vs. Company Average',unit:'gap',freq:'Quarterly',owner:'HRBP',
+    formula:'BU engagement score from pulse/annual survey expressed as gap (±) vs. enterprise average',
+    thresholds:[{rag:'g',label:'Green',val:'At or above company average'},{rag:'a',label:'Amber',val:'0 to −0.3 below average'},{rag:'r',label:'Red',val:'>−0.3 below → mandatory action plan within 30 days; >−0.5 → CHRO flag'}],
+    biz:"Never present the score alone. Always present: Score → Gap vs average → 3-month trend → Top 3 driver themes → One action committed. A score without context is decoration.",
+    source:'Engagement survey platform / Darwinbox',ragFn:(v)=>v>=0?'g':v>=-0.3?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: engagement ${v>=0?'+':''}${v} vs company average — ${v<-0.5?'CHRO flag required: mandatory action plan':v<-0.3?'mandatory action plan within 30 days':'within acceptable range'}`,
+    chroAction:(v,bu)=>v<-0.3?`Engagement action plan required for ${bu} — present to CHRO with root cause analysis`:null},
+  M14:{name:'Stay Interview Completion Rate',unit:'%',freq:'Quarterly',owner:'HRBP',
+    formula:'% of at-risk employees who have had a structured stay interview in the rolling 90 days',
+    thresholds:[{rag:'g',label:'Green',val:'100% of at-risk employees'},{rag:'a',label:'Amber',val:'75–99%'},{rag:'r',label:'Red',val:'<75% — HRBP is not working the retention pipeline'}],
+    biz:"Exit interviews tell you why people left. Stay interviews tell you why they might leave. The HRBP who only does exit interviews is always 30 days too late.",
+    source:'HRBP stay interview log',ragFn:(v)=>v>=100?'g':v>=75?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% stay interview completion for at-risk employees`,
+    chroAction:(v,bu)=>v<75?`Stay interview backlog in ${bu} — HRBP to complete all at-risk conversations within 2 weeks`:null},
+  M15:{name:'Exit Interview Theme Tracker',unit:'months',freq:'Monthly',owner:'HRBP',
+    formula:'Top 3 exit reasons for the month tracked month-on-month. Same theme ≥3 consecutive months → formal retention initiative',
+    thresholds:[{rag:'g',label:'Green',val:'No theme repeated for 3+ consecutive months'},{rag:'a',label:'Amber',val:'Same theme in top 3 for 2 consecutive months'},{rag:'r',label:'Red',val:'Same theme for 3+ months → named initiative with owner and deadline'}],
+    biz:"Any theme in top 3 for 3+ consecutive months is a systemic issue, not individual circumstance. The response must be a named initiative — not a note.",
+    source:'Exit interview data / Darwinbox exits',ragFn:(v)=>v<2?'g':v<3?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: exit theme repeated for ${v} consecutive months — ${v>=3?'formal retention initiative required with named owner':'monitor'}`,
+    chroAction:(v,bu)=>v>=3?`Formal retention initiative required in ${bu} — HRBP to name initiative, owner, and deadline`:null},
+  M16:{name:'Headcount vs. Approved Manpower Plan',unit:'%',freq:'Monthly',owner:'HRBP',
+    formula:'Actual headcount ÷ approved plan × 100, expressed as variance %',
+    thresholds:[{rag:'g',label:'Green',val:'Within ±3%'},{rag:'a',label:'Amber',val:'±3–5%'},{rag:'r',label:'Red',val:'>±5% → CHRO approval required before correction'}],
+    biz:"Headcount drift is how labour costs go out of control in manufacturing. The CHRO needs to see this monthly — not at year-end when the audit surfaces it.",
+    source:'Darwinbox headcount + approved AOP manpower plan',ragFn:(v)=>Math.abs(v)<=3?'g':Math.abs(v)<=5?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: headcount ${v>0?'+':''}${v}% vs approved plan — ${Math.abs(v)>5?'CHRO approval required before correction':Math.abs(v)>3?'explanation to HR Head required':'within plan'}`,
+    chroAction:(v,bu)=>Math.abs(v)>5?`CHRO approval required before headcount correction in ${bu}`:null},
+  M17:{name:'FFS Clearance Rate',unit:'%',freq:'Monthly',owner:'HR Ops + HRBP',
+    formula:'% of exited employees whose Full & Final Settlement completed within 30 days of exit date',
+    thresholds:[{rag:'g',label:'Green',val:'100%'},{rag:'r',label:'Red',val:'Any FFS >30 days = statutory wage dispute risk → immediate escalation. Zero tolerance.'}],
+    biz:"An unsettled FFS is not a process delay — it is a statutory liability under the Payment of Wages Act. One complaint to the Labour Department triggers a mandatory inspection.",
+    source:'Darwinbox exit management module',ragFn:(v)=>v>=100?'g':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% FFS clearance — ${v<100?'statutory risk: Payment of Wages Act violation exposure':'compliant'}`,
+    chroAction:(v,bu)=>v<100?`Immediate escalation: unsettled FFS in ${bu} creates statutory liability — resolve within 48hrs`:null},
+  M18:{name:'HRBP-to-Employee Span of Control',unit:'ratio',freq:'Quarterly',owner:'CHRO',
+    formula:'Total E-grade+ headcount per BU ÷ number of active HRBPs assigned to that BU',
+    thresholds:[{rag:'g',label:'Green',val:'<500 employees per HRBP'},{rag:'a',label:'Amber',val:'500–700'},{rag:'r',label:'Red',val:'>700 → headcount review. Arvind current state: ~950 (documented structural gap)'}],
+    biz:"You cannot expect HRBP performance at a 1:950 ratio. This metric stays on the CHRO dashboard permanently until it reaches <700. It holds the organisation accountable for the structural gap causing everything else.",
+    source:'Darwinbox headcount + HRBP headcount roster',ragFn:(v)=>v<500?'g':v<=700?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: 1 HRBP per ${v} employees — ${v>700?'structural gap: HRBP headcount review required. Remains RED until resolved.':'within target range'}`,
+    chroAction:(v,bu)=>v>700?`HRBP headcount review for ${bu} — this metric stays RED until ratio falls below 700`:null},
+  M19:{name:'Absenteeism Rate',unit:'%',freq:'Weekly/Monthly',owner:'HRBP',
+    formula:'% of scheduled E-grade work-hours lost to unplanned absence, split by department',
+    thresholds:[{rag:'g',label:'Green',val:'<3%'},{rag:'a',label:'Amber',val:'3–5%'},{rag:'r',label:'Red',val:'>5% for 3 consecutive weeks → formal counselling; same-day escalation if >5% on any single shift'}],
+    biz:"Absenteeism above 5% on any shift creates production scheduling risk in a manufacturing environment. Chronic absenteeism predicts attrition 4–6 weeks ahead.",
+    source:'Darwinbox attendance module',ragFn:(v)=>v<3?'g':v<=5?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: ${v}% absenteeism rate — ${v>5?'formal counselling process triggered; same-day escalation if shift-level breach':'within acceptable range'}`,
+    chroAction:(v,bu)=>v>5?`Absenteeism counselling process triggered in ${bu} — HRBP to confirm owners within 48hrs`:null},
+  M20:{name:'HR Budget vs. Actuals (AOP Variance)',unit:'%',freq:'Quarterly',owner:'HRBP + HR Head',
+    formula:'Actual HR spend (L&D, hiring, engagement) vs AOP-approved HR budget, expressed as % variance',
+    thresholds:[{rag:'g',label:'Green',val:'Within ±5% of AOP'},{rag:'a',label:'Amber',val:'±5–10%'},{rag:'r',label:'Red',val:'>10% variance → written explanation to CHRO'}],
+    biz:"The HRBP is not just a strategic adviser — they are a cost-centre owner. Showing the CHRO that the HRBP manages a budget and is accountable for it is the most powerful signal that this is a business function.",
+    source:'Finance AOP + HR actual spend ledger',ragFn:(v)=>Math.abs(v)<=5?'g':Math.abs(v)<=10?'a':'r',
+    chroInsight:(v,bu)=>`${bu}: HR budget ${v>0?'+':''}${v}% vs AOP — ${Math.abs(v)>10?'written explanation to CHRO required':'within AOP tolerance'}`,
+    chroAction:(v,bu)=>Math.abs(v)>10?`Written explanation to CHRO required for HR budget variance in ${bu}`:null},
+};
+
+// ════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════
+const BUS=['wk','env','amd','anup','astl','fashions','smartspaces'];
+const BU_NAMES={wk:'Wovens & Knits',env:'Envisol',amd:'Advanced Materials',anup:'Anup Engineering',astl:'Arvind Smart Textiles',fashions:'Arvind Fashions',smartspaces:'Arvind Smartspaces'};
+let currentLayer=localStorage.getItem('dash_layer')||'chro';
+// Init snav layer visibility on load
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.snav-btn[data-layer]').forEach(btn=>{
+    btn.style.display=(btn.dataset.layer===currentLayer)?'':'none';
+  });
+});
+let currentBU=localStorage.getItem('dash_bu')||'all';
+
+// Load persisted metric values
+function loadValues(){
+  const saved=localStorage.getItem('dash_values');
+  return saved?JSON.parse(saved):{};
+}
+function saveValues(vals){
+  localStorage.setItem('dash_values',JSON.stringify(vals));
+}
+let metricValues=loadValues();
+function getVal(bu,mid){
+  return metricValues[bu]&&metricValues[bu][mid]!==undefined?metricValues[bu][mid]:null;
+}
+function setVal(bu,mid,v){
+  if(!metricValues[bu])metricValues[bu]={};
+  metricValues[bu][mid]=v;
+  saveValues(metricValues);
+}
+
+// Sample illustrative data
+const SAMPLE={
+  wk:{M1:7.2,M2:8.3,M3:35,M4:62,M5:72,M6:11,M7:61,M8:55,M9:79,M10:32,M11:3.1,M12:22,M13:-0.6,M14:70,M15:3,M16:4.2,M17:94,M18:950,M19:5.8,M20:8},
+  env:{M1:4.1,M2:0,M3:18,M4:28,M5:85,M6:13,M7:80,M8:38,M9:88,M10:22,M11:3.7,M12:12,M13:-0.1,M14:88,M15:1,M16:1.1,M17:100,M18:480,M19:3.2,M20:4},
+  amd:{M1:2.8,M2:0,M3:15,M4:18,M5:90,M6:12,M7:85,M8:30,M9:96,M10:18,M11:4.1,M12:8,M13:0.3,M14:95,M15:0,M16:-0.8,M17:100,M18:420,M19:2.1,M20:-3},
+};
+// initialise with sample if no saved data
+BUS.forEach(bu=>{
+  Object.keys(METRICS).forEach(mid=>{
+    if(getVal(bu,mid)===null&&SAMPLE[bu]&&SAMPLE[bu][mid]!==undefined){
+      setVal(bu,mid,SAMPLE[bu][mid]);
+    }
+  });
+});
+
+function getDisplayVal(bu,mid){
+  const v=getVal(bu,mid);
+  if(v===null) return null;
+  return v;
+}
+function getRag(bu,mid){
+  const v=getDisplayVal(bu,mid);
+  if(v===null) return 'na';
+  return METRICS[mid].ragFn(v);
+}
+
+// ════════════════════════════════════════════════════
+// LAYER SWITCHER
+// ════════════════════════════════════════════════════
+function switchLayer(layer){
+  currentLayer=layer;
+  localStorage.setItem('dash_layer',layer);
+  document.querySelectorAll('.ls-tab').forEach((t,i)=>{
+    const layers=['chro','hrhead','hrbp'];
+    t.classList.toggle('active',layers[i]===layer);
+  });
+  document.querySelectorAll('.layer-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('layer-'+layer).classList.add('active');
+  // Show/hide layer-specific snav items
+  document.querySelectorAll('.snav-btn[data-layer]').forEach(btn=>{
+    btn.style.display = (btn.dataset.layer===layer) ? '' : 'none';
+  });
+  // Re-render dynamic content
+  if(layer==='chro'){renderTHS();renderRAGTable();}
+  if(layer==='hrhead'){renderClusters();}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function onBUChange(){
+  const sel=document.getElementById('bu-selector');
+  if(!sel) return;
+  currentBU=sel.value;
+  localStorage.setItem('dash_bu',currentBU);
+  renderTHS();renderRAGTable();
+  if(currentLayer==='hrhead') renderClusters();
+}
+
+// ════════════════════════════════════════════════════
+// TALENT HEALTH SCORE
+// ════════════════════════════════════════════════════
+function computeTHS(bu){
+  let total=0,wsum=0;
+  CLUSTERS.forEach(c=>{
+    let cScore=0,cnt=0;
+    c.metrics.forEach(mid=>{
+      const r=getRag(bu,mid);
+      const s=r==='g'?8.5:r==='a'?5.5:r==='r'?2:5.5;
+      cScore+=s;cnt++;
+    });
+    const avg=cScore/(cnt||1);
+    total+=avg*c.weight;wsum+=c.weight;
+  });
+  return Math.round((total/wsum)*10)/10;
+}
+
+function renderTHS(){
+  const grid=document.getElementById('ths-grid');
+  if(!grid) return;
+  const buList=currentBU==='all'?BUS:[currentBU];
+  grid.innerHTML=buList.map(bu=>{
+    const score=computeTHS(bu);
+    const cls=score>=7?'green':score>=4?'amber':'red';
+    const snapshots=loadSnapshots()[bu]||[];
+    const prev=snapshots.length>=2?snapshots[snapshots.length-2].ths:null;
+    const trendTxt=prev===null?'No prior data':score>prev?`▲ from ${prev}`:`▼ from ${prev}`;
+    const trendCls=prev===null?'flat':score>prev?'up':'down';
+    const breakdown=CLUSTERS.map(c=>{
+      let cs=0,cnt=0;
+      c.metrics.forEach(mid=>{const r=getRag(bu,mid);cs+=(r==='g'?8.5:r==='a'?5.5:r==='r'?2:5.5);cnt++;});
+      const avg=cs/(cnt||1);
+      const pct=Math.round(avg*10);
+      const col=avg>=7?'#66BB6A':avg>=4?'#FFB300':'#C8102E';
+      return `<div class="ths-cluster-row"><span class="ths-cluster-name">${c.name}</span><div class="ths-cluster-bar"><div class="ths-cluster-fill" style="width:${pct}%;background:${col};"></div></div><span class="ths-cluster-val">${avg.toFixed(1)}</span></div>`;
+    }).join('');
+    return `<div class="ths-card">
+      <div class="ths-score-wrap"><span class="ths-score ${cls}">${score}<span class="ths-outof">/10</span></span></div>
+      <div class="ths-trend ${trendCls}">${trendTxt}</div>
+      <div class="ths-breakdown">${breakdown}</div></div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════
+// RAG TABLE
+// ════════════════════════════════════════════════════
+const HEADLINE=['M1','M2','M5','M9','M13','M16'];
+function renderRAGTable(){
+  const tbl=document.getElementById('rag-table');
+  if(!tbl) return;
+  const buList=currentBU==='all'?BUS:[currentBU];
+  let html=`<thead><tr><th>Metric</th>${buList.map(b=>`<th>${BU_NAMES[b]}</th>`).join('')}</tr></thead><tbody>`;
+  HEADLINE.forEach(mid=>{
+    const m=METRICS[mid];
+    html+=`<tr><td><strong>${mid}</strong> — ${m.name}</td>`;
+    buList.forEach(bu=>{
+      const v=getDisplayVal(bu,mid);
+      const r=getRag(bu,mid);
+      const disp=v!==null?`${v}${m.unit}`:'—';
+      const insight=m.chroInsight?m.chroInsight(v||0,BU_NAMES[bu]):'';
+      html+=`<td><div class="rag-cell ${r}" onclick="expandRAGAction('${mid}','${bu}')" id="rag-${mid}-${bu}">
+        <div class="rag-dot ${r}"></div>${disp}
+        <div class="rag-tooltip">${insight}</div>
+      </div></td>`;
+    });
+    html+=`</tr><tr id="rag-action-row-${mid}" style="display:none;"><td colspan="${buList.length+1}" style="padding:0;"><div class="rag-action-panel open" id="rag-action-${mid}"></div></td></tr>`;
+  });
+  html+=`</tbody>`;
+  tbl.innerHTML=html;
+  renderCHROActions();
+}
+
+function expandRAGAction(mid,bu){
+  const m=METRICS[mid];
+  const v=getDisplayVal(bu,mid);
+  const r=getRag(bu,mid);
+  const action=m.chroAction?m.chroAction(v||0,BU_NAMES[bu]):'No action required — monitor.';
+  const row=document.getElementById(`rag-action-row-${mid}`);
+  const panel=document.getElementById(`rag-action-${mid}`);
+  const isOpen=row.style.display!=='none';
+  // close all
+  document.querySelectorAll('[id^=rag-action-row-]').forEach(r=>r.style.display='none');
+  if(!isOpen){
+    row.style.display='';
+    panel.innerHTML=`<div class="rag-action-label">Recommended Action — ${BU_NAMES[bu]}</div>
+      <div>${action||'No action required — Green status. Monitor next review.'}</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--mid-grey);"><strong>Business translation:</strong> ${m.biz}</div>`;
+  }
+}
+
+function renderCHROActions(){
+  const list=document.getElementById('chro-actions-list');
+  if(!list) return;
+  const buList=currentBU==='all'?BUS:[currentBU];
+  const actions=[];
+  HEADLINE.forEach(mid=>{
+    buList.forEach(bu=>{
+      const v=getDisplayVal(bu,mid)||0;
+      const r=getRag(bu,mid);
+      if(r==='r'){
+        const m=METRICS[mid];
+        const action=m.chroAction?m.chroAction(v,BU_NAMES[bu]):null;
+        if(action) actions.push({rag:'r',text:action});
+      } else if(r==='a'){
+        actions.push({rag:'a',text:`${BU_NAMES[bu]} — ${METRICS[mid].name}: Amber status — monitor and prepare intervention plan`});
+      }
+    });
+  });
+  if(!actions.length){
+    list.innerHTML=`<div style="font-size:12px;color:var(--green);font-weight:700;">✓ No Red metrics requiring immediate action this review cycle.</div>`;
+    return;
+  }
+  list.innerHTML=actions.map(a=>`<div class="chro-action-item">
+    <span class="chro-action-rag"><span class="rag-pill ${a.rag}">${a.rag==='r'?'RED':'AMBER'}</span></span>
+    <span class="chro-action-text">${a.text}</span>
+  </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════
+// HR HEAD — METRIC CLUSTERS
+// ════════════════════════════════════════════════════
+function renderClusters(){
+  const cont=document.getElementById('clusters-container');
+  if(!cont) return;
+  const buList=currentBU==='all'?BUS:[currentBU];
+  const snapshots=loadSnapshots();
+  cont.innerHTML=CLUSTERS.map(c=>{
+    const cards=c.metrics.map(mid=>{
+      const m=METRICS[mid];
+      // average across selected BUs
+      const vals=buList.map(bu=>getDisplayVal(bu,mid)).filter(v=>v!==null);
+      const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
+      const r=avg!==null?m.ragFn(avg):'na';
+      const disp=avg!==null?`${avg.toFixed(1)}${m.unit}`:'No data';
+      // sparkline from snapshots
+      const sparkData=buList.flatMap(bu=>(snapshots[bu]||[]).map(s=>s.values&&s.values[mid]||null)).filter(v=>v!==null).slice(-6);
+      return `<div class="metric-card ${r}" onclick="openModal('${mid}','${buList[0]||'wk'}')">
+        <div class="mc-body">
+          <div class="mc-id">${mid} · ${m.freq}</div>
+          <div class="mc-name">${m.name}</div>
+          <div class="mc-value-row">
+            <span class="mc-value ${r}">${disp}</span>
+            <span class="mc-trend flat">→</span>
+          </div>
+          <canvas class="mc-sparkline" id="spark-${mid}" width="200" height="32"></canvas>
+        </div>
+        <div class="mc-footer">
+          <span class="mc-freq">${m.owner}</span>
+          <span class="mc-click-hint">Click for details →</span>
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="cluster-section">
+      <div class="cluster-header">
+        <div>
+          <div class="cluster-title">${c.name}</div>
+          <div class="cluster-pl">${c.pl}</div>
+        </div>
+        <span class="cluster-weight">${(c.weight*100).toFixed(0)}% weight</span>
+      </div>
+      <div class="metric-cards">${cards}</div>
+    </div>`;
+  }).join('');
+  // draw sparklines after render
+  requestAnimationFrame(()=>{
+    CLUSTERS.forEach(c=>c.metrics.forEach(mid=>{
+      drawSparkline(mid,buList,snapshots);
+    }));
+  });
+}
+
+function drawSparkline(mid,buList,snapshots){
+  const canvas=document.getElementById(`spark-${mid}`);
+  if(!canvas) return;
+  const data=[];
+  const allSnaps=buList.flatMap(bu=>snapshots[bu]||[]);
+  const sorted=[...new Set(allSnaps.map(s=>s.label))].slice(-6);
+  sorted.forEach(label=>{
+    const snap=allSnaps.find(s=>s.label===label);
+    if(snap&&snap.values&&snap.values[mid]!==undefined) data.push(snap.values[mid]);
+  });
+  if(data.length<2) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.offsetWidth||200,H=32;
+  canvas.width=W;canvas.height=H;
+  const min=Math.min(...data),max=Math.max(...data),range=max-min||1;
+  ctx.clearRect(0,0,W,H);
+  ctx.beginPath();
+  ctx.strokeStyle='rgba(200,16,46,0.6)';ctx.lineWidth=1.5;ctx.lineJoin='round';
+  data.forEach((v,i)=>{
+    const x=(i/(data.length-1))*W;
+    const y=H-((v-min)/range)*(H-4)-2;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  // dots
+  data.forEach((v,i)=>{
+    const x=(i/(data.length-1))*W;
+    const y=H-((v-min)/range)*(H-4)-2;
+    ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);
+    ctx.fillStyle='var(--red)';ctx.fill();
+  });
+}
+
+// ════════════════════════════════════════════════════
+// METRIC MODAL
+// ════════════════════════════════════════════════════
+function openModal(mid,bu){
+  const m=METRICS[mid];
+  const v=getDisplayVal(bu,mid);
+  const r=v!==null?m.ragFn(v):'na';
+  document.getElementById('modal-id').textContent=`${mid} · ${m.freq} · Owner: ${m.owner}`;
+  document.getElementById('modal-title').textContent=m.name;
+  document.getElementById('metric-modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+
+  let extraHTML='';
+  if(m.special==='calc') extraHTML=renderCalcHTML(mid,bu,v);
+  if(m.special==='succession') extraHTML=renderSuccessionHTML(bu);
+  if(m.special==='bellcurve') extraHTML=renderBellCurveHTML(bu);
+
+  document.getElementById('modal-body').innerHTML=`
+    <div class="modal-section">
+      <div class="modal-section-label">Current Value — ${BU_NAMES[bu]}</div>
+      <div class="modal-current">
+        <input class="modal-current-input" id="modal-val-input" type="number" value="${v!==null?v:''}" placeholder="Enter value">
+        <span class="modal-current-unit">${m.unit}</span>
+        <span class="rag-pill ${r}" style="margin-left:8px;">${r.toUpperCase()}</span>
+      </div>
+      <button class="modal-save-btn" onclick="saveModalVal('${mid}','${bu}')">Save Value</button>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Formula</div>
+      <div class="modal-section-text">${m.formula}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">RAG Thresholds</div>
+      <table class="modal-rag-table">
+        <tr><th>Status</th><th>Threshold</th></tr>
+        ${m.thresholds.map(t=>`<tr class="${t.rag}"><td><span class="rag-pill ${t.rag}">${t.label}</span></td><td>${t.val}</td></tr>`).join('')}
+      </table>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Business Translation</div>
+      <div class="modal-biz-box"><div class="modal-biz-text">${m.biz}</div></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Data Source</div>
+      <div class="modal-section-text">${m.source}</div>
+    </div>
+    ${extraHTML}`;
+  if(m.special==='bellcurve') setTimeout(()=>renderBellChart(bu),100);
+}
+
+function saveModalVal(mid,bu){
+  const inp=document.getElementById('modal-val-input');
+  const v=parseFloat(inp.value);
+  if(!isNaN(v)){setVal(bu,mid,v);closeModal();renderTHS();renderRAGTable();if(currentLayer==='hrhead')renderClusters();}
+}
+function closeModal(){
+  document.getElementById('metric-modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ATTRITION COST CALC
+function renderCalcHTML(mid,bu,currentAttr){
+  return `<div class="modal-section">
+    <div class="modal-section-label">Attrition Cost Calculator</div>
+    <div class="calc-wrap">
+      <div class="calc-label">M4 — Replacement Cost Estimator (50% of Annual CTC rule)</div>
+      <div class="calc-inputs">
+        <div class="calc-field"><label>No. of Exits This Month</label><input type="number" id="calc-exits" placeholder="e.g. 6" oninput="computeCalc()"></div>
+        <div class="calc-field"><label>Avg Annual CTC of Exiting Grade (₹L)</label><input type="number" id="calc-ctc" placeholder="e.g. 8.5" oninput="computeCalc()"></div>
+      </div>
+      <div class="calc-results">
+        <div class="calc-result"><span class="calc-result-val" id="calc-total">—</span><div class="calc-result-lbl">Total Cost (₹L)</div></div>
+        <div class="calc-result"><span class="calc-result-val" id="calc-per">—</span><div class="calc-result-lbl">Cost per Exit (₹L)</div></div>
+        <div class="calc-result"><span class="calc-result-val" id="calc-annual">—</span><div class="calc-result-lbl">Annualised (₹L)</div></div>
+      </div>
+    </div>
+  </div>`;
+}
+function computeCalc(){
+  const exits=parseFloat(document.getElementById('calc-exits')?.value)||0;
+  const ctc=parseFloat(document.getElementById('calc-ctc')?.value)||0;
+  const total=exits*0.5*ctc;
+  const perExit=exits?total/exits:0;
+  const annual=total*12;
+  const fmt=v=>v?v.toFixed(1):'—';
+  const t=document.getElementById('calc-total');
+  const p=document.getElementById('calc-per');
+  const a=document.getElementById('calc-annual');
+  if(t) t.textContent=fmt(total);
+  if(p) p.textContent=fmt(perExit);
+  if(a) a.textContent=fmt(annual);
+  // feed into M4 card
+  if(total){const bu=currentBU==='all'?'wk':currentBU;setVal(bu,'M4',Math.round(total*10)/10);}
+}
+
+// SUCCESSION TABLE
+function renderSuccessionHTML(bu){
+  const key=`succession_${bu}`;
+  const rows=JSON.parse(localStorage.getItem(key)||'[]');
+  const rowsHTML=rows.map((r,i)=>`<tr>
+    <td><input value="${r.role||''}" onchange="updateSuccRow('${bu}',${i},'role',this.value)" placeholder="Critical role name"></td>
+    <td><input value="${r.successor||''}" onchange="updateSuccRow('${bu}',${i},'successor',this.value)" placeholder="Named successor"></td>
+    <td><select onchange="updateSuccRow('${bu}',${i},'readiness',this.value)">
+      <option ${r.readiness==='Ready Now'?'selected':''}>Ready Now</option>
+      <option ${r.readiness==='1–2 Years'?'selected':''}>1–2 Years</option>
+      <option ${r.readiness==='2+ Years'?'selected':''}>2+ Years</option>
+    </select></td>
+    <td><span class="readiness-${r.readiness==='Ready Now'?'now':r.readiness==='1–2 Years'?'1':'2'}">${r.readiness||'—'}</span></td>
+    <td><button class="at-del-btn" onclick="delSuccRow('${bu}',${i})">✕</button></td>
+  </tr>`).join('');
+  return `<div class="modal-section">
+    <div class="modal-section-label">Succession Pipeline — ${BU_NAMES[bu]}</div>
+    <div class="succession-wrap">
+      <table class="succession-table">
+        <thead><tr><th>Critical Role</th><th>Named Successor</th><th>Readiness</th><th>Status</th><th></th></tr></thead>
+        <tbody id="succ-tbody">${rowsHTML}</tbody>
+      </table>
+      <button class="add-row-btn" onclick="addSuccRow('${bu}')">+ Add Role</button>
+    </div>
+  </div>`;
+}
+function addSuccRow(bu){
+  const key=`succession_${bu}`;
+  const rows=JSON.parse(localStorage.getItem(key)||'[]');
+  rows.push({role:'',successor:'',readiness:'Ready Now'});
+  localStorage.setItem(key,JSON.stringify(rows));
+  const mid='M5';openModal(mid,bu);
+}
+function updateSuccRow(bu,i,field,val){
+  const key=`succession_${bu}`;
+  const rows=JSON.parse(localStorage.getItem(key)||'[]');
+  if(rows[i]) rows[i][field]=val;
+  localStorage.setItem(key,JSON.stringify(rows));
+  const pct=rows.filter(r=>r.successor&&r.readiness).length/Math.max(rows.length,1)*100;
+  setVal(bu,'M5',Math.round(pct));
+}
+function delSuccRow(bu,i){
+  const key=`succession_${bu}`;
+  const rows=JSON.parse(localStorage.getItem(key)||'[]');
+  rows.splice(i,1);
+  localStorage.setItem(key,JSON.stringify(rows));
+  openModal('M5',bu);
+}
+
+// BELL CURVE
+function renderBellCurveHTML(bu){
+  const key=`bellcurve_${bu}`;
+  const vals=JSON.parse(localStorage.getItem(key)||'{"o":15,"e":25,"m":45,"b":10,"u":5}');
+  return `<div class="modal-section">
+    <div class="modal-section-label">Rating Distribution — ${BU_NAMES[bu]}</div>
+    <div class="bellcurve-wrap">
+      <div class="bc-inputs">
+        ${[['o','Outstanding'],['e','Exceeds'],['m','Meets'],['b','Below'],['u','Underperforms']].map(([k,l])=>`
+        <div class="bc-input-item"><label>${l}</label>
+        <input type="number" id="bc-${k}" value="${vals[k]||0}" min="0" max="100" oninput="saveBCVals('${bu}');renderBellChart('${bu}')">
+        </div>`).join('')}
+      </div>
+      <div class="bc-warning" id="bc-warn">⚠ Percentages must total 100%</div>
+      <div class="bc-chart" id="bc-chart"></div>
+    </div>
+  </div>`;
+}
+function saveBCVals(bu){
+  const key=`bellcurve_${bu}`;
+  const vals={};
+  ['o','e','m','b','u'].forEach(k=>{vals[k]=parseFloat(document.getElementById(`bc-${k}`)?.value)||0;});
+  localStorage.setItem(key,JSON.stringify(vals));
+}
+function renderBellChart(bu){
+  const keys=['o','e','m','b','u'];
+  const labels=['Outstanding','Exceeds','Meets','Below','Underperforms'];
+  const vals=keys.map(k=>parseFloat(document.getElementById(`bc-${k}`)?.value)||0);
+  const total=vals.reduce((a,b)=>a+b,0);
+  const warn=document.getElementById('bc-warn');
+  if(warn) warn.style.display=Math.abs(total-100)>1?'block':'none';
+  const chart=document.getElementById('bc-chart');
+  if(!chart) return;
+  const maxV=Math.max(...vals,1);
+  chart.innerHTML=vals.map((v,i)=>{
+    const h=Math.round((v/maxV)*100);
+    const isWarn=i===0&&v>30;const isDanger=i===0&&v>30;
+    return `<div class="bc-bar-wrap">
+      <span class="bc-bar-pct">${v}%</span>
+      <div class="bc-bar${isWarn?' danger':''}" style="height:${h}px;background:${isDanger?'var(--red)':v>25&&i===0?'var(--amber)':'var(--light-grey)'};"></div>
+      <span class="bc-bar-label">${labels[i].substring(0,3)}</span>
+    </div>`;
+  }).join('');
+  // update M10 RAG (using top-box %)
+  setVal(bu,'M10',vals[0]);
+}
+
+// ════════════════════════════════════════════════════
+// ACTION TRACKER
+// ════════════════════════════════════════════════════
+function loadActions(){return JSON.parse(localStorage.getItem('dash_actions')||'[]');}
+function saveActions(a){localStorage.setItem('dash_actions',JSON.stringify(a));}
+
+function addAction(){
+  const actions=loadActions();
+  actions.push({id:Date.now(),text:'',metric:'M1',owner:'',due:'',priority:'High',status:'todo',bu:currentBU==='all'?'wk':currentBU});
+  saveActions(actions);renderActions();
+}
+function deleteAction(id){
+  const actions=loadActions().filter(a=>a.id!==id);
+  saveActions(actions);renderActions();
+}
+function updateAction(id,field,val){
+  const actions=loadActions();
+  const a=actions.find(x=>x.id===id);
+  if(a){a[field]=val;saveActions(actions);}
+}
+function renderActions(){
+  const tbody=document.getElementById('at-tbody');
+  if(!tbody) return;
+  const filter=document.getElementById('at-filter')?.value||'all';
+  const mfilter=document.getElementById('at-metric-filter')?.value||'all';
+  let actions=loadActions();
+  if(filter!=='all') actions=actions.filter(a=>a.status===filter);
+  if(mfilter!=='all') actions=actions.filter(a=>a.metric===mfilter);
+  if(currentBU!=='all') actions=actions.filter(a=>a.bu===currentBU||!a.bu);
+  if(!actions.length){
+    tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--mid-grey);font-style:italic;">No actions found. Add one above.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML=actions.map(a=>{
+    const statusOpts=['todo','inprog','done','slipped'].map(s=>`<option value="${s}" ${a.status===s?'selected':''}>${s==='todo'?'To Do':s==='inprog'?'In Progress':s==='done'?'Completed':'Slipped'}</option>`).join('');
+    const prioOpts=['High','Medium','Low'].map(p=>`<option ${a.priority===p?'selected':''}>${p}</option>`).join('');
+    return `<tr>
+      <td><input value="${a.text||''}" placeholder="Describe the action..." onchange="updateAction(${a.id},'text',this.value)" style="min-width:200px;"></td>
+      <td><select onchange="updateAction(${a.id},'metric',this.value)">${document.getElementById('at-metric-filter').innerHTML.replace('<option value="all">All Metrics</option>','').replace(new RegExp(`value="${a.metric}"`),'value="'+a.metric+'" selected')}</select></td>
+      <td><input value="${a.owner||''}" placeholder="Owner name" onchange="updateAction(${a.id},'owner',this.value)" style="min-width:120px;"></td>
+      <td><input type="date" value="${a.due||''}" onchange="updateAction(${a.id},'due',this.value)"></td>
+      <td><select onchange="updateAction(${a.id},'priority',this.value)">${prioOpts}</select></td>
+      <td><select onchange="updateAction(${a.id},'status',this.value)">${statusOpts}</select></td>
+      <td><button class="at-del-btn" onclick="deleteAction(${a.id})">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════
+// SNAPSHOTS
+// ════════════════════════════════════════════════════
+function loadSnapshots(){return JSON.parse(localStorage.getItem('dash_snapshots')||'{}');}
+function saveSnapshots(s){localStorage.setItem('dash_snapshots',JSON.stringify(s));}
+
+function saveSnapshot(){
+  const label=document.getElementById('snapshot-label')?.value?.trim();
+  if(!label){alert('Please enter a label (e.g. April 2026)');return;}
+  const snapshots=loadSnapshots();
+  BUS.forEach(bu=>{
+    if(!snapshots[bu]) snapshots[bu]=[];
+    const values={};
+    Object.keys(METRICS).forEach(mid=>{const v=getDisplayVal(bu,mid);if(v!==null)values[mid]=v;});
+    const ths=computeTHS(bu);
+    // remove if same label exists
+    const idx=snapshots[bu].findIndex(s=>s.label===label);
+    if(idx>=0) snapshots[bu][idx]={label,values,ths,ts:Date.now()};
+    else snapshots[bu].push({label,values,ths,ts:Date.now()});
+    // keep last 12
+    snapshots[bu]=snapshots[bu].slice(-12);
+  });
+  saveSnapshots(snapshots);
+  renderSnapshotHistory();
+  const actions=loadActions();
+  // also save action tracker state
+  localStorage.setItem(`actions_snap_${label}`,JSON.stringify(actions));
+  alert(`Snapshot "${label}" saved.`);
+}
+
+function renderSnapshotHistory(){
+  const hist=document.getElementById('snapshot-history');
+  if(!hist) return;
+  const snapshots=loadSnapshots();
+  const labels=[...new Set(BUS.flatMap(bu=>(snapshots[bu]||[]).map(s=>s.label)))].sort();
+  hist.innerHTML=labels.map(l=>`<div class="snapshot-tag">
+    ${l}
+    <button class="snapshot-load-btn" onclick="loadSnapshot('${l}')">Load</button>
+    <button class="snapshot-tag-del" onclick="deleteSnapshot('${l}')">✕</button>
+  </div>`).join('');
+}
+
+function loadSnapshot(label){
+  const snapshots=loadSnapshots();
+  BUS.forEach(bu=>{
+    const snap=(snapshots[bu]||[]).find(s=>s.label===label);
+    if(snap&&snap.values){
+      Object.keys(snap.values).forEach(mid=>setVal(bu,mid,snap.values[mid]));
+    }
+  });
+  renderTHS();renderRAGTable();if(currentLayer==='hrhead') renderClusters();
+  alert(`Snapshot "${label}" loaded.`);
+}
+function deleteSnapshot(label){
+  const snapshots=loadSnapshots();
+  BUS.forEach(bu=>{if(snapshots[bu]) snapshots[bu]=snapshots[bu].filter(s=>s.label!==label);});
+  saveSnapshots(snapshots);renderSnapshotHistory();
+}
+
+// ════════════════════════════════════════════════════
+// METRIC LIBRARY
+// ════════════════════════════════════════════════════
+function buildLibrary(){
+  const grid = document.getElementById('lib-grid');
+  if (!grid) return;
+
+  // Group metrics by cluster and render cluster-by-cluster
+  grid.innerHTML = CLUSTERS.map((cluster, ci) => {
+    const items = cluster.metrics.map(mid => {
+      const m = METRICS[mid];
+      if (!m) return '';
+      const ragBadges = m.thresholds.map(t =>
+        `<span class="lib-rag-badge ${t.rag}">${t.label}: ${t.val}</span>`
+      ).join('');
+      return `<div class="lib-item">
+        <div class="lib-item-header" onclick="toggleLib(this)">
+          <div class="lib-item-left">
+            <span class="lib-item-id">${mid}</span>
+            <div>
+              <div class="lib-item-name">${m.name}</div>
+              <div class="lib-item-cluster">${m.freq}</div>
+            </div>
+          </div>
+          <span class="lib-item-arrow">›</span>
+        </div>
+        <div class="lib-item-body">
+          <div class="lib-detail-grid">
+            <div>
+              <div class="lib-detail-label">Formula</div>
+              <div class="lib-detail-text">${m.formula}</div>
+              <div class="lib-detail-label" style="margin-top:12px;">Data Source</div>
+              <div class="lib-detail-text">${m.source}</div>
+              <div class="lib-detail-label" style="margin-top:12px;">Owner</div>
+              <div class="lib-detail-text">${m.owner}</div>
+            </div>
+            <div>
+              <div class="lib-detail-label">RAG Thresholds</div>
+              <div class="lib-rag-mini">${ragBadges}</div>
+              <div class="lib-detail-label" style="margin-top:12px;">Business Translation</div>
+              <div class="lib-detail-text" style="font-style:italic;color:var(--mid-grey);">${m.biz}</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="lib-cluster-group">
+      <div class="lib-cluster-header" onclick="toggleLibCluster(this)">
+        <div class="lib-cluster-left">
+          <span class="lib-cluster-num">${ci + 1}</span>
+          <div>
+            <div class="lib-cluster-name">${cluster.name}</div>
+            <div class="lib-cluster-meta">${cluster.metrics.length} metrics · Weight: ${cluster.weight}%</div>
+          </div>
+        </div>
+        <span class="lib-cluster-chevron">›</span>
+      </div>
+      <div class="lib-cluster-body">${items}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleLibCluster(header) {
+  const group = header.parentElement;
+  const isOpen = group.classList.contains('open');
+  // Close all other clusters
+  document.querySelectorAll('.lib-cluster-group.open').forEach(g => {
+    g.classList.remove('open');
+    g.querySelector('.lib-cluster-chevron').style.transform = '';
+  });
+  if (!isOpen) {
+    group.classList.add('open');
+    header.querySelector('.lib-cluster-chevron').style.transform = 'rotate(90deg)';
+  }
+}
+
+// ════════════════════════════════════════════════════
+// FIVE NON-NEGOTIABLES
+// ════════════════════════════════════════════════════
+const NN=[
+  {title:'Everything runs on Darwinbox',body:'No new tool, no new subscription. The dashboard pulls from Darwinbox for attrition, PMS, headcount, and succession data. The HRBP\'s job is to ensure Darwinbox data quality — not to build a parallel Excel system. If the data is not in Darwinbox, it does not exist for governance purposes.'},
+  {title:'Every metric has a rupee translation',body:'Before presenting to the CHRO, every Red metric is converted to a business cost or business risk. Attrition cost in lakhs. Succession gap in risk-weighted roles. PMS non-compliance in productivity-hours. A metric without a rupee translation is an observation. With one, it is a governance instrument.'},
+  {title:'The HRBP-to-employee ratio stays on the dashboard permanently',body:'This metric remains RED until the ratio falls below 700. It holds the organisation accountable for the structural gap that is causing everything else. Removing it would be covering up the root cause. Arvind\'s current state in Wovens & Knits: ~950 employees per HRBP.'},
+  {title:'The dashboard is version-controlled and dated',body:'Every copy presented to the CHRO is version-stamped via the Monthly Snapshot function. When the CHRO asks "what did this look like six months ago?" the HRBP has the answer in 30 seconds. This signals professionalism and reliability — two things that build CHRO trust faster than any single data point.'},
+  {title:'The HRBP presents it — not sends it',body:'A dashboard sent by email becomes a file. A dashboard presented in a structured forum becomes a conversation that forces accountability. The Operating Rhythm already mandates the forums — the dashboard gives those forums content that forces decisions. The rule: every forum must end with at least one named decision.'},
+];
+function buildNonNeg(){
+  const acc=document.getElementById('nn-accordion');
+  if(!acc) return;
+  acc.innerHTML=NN.map((n,i)=>`<div>
+    <div class="nn-item-header" onclick="toggleNN(this)">
+      <span class="nn-item-num">${String(i+1).padStart(2,'0')}</span>
+      <span class="nn-item-title">${n.title}</span>
+      <span class="nn-item-arrow">›</span>
+    </div>
+    <div class="nn-item-body">${n.body}</div>
+  </div>`).join('');
+}
+function toggleNN(header){
+  const body=header.nextElementSibling;
+  const open=body.classList.contains('open');
+  document.querySelectorAll('.nn-item-header').forEach(h=>h.classList.remove('open'));
+  document.querySelectorAll('.nn-item-body').forEach(b=>b.classList.remove('open'));
+  if(!open){header.classList.add('open');body.classList.add('open');}
+}
+
+// ════════════════════════════════════════════════════
+// EXCEL UPLOAD + TEMPLATE
+// ════════════════════════════════════════════════════
+function handleExcelUpload(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=evt=>{
+    try{
+      const wb=XLSX.read(evt.target.result,{type:'binary'});
+      const found=[],missing=[];
+      BUS.forEach((bu,idx)=>{
+        const sheetName=wb.SheetNames[idx];
+        if(!sheetName) return;
+        const ws=wb.Sheets[sheetName];
+        const data=XLSX.utils.sheet_to_json(ws,{header:1});
+        data.forEach(row=>{
+          const mid=row[0];const val=parseFloat(row[2]);
+          if(mid&&METRICS[mid]&&!isNaN(val)){setVal(bu,mid,val);found.push(`${mid} (${BU_NAMES[bu]})`);}
+          else if(mid&&METRICS[mid]) missing.push(`${mid} (${BU_NAMES[bu]})`);
+        });
+      });
+      const statusEl=document.getElementById('upload-status');
+      statusEl.innerHTML=`<span class="upload-found">✓ ${found.length} metrics populated</span><br>
+        ${missing.length?`<span class="upload-missing">⚠ ${missing.length} metrics missing data: ${[...new Set(missing)].join(', ')}</span>`:''}`;
+      localStorage.setItem('dash_upload_file',file.name);
+      renderTHS();renderRAGTable();if(currentLayer==='hrhead') renderClusters();
+    }catch(err){document.getElementById('upload-status').innerHTML=`<span style="color:var(--red);">Error reading file: ${err.message}</span>`;}
+  };
+  reader.readAsBinaryString(file);
+}
+
+function downloadTemplate(){
+  const wb=XLSX.utils.book_new();
+  const instructions=[
+    ['ARVIND HRBP DATA TEMPLATE — INSTRUCTIONS'],
+    [''],
+    ['This template has 3 sheets: one per BU (Wovens & Knits, Envisol, Advanced Materials).'],
+    ['Fill Column C (Current Value) for each metric. Do not change Column A (Metric ID) or Column B (Metric Name).'],
+    ['Leave blank if data is unavailable. Save as .xlsx and upload to the Dashboard.'],
+    ['Units: % metrics enter as number (e.g. 7.2 for 7.2%). Ratio: enter raw number. Gap: enter signed decimal (e.g. -0.3).'],
+  ];
+  const instrWS=XLSX.utils.aoa_to_sheet(instructions);
+  XLSX.utils.book_append_sheet(wb,instrWS,'README');
+  const headers=['Metric ID','Metric Name','Current Value','Unit','Notes'];
+  BUS.forEach((bu,idx)=>{
+    const rows=[headers];
+    Object.keys(METRICS).forEach(mid=>{
+      const m=METRICS[mid];
+      rows.push([mid,m.name,'',m.unit,'']);
+    });
+    const ws=XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:12},{wch:40},{wch:16},{wch:10},{wch:30}];
+    XLSX.utils.book_append_sheet(wb,ws,[BU_NAMES[bu].substring(0,31)]);
+  });
+  XLSX.writeFile(wb,'Arvind_HRBP_Dashboard_Template.xlsx');
+}
+
+// ════════════════════════════════════════════════════
+// CHRO PDF EXPORT
+// ════════════════════════════════════════════════════
+function generateCHROPdf(){
+  const buList=currentBU==='all'?BUS:[currentBU];
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  let actionsHTML='';
+  const redActions=[];
+  HEADLINE.forEach(mid=>{
+    buList.forEach(bu=>{
+      const v=getDisplayVal(bu,mid)||0;
+      const r=getRag(bu,mid);
+      if(r==='r'){const m=METRICS[mid];const a=m.chroAction?m.chroAction(v,BU_NAMES[bu]):null;if(a)redActions.push({rag:'r',text:a});}
+    });
+  });
+  actionsHTML=redActions.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee;font-size:12px;display:flex;gap:12px;align-items:flex-start;">
+    <span style="background:#C8102E;color:white;padding:2px 8px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;">RED</span>
+    <span>${a.text}</span>
+  </div>`).join('');
+
+  const rowsHTML=HEADLINE.map(mid=>{
+    const m=METRICS[mid];
+    return `<tr>
+      <td style="padding:10px 12px;font-size:12px;font-weight:700;border-bottom:1px solid #eee;">${mid} — ${m.name}</td>
+      ${buList.map(bu=>{
+        const v=getDisplayVal(bu,mid);const r=getRag(bu,mid);
+        const color=r==='g'?'#2E7D32':r==='a'?'#F57F17':'#C8102E';
+        return `<td style="padding:10px 12px;text-align:center;border-bottom:1px solid #eee;"><span style="background:${color}20;color:${color};padding:4px 10px;font-size:11px;font-weight:800;letter-spacing:.06em;">${v!==null?v+m.unit:'—'}</span></td>`;
+      }).join('')}
+    </tr>`;
+  }).join('');
+
+  const thsHTML=buList.map(bu=>{
+    const score=computeTHS(bu);
+    const color=score>=7?'#2E7D32':score>=4?'#F57F17':'#C8102E';
+    return `<div style="text-align:center;padding:16px 24px;background:#F7F7F5;border-top:3px solid ${color};">
+      <div style="font-family:Georgia,serif;font-size:40px;font-weight:700;color:${color};">${score}<span style="font-size:14px;color:#ccc;">/10</span></div>
+    </div>`;
+  }).join('');
+
+  const logoSrc=`data:image/png;base64,${document.querySelector('.nav-logo-img').src.split('base64,')[1]}`;
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:Raleway,sans-serif;color:#2D2D2D;background:white;}
+    .cover{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#2D2D2D;text-align:center;page-break-after:always;}
+    .cover img{height:60px;opacity:.9;margin-bottom:40px;}
+    .cover-title{font-family:"Playfair Display",serif;font-size:36px;color:white;margin-bottom:16px;}
+    .cover-sub{font-size:14px;color:rgba(255,255,255,.5);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;}
+    .cover-conf{font-size:11px;color:#C8102E;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-top:32px;border:1px solid rgba(200,16,46,.3);padding:8px 20px;}
+    .page{padding:40px;max-width:900px;margin:0 auto;}
+    table{width:100%;border-collapse:collapse;}
+    th{background:#2D2D2D;color:white;padding:10px 12px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-align:center;}
+    th:first-child{background:#C8102E;text-align:left;}
+    @media print{.cover{height:100vh;}}
+  </style>
+  </head><body>
+  <div class="cover">
+    <img src="${logoSrc}" alt="Arvind">
+    <div class="cover-title">HRBP People Dashboard</div>
+    <div class="cover-sub">CHRO Executive View</div>
+    <div class="cover-sub">${buList.map(b=>BU_NAMES[b]).join(' · ')} · ${dateStr}</div>
+    <div class="cover-conf">Confidential — CHRO Review Only</div>
+  </div>
+  <div class="page">
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:8px;">Talent Health Score</div>
+    <p style="font-size:12px;color:#888;margin-bottom:20px;">Composite BU rating out of 10 — weighted across 5 clusters</p>
+    <div style="display:grid;grid-template-columns:repeat(${buList.length},1fr);gap:2px;margin-bottom:40px;">${thsHTML}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:8px;">RAG Status — Headline Metrics</div>
+    <p style="font-size:12px;color:#888;margin-bottom:20px;">Hover metric names in the live dashboard for business-language insight sentences.</p>
+    <table style="margin-bottom:40px;">
+      <tr><th>Metric</th>${buList.map(b=>`<th>${BU_NAMES[b]}</th>`).join('')}</tr>
+      ${rowsHTML}
+    </table>
+    ${redActions.length?`<div style="margin-bottom:40px;">
+      <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:8px;">CHRO Action Required</div>
+      <p style="font-size:12px;color:#888;margin-bottom:16px;">One decision must be committed before this review ends.</p>
+      ${actionsHTML}
+    </div>`:'<div style="padding:16px;background:#F0FFF0;font-size:12px;color:#2E7D32;font-weight:700;">✓ No Red metrics requiring immediate action this cycle.</div>'}
+    <div style="margin-top:48px;border-top:1px solid #eee;padding-top:16px;font-size:10px;color:#B7B7B7;">
+      Arvind Limited · HRBP Playbook 2026 · Internal Document · Generated ${new Date().toLocaleString('en-IN')}
+    </div>
+  </div>
+  <script>window.onload=()=>window.print();<\/script>
+  </body></html>`;
+  const w=window.open('','_blank');
+  w.document.write(html);w.document.close();
+}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  // restore layer + BU
+  // bu-selector removed — currentBU persisted via localStorage
+  switchLayer(currentLayer);
+  buildLibrary();
+  buildNonNeg();
+  renderSnapshotHistory();
+  renderActions();
+  // reveal animations
+  gsap.registerPlugin(ScrollTrigger);
+  document.querySelectorAll('.rv').forEach(el=>{
+    gsap.to(el,{opacity:1,y:0,duration:.75,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+  });
+});
+
+// ── PHIL AXIS REVEAL ──
+function togglePhilAxis(card) {
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.pa-reveal.open').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.pa-toggle').textContent = '+';
+  });
+  if (!isOpen) {
+    card.classList.add('open');
+    card.querySelector('.pa-toggle').textContent = '−';
+  }
+}
+// ── HOW TO USE OVERLAY ──
+function openHowTo() {
+  document.getElementById('how-to-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeHowTo() {
+  document.getElementById('how-to-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeHowToOutside(e) {
+  if (e.target === document.getElementById('how-to-overlay')) closeHowTo();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHowTo(); });
+</script>
+
+<!-- HOW TO USE BUTTON -->
+<button class="how-to-btn" onclick="openHowTo()">
+  How to use this page <span class="how-to-btn-icon">?</span>
+</button>
+
+<!-- HOW TO USE OVERLAY -->
+<div class="how-to-overlay" id="how-to-overlay" onclick="closeHowToOutside(event)">
+  <div class="how-to-modal">
+    <div class="how-to-modal-header">
+      <button class="how-to-close" onclick="closeHowTo()">×</button>
+      <div class="how-to-modal-eyebrow">Guide</div>
+      <div class="how-to-modal-title">How to use this dashboard</div>
+    </div>
+    <div class="how-to-modal-body">
+      <div class="how-to-step">
+        <div class="how-to-step-num red">1</div>
+        <div class="how-to-step-content">
+          <div class="how-to-step-title">Download & fill the Excel template</div>
+          <div class="how-to-step-body">Go to the <strong>Data Upload</strong> section. Download the Arvind HRBP Data Template (.xlsx). It has one sheet with Column A = Metric ID (M1–M20), Column B = Metric Name, Column C = Current Value, Column D = Unit. Fill in your BU's numbers for this month. Leave a cell blank if data is unavailable — it will be flagged but won't break the upload.</div>
+        </div>
+      </div>
+      <div class="how-to-step">
+        <div class="how-to-step-num">2</div>
+        <div class="how-to-step-content">
+          <div class="how-to-step-title">Upload the file</div>
+          <div class="how-to-step-body">Drag and drop your completed file into the upload zone, or click <strong>Choose File</strong>. The dashboard reads the metric columns automatically and populates all 20 metric cards. Any missing or unrecognised columns are flagged in red.</div>
+        </div>
+      </div>
+      <div class="how-to-step">
+        <div class="how-to-step-num">3</div>
+        <div class="how-to-step-content">
+          <div class="how-to-step-title">Review the Talent Health Score</div>
+          <div class="how-to-step-body">Once uploaded, check the <strong>Talent Health Score</strong> — one composite number across 5 clusters. Green = 8–10, Amber = 4–7, Red = 0–3. If any cluster is Red, that is your first conversation point with the business leader.</div>
+        </div>
+      </div>
+      <div class="how-to-step">
+        <div class="how-to-step-num">4</div>
+        <div class="how-to-step-content">
+          <div class="how-to-step-title">Prepare the CHRO or HR Head view</div>
+          <div class="how-to-step-body">Switch to <strong>CHRO Executive View</strong> for the RAG grid — 6 headline metrics, pre-written insight sentences, one recommended action per Red metric. Switch to <strong>HR Head View</strong> for all 20 metrics with trend lines and cluster-level drill-down.</div>
+        </div>
+      </div>
+      <div class="how-to-step">
+        <div class="how-to-step-num">5</div>
+        <div class="how-to-step-content">
+          <div class="how-to-step-title">Save a monthly snapshot</div>
+          <div class="how-to-step-body">After reviewing, scroll to <strong>Data Upload → Monthly Snapshot</strong>. Label it by month and hit <strong>Save Snapshot</strong>. Each snapshot builds one point on the 6-month sparkline across all metric cards. Do this every month — the trend line is the story.</div>
+        </div>
+      </div>
+      <div class="how-to-step">
+        <div class="how-to-step-num red">6</div>
+        <div class="how-to-step-content">
+          <div class="how-to-step-title">Log at least one action before you close</div>
+          <div class="how-to-step-body">Every Red metric must produce one named action in the <strong>Action Tracker</strong> — with an owner and a deadline. This is non-negotiable. The dashboard is not a report. It is only complete when a decision has been made.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

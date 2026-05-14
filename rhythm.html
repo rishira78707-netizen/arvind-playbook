@@ -284,6 +284,30 @@ section{position:relative;}
   .what-grid,.matrix-pct-strip{grid-template-columns:1fr 1fr;}
   .week-panel-inner{grid-template-columns:1fr;}
 }
+
+/* HERO SUMMARY STRIP */
+.hero-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;background:var(--light-grey);}
+.hs-cell{background:var(--white);padding:18px 20px;}
+.hs-label{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px;}
+.hs-val{font-size:13px;font-weight:700;color:var(--dark-grey);line-height:1.4;}
+.hs-val em{font-style:normal;color:var(--red);}
+
+/* WHAT-CARD REVEAL */
+.wc-reveal { cursor:pointer; padding:0; transition:border-left-color .2s, box-shadow .2s; }
+.wc-reveal:hover, .wc-reveal.open { border-left-color:var(--red); box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.wc-summary { display:flex; align-items:center; justify-content:space-between; padding:22px 24px; gap:16px; }
+.wc-toggle {
+  width:28px; height:28px; border-radius:50%; border:1.5px solid var(--light-grey);
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; color:var(--mid-grey); flex-shrink:0; transition:all .2s;
+}
+.wc-reveal.open .wc-toggle { background:var(--red); border-color:var(--red); color:var(--white); }
+.wc-body {
+  max-height:0; overflow:hidden; padding:0 24px;
+  font-size:13px; line-height:1.75; color:rgba(45,45,45,.7);
+  transition:max-height .4s cubic-bezier(.22,1,.36,1), padding .3s;
+}
+.wc-reveal.open .wc-body { max-height:200px; padding:0 24px 20px; }
 </style>
 </head>
 <body>
@@ -304,11 +328,11 @@ section{position:relative;}
       <li><a href="index.html">Home</a></li>
       <li><a href="company.html">Company</a></li>
       <li><a href="stakeholders.html">People</a></li>
-      <li><a href="charter.html">Role Charter</a></li>
-      <li><a href="engagement.html">Engagement</a></li>
-      <li><a href="rhythm.html" class="active">Operating Rhythm</a></li>
+      <li><a href="charter.html">Your Role</a></li>
+      <li><a href="engagement.html">How You Engage</a></li>
+      <li><a href="rhythm.html" class="active">Your Calendar</a></li>
       <li><a href="processes.html">Processes</a></li>
-      <li><a href="#">Dashboard</a></li>
+      <li><a href="dashboard.html">Your Dashboard</a></li>
     </ul>
   </div>
 </nav>
@@ -348,6 +372,21 @@ section{position:relative;}
       </div>
     </div>
   </div>
+
+  <div class="hero-strip rv">
+    <div class="hs-cell">
+      <div class="hs-label">What this is</div>
+      <div class="hs-val">Your structured cadence — daily to annual — so you are always proactive, never reactive.</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-label">When to use it</div>
+      <div class="hs-val">Week 1 at any BU. When your days feel unstructured. When firefighting is replacing strategy.</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-label">Time to read</div>
+      <div class="hs-val"><em>12 min</em> full read · <em>4 min</em> for daily + weekly rhythms only.</div>
+    </div>
+  </div>
 </section>
 
 <!-- SUBNAV -->
@@ -377,27 +416,47 @@ section{position:relative;}
       <p class="sec-intro">Each activity has a named owner, a defined output, and a stated purpose tied to a business outcome. Without a defined rhythm, the HRBP role defaults to firefighting — processing transactions and resolving immediate issues rather than building the workforce capability the business needs.</p>
     </div>
     <div class="what-grid rv">
-      <div class="what-card">
-        <div class="what-card-label">The Problem It Solves</div>
-        <div class="what-card-title">Reactive vs. Proactive</div>
-        <div class="what-card-body">Without a defined rhythm, urgent operational tasks crowd out strategic ones. The HRBP becomes a responder to whatever arrives in the inbox — grievances, payroll queries, ad-hoc requests — rather than the architect of a BU workforce that meets business targets.</div>
+        <div class="what-card wc-reveal rv" onclick="toggleWhatCard(this)">
+          <div class="wc-summary">
+            <div>
+              <div class="what-card-label">The Problem It Solves</div>
+              <div class="what-card-title">Reactive vs. Proactive</div>
+            </div>
+            <div class="wc-toggle">+</div>
+          </div>
+          <div class="wc-body">Without a defined rhythm, urgent operational tasks crowd out strategic ones. The HRBP becomes a responder to whatever arrives in the inbox — grievances, payroll queries, ad-hoc requests — rather than the architect of a BU workforce that meets business targets.</div>
+        </div>
+        <div class="what-card wc-reveal rv" onclick="toggleWhatCard(this)">
+          <div class="wc-summary">
+            <div>
+              <div class="what-card-label">What the Rhythm Governs</div>
+              <div class="what-card-title">Five Time Horizons</div>
+            </div>
+            <div class="wc-toggle">+</div>
+          </div>
+          <div class="wc-body">Daily: operational integrity. Weekly: focus and triage. Monthly: analytical depth and compliance. Quarterly: strategic cycles — PMS, talent calibration, succession. Annual: governance, people plan, and operating rhythm review itself.</div>
+        </div>
+        <div class="what-card wc-reveal rv" onclick="toggleWhatCard(this)">
+          <div class="wc-summary">
+            <div>
+              <div class="what-card-label">For Arvind HRBPs Specifically</div>
+              <div class="what-card-title">Balancing Two Demands</div>
+            </div>
+            <div class="wc-toggle">+</div>
+          </div>
+          <div class="wc-body">Managing multi-location workforce across Wovens, Knits, and Garmenting means the HRBP must balance strategic interventions (succession, talent health, org effectiveness) with operational integrity (compliance, grievance resolution, payroll accuracy). This document maps that balance.</div>
+        </div>
+        <div class="what-card wc-reveal rv" onclick="toggleWhatCard(this)">
+          <div class="wc-summary">
+            <div>
+              <div class="what-card-label">The Discipline Standard</div>
+              <div class="what-card-title">Rhythm Is Identity</div>
+            </div>
+            <div class="wc-toggle">+</div>
+          </div>
+          <div class="wc-body">An HRBP who works to a rhythm has decided to be proactive. One without a rhythm is defined by whatever landed in their inbox this morning. The difference between a transactional HR generalist and a strategic HRBP is not capability — it is discipline.</div>
+        </div>
       </div>
-      <div class="what-card">
-        <div class="what-card-label">What the Rhythm Governs</div>
-        <div class="what-card-title">Five Time Horizons</div>
-        <div class="what-card-body">Daily: operational integrity. Weekly: focus and triage. Monthly: analytical depth and compliance. Quarterly: strategic cycles — PMS, talent calibration, succession. Annual: governance, people plan, and operating rhythm review itself.</div>
-      </div>
-      <div class="what-card">
-        <div class="what-card-label">For Arvind HRBPs Specifically</div>
-        <div class="what-card-title">Balancing Two Demands</div>
-        <div class="what-card-body">Managing multi-location workforce across Wovens, Knits, and Garmenting means the HRBP must balance strategic interventions (succession, talent health, org effectiveness) with operational integrity (compliance, grievance resolution, payroll accuracy). This document maps that balance.</div>
-      </div>
-      <div class="what-card">
-        <div class="what-card-label">The Discipline Standard</div>
-        <div class="what-card-title">Rhythm Is Identity</div>
-        <div class="what-card-body">An HRBP who works to a rhythm has decided to be proactive. One without a rhythm is defined by whatever landed in their inbox this morning. The difference between a transactional HR generalist and a strategic HRBP is not capability — it is discipline.</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -407,7 +466,7 @@ section{position:relative;}
     <div class="sec-header rv">
       <span class="eyebrow">Section 2 · Daily Operating Rhythm</span>
       <h2 class="sec-title">Nine activities.<br><em>Every working day.</em></h2>
-      <p class="sec-intro">The daily rhythm gives the HRBP a predictable day structure that balances strategic work with operational responsiveness. Each activity has a clear purpose tied to a business outcome — not a process requirement.</p>
+      <p class="sec-intro">How many of these nine activities are you doing today — intentionally, not reactively? The ones you skip are the ones that will surface as problems in 30 days.</p>
     </div>
     <div class="daily-grid rv">
       <div class="daily-card">
@@ -416,7 +475,7 @@ section{position:relative;}
           <span class="daily-card-title">Morning Attendance & Absenteeism Review</span>
           <span class="daily-card-arrow">›</span>
         </div>
-        <div class="daily-card-body">Review attendance data for the HRBP's BU. Identify same-day absenteeism above threshold. Flag production-impacting absences to the HR head / HOD.</div>
+        <div class="daily-card-body">Review attendance data for the HRBP's BU. Identify same-day absenteeism above threshold. Flag production-impacting absences to the HR head / Functional Head.</div>
       </div>
       <div class="daily-card">
         <div class="daily-card-header" onclick="toggleDaily(this)">
@@ -619,7 +678,7 @@ section{position:relative;}
     <div class="sec-header rv">
       <span class="eyebrow">Section 6 · Annual Operating Rhythm</span>
       <h2 class="sec-title">Every activity anchored<br><em>to a business event.</em></h2>
-      <p class="sec-intro">The annual calendar maps HRBP activities to Arvind's April–March financial year. Click any month to see its activities and the business event each one supports.</p>
+      <p class="sec-intro">Are there months where your calendar is completely empty of structured HR activity? That gap is not a quiet period — it is where attrition surprises and succession gaps are quietly forming.</p>
     </div>
     <div class="annual-layout rv">
       <div class="annual-grid-side">
@@ -647,6 +706,10 @@ section{position:relative;}
       <span class="eyebrow">Section 7 · Activity Categorisation Matrix</span>
       <h2 class="sec-title">Four quadrants.<br><em>One target state.</em></h2>
       <p class="sec-intro">Every HRBP activity falls into one of four quadrants defined by Frequency (Recurring vs. Triggered) and Nature (Strategic vs. Operational). Click any quadrant to expand its activity list.</p>
+    </div>
+    <div style="background:rgba(200,16,46,.04);border-left:4px solid var(--red);padding:20px 28px;margin-bottom:32px;" class="rv">
+      <div style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">What HRBPs often miss</div>
+      <p style="font-size:13px;line-height:1.7;color:var(--dark-grey);max-width:680px;">Most HRBPs land in the bottom-right quadrant — triggered and operational — because that is where the inbox points them. The target is top-left: recurring and strategic. Getting there requires protecting your calendar before others fill it.</p>
     </div>
     <div class="matrix-pct-strip rv">
       <div class="mps-card target"><span class="mps-pct">65%</span><div class="mps-label">Recurring · Strategic<br>Target Zone</div></div>
@@ -789,6 +852,24 @@ section{position:relative;}
     <h2 class="closing-statement rv">An HRBP who works to a rhythm has <em>decided to be proactive.</em> An HRBP without a rhythm is one who will be defined by <em>whatever landed in their inbox</em> this morning.</h2>
     <div class="closing-line rv"></div>
   </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;" class="rv">
+    <a href="engagement.html" style="text-decoration:none;background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--red);padding:24px;display:block;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'">
+      <div style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Also read →</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--dark-grey);margin-bottom:6px;">How You Engage</div>
+      <div style="font-size:11px;color:var(--mid-grey);line-height:1.6;">The forums, templates, and escalation protocols that structure your stakeholder relationships.</div>
+    </a>
+    <a href="processes.html" style="text-decoration:none;background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--dark-grey);padding:24px;display:block;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'">
+      <div style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--dark-grey);margin-bottom:8px;">Go deeper →</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--dark-grey);margin-bottom:6px;">Process Library</div>
+      <div style="font-size:11px;color:var(--mid-grey);line-height:1.6;">161 hire-to-retire processes with SOPs and RACI — the execution layer beneath this rhythm.</div>
+    </a>
+    <a href="dashboard.html" style="text-decoration:none;background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--dark-grey);padding:24px;display:block;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'">
+      <div style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--dark-grey);margin-bottom:8px;">Measure it →</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--dark-grey);margin-bottom:6px;">HRBP Dashboard</div>
+      <div style="font-size:11px;color:var(--mid-grey);line-height:1.6;">The 10 KPIs that tell you whether your rhythm is producing outcomes.</div>
+    </a>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -807,7 +888,7 @@ section{position:relative;}
           <li><a href="#">Company Overview</a></li>
           <li><a href="#">Role Charter</a></li>
           <li><a href="#">Engagement Model</a></li>
-          <li><a href="#">Operating Rhythm</a></li>
+          <li><a href="#">Your Calendar</a></li>
         </ul>
       </div>
       <div>
@@ -834,6 +915,14 @@ section{position:relative;}
       <div class="footer-bottom-left">© 2026 Arvind Limited · HRBP Playbook · Internal Document</div>
       <div class="footer-bottom-right">Operating Rhythm · Sections 1–8 · Summer 2026</div>
     </div>
+  </div>
+
+  <div style="background:rgba(200,16,46,.06);border-top:1px solid rgba(200,16,46,.2);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div>
+      <div style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px;">Read this file</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.8);font-weight:600;">Read the full Operating Rhythm as a PDF — save it, reference it, keep it close.</div>
+    </div>
+    <a href="https://drive.google.com/file/d/19mvnfRD5HHylLTWEXytIh_To5osQYVNp/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;background:var(--red);color:var(--white);font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#a00e24'" onmouseout="this.style.background='var(--red)'">Read the PDF →</a>
   </div>
 </footer>
 
@@ -1036,6 +1125,19 @@ function toggleMatrix(id){
     document.getElementById(id+'-items').classList.add('open');
     document.getElementById(id).classList.add('active-cell');
     matrixCells.filter(c=>c!==id).forEach(cid=>document.getElementById(cid).classList.add('dimmed'));
+  }
+}
+
+// ── WHAT-CARD REVEAL ──
+function toggleWhatCard(card) {
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.wc-reveal.open').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.wc-toggle').textContent = '+';
+  });
+  if (!isOpen) {
+    card.classList.add('open');
+    card.querySelector('.wc-toggle').textContent = '−';
   }
 }
 </script>

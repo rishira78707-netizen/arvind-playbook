@@ -286,6 +286,32 @@ section{position:relative;}
   .partnership-grid,.charter-cols,.charter-sigs,.bench-gartner-stats,.hero-meta{grid-template-columns:1fr;}
   .tmpl-meta{flex-direction:column;gap:8px;}
 }
+
+/* HERO SUMMARY STRIP */
+.hero-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;background:var(--light-grey);}
+.hs-cell{background:var(--white);padding:18px 20px;}
+.hs-label{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px;}
+.hs-val{font-size:13px;font-weight:700;color:var(--dark-grey);line-height:1.4;}
+.hs-val em{font-style:normal;color:var(--red);}
+
+/* WM REVEAL CARDS */
+.wm-reveal-card{background:var(--white);border:1px solid var(--light-grey);border-left:3px solid var(--light-grey);padding:0;margin-bottom:8px;cursor:pointer;transition:border-left-color .2s,box-shadow .2s;}
+.wm-reveal-card:hover,.wm-reveal-card.open{border-left-color:var(--red);box-shadow:0 2px 12px rgba(0,0,0,.05);}
+.wm-reveal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;gap:12px;}
+.wm-reveal-title{font-size:13px;font-weight:700;color:var(--dark-grey);}
+.wm-reveal-icon{width:24px;height:24px;border-radius:50%;background:var(--light-grey);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--dark-grey);flex-shrink:0;transition:background .2s,color .2s;}
+.wm-reveal-card.open .wm-reveal-icon{background:var(--red);color:var(--white);}
+.wm-reveal-body{max-height:0;overflow:hidden;padding:0 20px;font-size:13px;line-height:1.75;color:rgba(45,45,45,.7);transition:max-height .4s cubic-bezier(.22,1,.36,1),padding .3s;}
+.wm-reveal-card.open .wm-reveal-body{max-height:200px;padding:0 20px 16px;}
+
+/* PG REVEAL CARDS */
+.pg-reveal{cursor:pointer;padding:0;}
+.pg-card-summary{display:flex;align-items:center;justify-content:space-between;padding:24px 24px;gap:16px;}
+.pg-card-preview{font-size:12px;color:var(--mid-grey);margin-top:4px;}
+.pg-toggle{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--light-grey);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--mid-grey);flex-shrink:0;transition:all .2s;}
+.pg-reveal.open .pg-toggle{background:var(--red);border-color:var(--red);color:var(--white);}
+.pg-card-detail{max-height:0;overflow:hidden;padding:0 24px;font-size:13px;line-height:1.75;color:rgba(45,45,45,.7);transition:max-height .4s cubic-bezier(.22,1,.36,1),padding .3s;}
+.pg-reveal.open .pg-card-detail{max-height:300px;padding:0 24px 20px;}
 </style>
 </head>
 <body>
@@ -305,11 +331,11 @@ section{position:relative;}
       <li><a href="index.html">Home</a></li>
       <li><a href="company.html">Company</a></li>
       <li><a href="stakeholders.html">People</a></li>
-      <li><a href="charter.html">Role Charter</a></li>
-      <li><a href="engagement.html" class="active">Engagement</a></li>
-      <li><a href="rhythm.html">Operating Rhythm</a></li>
+      <li><a href="charter.html">Your Role</a></li>
+      <li><a href="engagement.html" class="active">How You Engage</a></li>
+      <li><a href="rhythm.html">Your Calendar</a></li>
       <li><a href="processes.html">Processes</a></li>
-      <li><a href="#">Dashboard</a></li>
+      <li><a href="dashboard.html">Your Dashboard</a></li>
     </ul>
   </div>
 </nav>
@@ -320,7 +346,7 @@ section{position:relative;}
     <div class="hero-inner">
       <div>
         <div class="hero-breadcrumb">
-          <a href="#">Home</a>&nbsp;/&nbsp;<a href="#">Role Charter</a>&nbsp;/&nbsp;<span>Engagement Model</span>
+          <a href="#">Home</a>&nbsp;/&nbsp;<a href="#">Your Role</a>&nbsp;/&nbsp;<span>Engagement Model</span>
         </div>
         <h1 class="hero-title">The <em>Engagement Model</em><br>for Arvind HRBPs</h1>
         <p class="hero-body">Defines how HRBPs interact with stakeholders — with structured forums, ready-to-use agenda templates, escalation pathways, and the question bank that separates strategic partners from administrators.</p>
@@ -349,6 +375,21 @@ section{position:relative;}
       </div>
     </div>
   </div>
+
+  <div class="hero-strip rv">
+    <div class="hs-cell">
+      <div class="hs-label">What this is</div>
+      <div class="hs-val">The operating model that defines how you structure every relationship, forum, and conversation as an HRBP at Arvind.</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-label">When to use it</div>
+      <div class="hs-val">Before your first 1:1 with a business leader. When a relationship is stuck. When you need to escalate — or know when not to.</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-label">Time to read</div>
+      <div class="hs-val"><em>10 min</em> full read · <em>3 min</em> for the cadence and templates only.</div>
+    </div>
+  </div>
 </section>
 
 <!-- SECTION SUB-NAV -->
@@ -375,17 +416,26 @@ section{position:relative;}
         <div class="wm-source">— Gartner Research · Cross-Industry HRBP Effectiveness</div>
       </div>
       <div class="wm-right">
-        <div class="wm-point">
-          <div class="wm-point-title">The problem this document solves</div>
-          <div class="wm-point-body">Without structure, HRBPs default to being reactive. Business leaders default to treating HR as a service desk. This document replaces that dynamic with a defined operating model — forums, templates, boundaries, and tools.</div>
+        <div class="wm-reveal-card rv" onclick="toggleWmCard(this)">
+          <div class="wm-reveal-header">
+            <div class="wm-reveal-title">The problem this document solves</div>
+            <div class="wm-reveal-icon">+</div>
+          </div>
+          <div class="wm-reveal-body">Without structure, HRBPs default to being reactive. Business leaders default to treating HR as a service desk. This document replaces that dynamic with a defined operating model — forums, templates, boundaries, and tools.</div>
         </div>
-        <div class="wm-point">
-          <div class="wm-point-title">An HRBP without this model</div>
-          <div class="wm-point-body">An HRBP who waits for requests is a service desk. One who only enforces policy is a compliance officer. Neither is a partner. Partnership requires structure — and structure requires this model to be activated, not just read.</div>
+        <div class="wm-reveal-card rv" onclick="toggleWmCard(this)">
+          <div class="wm-reveal-header">
+            <div class="wm-reveal-title">An HRBP without this model</div>
+            <div class="wm-reveal-icon">+</div>
+          </div>
+          <div class="wm-reveal-body">An HRBP who waits for requests is a service desk. One who only enforces policy is a compliance officer. Neither is a partner. Partnership requires structure — and structure requires this model to be activated, not just read.</div>
         </div>
-        <div class="wm-point">
-          <div class="wm-point-title">What changes when this is in place</div>
-          <div class="wm-point-body">Business leaders know when to expect HR insight. HRBPs know what to bring and when. Escalations have a path. Conversations have a format. The relationship becomes predictable — and predictability is the foundation of trust.</div>
+        <div class="wm-reveal-card rv" onclick="toggleWmCard(this)">
+          <div class="wm-reveal-header">
+            <div class="wm-reveal-title">What changes when this is in place</div>
+            <div class="wm-reveal-icon">+</div>
+          </div>
+          <div class="wm-reveal-body">Business leaders know when to expect HR insight. HRBPs know what to bring and when. Escalation stops feeling like a failure and starts feeling like a protocol. The relationship stops being reactive and starts being structural.</div>
         </div>
       </div>
     </div>
@@ -401,16 +451,28 @@ section{position:relative;}
       <p class="section-intro">The HRBP brings workforce data and strategic perspective. The plant head brings business context. Neither makes consistently good people decisions without the other.</p>
     </div>
     <div class="partnership-grid rv">
-      <div class="pg-card">
-        <div class="pg-card-label">What Partnership Means at Arvind</div>
-        <div class="pg-card-body">Partnership is a shared accountability for people outcomes — not a service arrangement. The HRBP brings workforce data and strategic perspective; the plant head brings business context. Neither makes consistently good people decisions without the other.
-          <em>An HRBP who waits for requests is a service desk. One who only enforces policy is a compliance officer. Neither is a partner.</em>
+      <div class="pg-card pg-reveal" onclick="togglePgCard(this)">
+        <div class="pg-card-summary">
+          <div>
+            <div class="pg-card-label">What Partnership Means at Arvind</div>
+            <div class="pg-card-preview">Shared accountability, not a service arrangement.</div>
+          </div>
+          <div class="pg-toggle">+</div>
+        </div>
+        <div class="pg-card-detail">Partnership is a shared accountability for people outcomes — not a service arrangement. The HRBP brings workforce data and strategic perspective; the plant head brings business context. Neither makes consistently good people decisions without the other.
+          <br><br><em>An HRBP who waits for requests is a service desk. One who only enforces policy is a compliance officer. Neither is a partner.</em>
         </div>
       </div>
-      <div class="pg-card">
-        <div class="pg-card-label">What Business Leaders Must Bring</div>
-        <div class="pg-card-body">The partnership works in both directions. Business leaders must give the HRBP real access: a standing seat in business reviews, honest conversation about people challenges, and the willingness to act on HR insight.
-          <em>Research from Brandon Hall Group shows CEOs expect HRBPs to interpret talent analytics, enable talent management, and communicate business impact. That expectation is only met when leaders treat the HRBP as a peer.</em>
+      <div class="pg-card pg-reveal" onclick="togglePgCard(this)">
+        <div class="pg-card-summary">
+          <div>
+            <div class="pg-card-label">What Business Leaders Must Bring</div>
+            <div class="pg-card-preview">The partnership works in both directions.</div>
+          </div>
+          <div class="pg-toggle">+</div>
+        </div>
+        <div class="pg-card-detail">The partnership works in both directions. Business leaders must give the HRBP real access: a standing seat in business reviews, honest conversation about people challenges, and the willingness to act on HR insight.
+          <br><br><em>Research from Brandon Hall Group shows CEOs expect HRBPs to interpret talent analytics, enable talent management, and communicate business impact. That expectation is only met when leaders treat the HRBP as a peer.</em>
         </div>
       </div>
     </div>
@@ -488,6 +550,10 @@ section{position:relative;}
       <h2 class="section-title">Trust is earned<br><em>in sequence.</em></h2>
       <p class="section-intro">Adapted from Vodafone's HRBP transition model. Each rung is a prerequisite for the next. The most common failure is attempting Rung 4 before building the foundations at Rungs 1 and 2.</p>
     </div>
+    <div style="background:rgba(200,16,46,.04);border-left:4px solid var(--red);padding:20px 28px;margin-bottom:32px;" class="rv">
+      <div style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">What HRBPs often get wrong</div>
+      <p style="font-size:13px;line-height:1.7;color:var(--dark-grey);max-width:680px;">Most HRBPs try to jump to Rung 4 — challenging leadership, driving strategy — before they have earned the right to be heard. Rungs 1 and 2 are not optional warm-ups. They are the permission structure for everything that follows.</p>
+    </div>
     <div class="cred-steps rv">
       <div class="cred-step">
         <div class="cred-step-num">1</div>
@@ -539,7 +605,7 @@ section{position:relative;}
     <div class="section-header rv">
       <span class="section-eyebrow">Section 2 · Touchpoint Cadence</span>
       <h2 class="section-title">Six forums that replace<br><em>reactive, ad-hoc HR.</em></h2>
-      <p class="section-intro">These six forums form the operating rhythm of the HRBP model at Arvind. Each has a defined purpose, a clear owner, and a non-negotiable or recommended status.</p>
+      <p class="section-intro">Which of these forums are you running consistently? Most HRBPs have the monthly 1:1 — but skip the quarterly skip-level and the succession review. That gap is exactly where strategic credibility is lost.</p>
     </div>
     <div class="cadence-status-strip rv">
       <div class="cs-badge non-neg"><div class="cs-dot r"></div>5 Non-Negotiable — Cannot be cancelled, shortened, or rescheduled without a genuine emergency</div>
@@ -787,7 +853,7 @@ section{position:relative;}
       <div class="esc-flow">
         <div class="esc-node">
           <div class="esc-node-connector"><div class="esc-node-icon trigger">⚑</div><div class="esc-node-line"></div></div>
-          <div class="esc-node-content"><div class="esc-node-label trigger">Trigger</div><div class="esc-node-text">The business leader repeatedly goes directly to HOD (IR), the COE, or GCC for M-grade people matters without involving the HRBP.</div></div>
+          <div class="esc-node-content"><div class="esc-node-label trigger">Trigger</div><div class="esc-node-text">The business leader repeatedly goes directly to Functional Head (IR), the COE, or GCC for M-grade people matters without involving the HRBP.</div></div>
         </div>
         <div class="esc-node">
           <div class="esc-node-connector"><div class="esc-node-icon action">→</div><div class="esc-node-line"></div></div>
@@ -924,8 +990,8 @@ section{position:relative;}
         <ul class="footer-links">
           <li><a href="#">Home &amp; Landing</a></li>
           <li><a href="#">Company Overview</a></li>
-          <li><a href="#">Role Charter</a></li>
-          <li><a href="#">Engagement Model</a></li>
+          <li><a href="#">Your Role</a></li>
+          <li><a href="#">How You Engage</a></li>
           <li><a href="#">Operating Rhythm</a></li>
         </ul>
       </div>
@@ -955,6 +1021,14 @@ section{position:relative;}
       <div class="footer-bottom-left">© 2026 Arvind Limited · HRBP Playbook · Internal Document</div>
       <div class="footer-bottom-right">Engagement Model · Section 1–6 · Summer 2026</div>
     </div>
+  </div>
+
+  <div style="background:rgba(200,16,46,.06);border-top:1px solid rgba(200,16,46,.2);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div>
+      <div style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px;">Before you begin</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.8);font-weight:600;">Read the full engagement model before your first business leader meeting.</div>
+    </div>
+    <a href="https://drive.google.com/file/d/1u1MPvJHB2WAEZ13FssysqqJhkg9-yoE9/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;background:var(--red);color:var(--white);font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='https://drive.google.com/file/d/1u1MPvJHB2WAEZ13FssysqqJhkg9-yoE9/view?usp=sharinga00e24'" onmouseout="this.style.background='var(--red)'">Engagement Model →</a>
   </div>
 </footer>
 
@@ -1256,6 +1330,31 @@ function downloadCharter(){
   const a=document.createElement('a');
   a.href=url;a.download='Arvind_HRBP_Mutual_Commitment_Charter.html';
   a.click();URL.revokeObjectURL(url);
+}
+
+// ── WM REVEAL CARDS ──
+function toggleWmCard(card) {
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.wm-reveal-card.open').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.wm-reveal-icon').textContent = '+';
+  });
+  if (!isOpen) {
+    card.classList.add('open');
+    card.querySelector('.wm-reveal-icon').textContent = '−';
+  }
+}
+// ── PG REVEAL CARDS ──
+function togglePgCard(card) {
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.pg-reveal.open').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.pg-toggle').textContent = '+';
+  });
+  if (!isOpen) {
+    card.classList.add('open');
+    card.querySelector('.pg-toggle').textContent = '−';
+  }
 }
 </script>
 </body>

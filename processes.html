@@ -72,6 +72,20 @@ section{position:relative;}
 .hs-val{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--dark-grey);}
 .hs-sub{font-size:10px;color:var(--mid-grey);margin-top:3px;}
 
+/* HERO QUICK-SELECT PANEL */
+.hero-right-wrap{display:flex;flex-direction:column;gap:2px;}
+.hero-qs-panel{background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--red);padding:24px 22px;}
+.hero-qs-label{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:block;}
+.hero-qs-field{margin-bottom:12px;}
+.hero-qs-field label{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mid-grey);display:block;margin-bottom:6px;}
+.hero-qs-select{width:100%;padding:10px 32px 10px 12px;font-family:var(--font-body);font-size:12px;font-weight:700;color:var(--dark-grey);background:var(--off-white);border:none;border-bottom:2px solid var(--light-grey);outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23C8102E'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:border-color .2s,background .2s;}
+.hero-qs-select:focus{border-bottom-color:var(--red);background:var(--white);}
+.hero-qs-select:disabled{opacity:.45;color:var(--mid-grey);}
+.hero-qs-btn{width:100%;padding:11px 20px;background:var(--red);color:var(--white);border:none;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:4px;transition:background .2s;display:flex;align-items:center;justify-content:space-between;}
+.hero-qs-btn:hover{background:var(--red-dark);}
+.hero-qs-btn::after{content:"→";font-size:13px;}
+.hero-qs-btn:disabled{opacity:.4;pointer-events:none;}
+
 /* SEARCH + FILTER */
 #finder{padding:64px 0;background:var(--white);}
 .finder-box{background:var(--dark-grey);padding:40px 44px;position:relative;}
@@ -312,11 +326,11 @@ section{position:relative;}
       <li><a href="index.html">Home</a></li>
       <li><a href="company.html">Company</a></li>
       <li><a href="stakeholders.html">People</a></li>
-      <li><a href="charter.html">Role Charter</a></li>
-      <li><a href="engagement.html">Engagement</a></li>
-      <li><a href="rhythm.html">Rhythm</a></li>
+      <li><a href="charter.html">Your Role</a></li>
+      <li><a href="engagement.html">How You Engage</a></li>
+      <li><a href="rhythm.html">Your Calendar</a></li>
       <li><a href="processes.html" class="active">Processes</a></li>
-      <li><a href="#">Dashboard</a></li>
+      <li><a href="dashboard.html">Your Dashboard</a></li>
     </ul>
   </div>
 </nav>
@@ -426,11 +440,35 @@ section{position:relative;}
           </div>
         </div>
       </div>
-      <div class="hero-stats rv">
-        <div class="hs-card"><div class="hs-label">HR Functions</div><div class="hs-val" id="fn-count">14</div><div class="hs-sub">Full hire-to-retire lifecycle</div></div>
-        <div class="hs-card alt"><div class="hs-label">Total Processes</div><div class="hs-val" id="proc-count">161</div><div class="hs-sub">Mapped across all functions</div></div>
-        <div class="hs-card"><div class="hs-label">Fields per Process</div><div class="hs-val">17</div><div class="hs-sub">RACI · SOP · Decision Tree · more</div></div>
-        <div class="hs-card alt"><div class="hs-label">Data Last Updated</div><div class="hs-val" id="last-upload" style="font-size:14px;">Built-in</div><div class="hs-sub" id="last-upload-sub">Upload new data below</div></div>
+      <div class="hero-right-wrap rv">
+        <!-- Stats row — compact 2-up -->
+        <div class="hero-stats" style="grid-template-columns:1fr 1fr;">
+          <div class="hs-card"><div class="hs-label">HR Functions</div><div class="hs-val" id="fn-count">14</div><div class="hs-sub">Full hire-to-retire lifecycle</div></div>
+          <div class="hs-card alt"><div class="hs-label">Total Processes</div><div class="hs-val" id="proc-count">161</div><div class="hs-sub">Mapped across all functions</div></div>
+        </div>
+        <!-- Quick-select panel — visible on landing -->
+        <div class="hero-qs-panel">
+          <span class="hero-qs-label">Find a Process</span>
+          <div class="hero-qs-field">
+            <label>HR Function</label>
+            <select class="hero-qs-select" id="fn-select" onchange="onFnChange()">
+              <option value="">— Select Function —</option>
+            </select>
+          </div>
+          <div class="hero-qs-field">
+            <label>Process</label>
+            <select class="hero-qs-select" id="proc-select" disabled>
+              <option value="">— Select Process —</option>
+            </select>
+          </div>
+          <button class="hero-qs-btn" id="hero-load-btn" onclick="loadProcess()" disabled>View Process</button>
+        </div>
+        <!-- Upload status strip -->
+        <div style="background:var(--off-white);border:1px solid var(--light-grey);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+          <div style="font-size:10px;color:var(--mid-grey);"><span id="last-upload" style="font-weight:700;color:var(--dark-grey);">Built-in data</span> · <span id="last-upload-sub">Upload new file below</span></div>
+          <label style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);cursor:pointer;white-space:nowrap;" for="hero-upload-trigger">↑ Update</label>
+          <input type="file" id="hero-upload-trigger" accept=".xlsx,.xls" style="display:none;" onchange="handleUpload(event)">
+        </div>
       </div>
     </div>
   </div>
@@ -492,22 +530,10 @@ section{position:relative;}
         <span class="search-icon">⌕</span>
         <div class="search-dropdown" id="search-dropdown"></div>
       </div>
-      <div class="filter-row">
-        <div class="filter-field">
-          <label>HR Function</label>
-          <select class="filter-select" id="fn-select" onchange="onFnChange()">
-            <option value="">— Select Function —</option>
-          </select>
-        </div>
-        <div class="filter-field">
-          <label>Process</label>
-          <select class="filter-select" id="proc-select" disabled>
-            <option value="">— Select Process —</option>
-          </select>
-        </div>
-        <div class="filter-field">
-          <button class="filter-btn" onclick="loadProcess()">View Process →</button>
-        </div>
+      <div class="filter-row" style="margin-top:8px;">
+        <p style="font-size:12px;color:rgba(255,255,255,.45);font-style:italic;grid-column:1/-1;">
+          Use the <strong style="color:rgba(255,255,255,.8);">Find a Process</strong> panel at the top of the page to select a function and process, or search above.
+        </p>
       </div>
     </div>
   </div>
@@ -1337,7 +1363,20 @@ function handleUpload(e){
       const ts=now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' '+now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
       localStorage.setItem('proc_ts',ts);localStorage.setItem('proc_file',file.name);
       localStorage.setItem('proc_cnt',newProcs.length);localStorage.setItem('proc_fns',[...new Set(newProcs.map(p=>p.function))].length);
-      updateUploadStrip();initDropdowns();
+      try{localStorage.setItem('proc_data',JSON.stringify(newProcs));}catch(e){console.warn('localStorage full, data not persisted:',e);}
+      updateUploadStrip();
+      initDropdowns();
+      // Reset dropdowns to blank so user sees fresh state
+      document.getElementById('fn-select').value='';
+      const pSel=document.getElementById('proc-select');
+      pSel.innerHTML='<option value="">— Select Process —</option>';
+      pSel.disabled=true;
+      currentProcIdx=-1;
+      const pv=document.getElementById('process-view');
+      if(pv)pv.classList.remove('visible');
+      const si=document.getElementById('search-input');
+      if(si)si.value='';
+      closeSearch();
       document.getElementById('upload-status').innerHTML=`<span style="color:var(--green);font-weight:700;">✓ Loaded ${newProcs.length} processes from ${escH(file.name)}</span>`;
     }catch(err){document.getElementById('upload-status').innerHTML=`<span style="color:var(--red);">Error: ${escH(err.message)}</span>`;}
   };
@@ -1359,10 +1398,42 @@ function updateUploadStrip(){
 
 // INIT
 document.addEventListener('DOMContentLoaded',()=>{
+  // Restore uploaded data from localStorage if available
+  const saved=localStorage.getItem('proc_data');
+  if(saved){
+    try{
+      const parsed=JSON.parse(saved);
+      if(parsed&&parsed.length){PROCESSES=parsed;}
+    }catch(e){localStorage.removeItem('proc_data');}
+  }
   initDropdowns();renderGlossary();updateUploadStrip();
   gsap.from('.hero-title',{y:28,opacity:0,duration:.9,ease:'power3.out',delay:.3});
   gsap.from('.hero-body',{y:18,opacity:0,duration:.75,ease:'power2.out',delay:.5});
 });
+
+// ── HERO QUICK-SELECT: enable load button when process is chosen ──
+(function(){
+  const procSel = document.getElementById('proc-select');
+  const heroBtn = document.getElementById('hero-load-btn');
+  if(!procSel || !heroBtn) return;
+  // Override onFnChange to also update button state
+  const origOnFnChange = window.onFnChange;
+  // Watch proc-select changes
+  procSel.addEventListener('change', function(){
+    if(heroBtn) heroBtn.disabled = !this.value;
+  });
+  // Also patch loadProcess to scroll into view after loading
+  const origLoad = window.loadProcess;
+  window.loadProcess = function(){
+    if(origLoad) origLoad();
+    setTimeout(()=>{
+      const pv = document.getElementById('process-view');
+      if(pv && pv.classList.contains('visible')){
+        pv.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    }, 80);
+  };
+})();
 </script>
 </body>
 </html>

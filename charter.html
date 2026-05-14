@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Role Charter — Arvind Limited · HRBP Playbook</title>
+<title>Your Role — Arvind Limited · HRBP Playbook</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -67,6 +67,13 @@ section{position:relative;}
 .hmc-val{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--dark-grey);}
 .hmc-sub{font-size:11px;color:var(--mid-grey);margin-top:4px;}
 
+/* ── HERO SUMMARY STRIP ── */
+.hero-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;background:var(--light-grey);}
+.hs-cell{background:var(--white);padding:18px 20px;}
+.hs-label{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px;}
+.hs-val{font-size:13px;font-weight:700;color:var(--dark-grey);line-height:1.4;}
+.hs-val em{font-style:normal;color:var(--red);}
+
 /* ── SECTION SUB-NAV ── */
 #section-nav{position:sticky;top:var(--nav-h);z-index:500;background:var(--white);border-bottom:2px solid var(--light-grey);overflow-x:auto;}
 .section-nav-inner{display:flex;max-width:var(--max-w);margin:0 auto;padding:0 48px;}
@@ -110,17 +117,23 @@ section{position:relative;}
    SECTION 2 · PURPOSE STATEMENT
 ══════════════════════════════════ */
 #purpose{padding:100px 0;background:var(--white);}
-.purpose-statement-wrap{position:relative;padding:40px 48px;background:var(--dark-grey);margin-bottom:56px;}
+.purpose-statement-wrap{position:relative;padding:48px 56px;background:var(--dark-grey);margin-bottom:56px;}
 .purpose-statement-wrap::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red);}
-.purpose-statement{font-family:var(--font-display);font-size:clamp(18px,2.2vw,28px);font-weight:400;line-height:1.5;color:var(--white);}
+.purpose-statement{font-family:var(--font-display);font-size:clamp(17px,2vw,26px);font-weight:400;line-height:1.75;color:rgba(255,255,255,.9);}
 .purpose-statement strong{font-weight:700;color:var(--white);}
-.purpose-phrase{display:inline;position:relative;color:var(--white);}
-.purpose-phrase.annotated{color:var(--red);font-weight:600;cursor:default;border-bottom:1px dashed rgba(200,16,46,.5);}
-.annotation-tip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);background:var(--dark-grey);border:1px solid rgba(200,16,46,.3);border-left:3px solid var(--red);padding:14px 18px;width:280px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.4);}
-.annotation-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--dark-grey);}
-.purpose-phrase.annotated:hover .annotation-tip{opacity:1;}
+/* Annotated phrase — purely inline, tooltip via JS fixed positioning */
+.purpose-phrase{color:rgba(255,255,255,.9);}
+.purpose-phrase.annotated{color:var(--red);font-weight:600;cursor:default;border-bottom:1px dashed rgba(200,16,46,.4);}
+/* Tooltip rendered as fixed overlay, positioned by JS — never disrupts text flow */
+#annotation-tooltip{position:fixed;background:#1a1a1a;border:1px solid rgba(200,16,46,.3);border-left:3px solid var(--red);padding:14px 18px;width:260px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:9990;box-shadow:0 8px 32px rgba(0,0,0,.7);}
+#annotation-tooltip.visible{opacity:1;}
+#annotation-tooltip::after{content:'';position:absolute;top:100%;left:24px;border:6px solid transparent;border-top-color:#1a1a1a;}
 .annotation-tip-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
-.annotation-tip-text{font-size:11px;line-height:1.6;color:rgba(255,255,255,.7);}
+.annotation-tip-text{font-size:11px;line-height:1.6;color:rgba(255,255,255,.75);}
+/* Legend chips */
+.purpose-phrase-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);}
+.ppl-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid rgba(200,16,46,.25);background:rgba(200,16,46,.06);font-size:10px;font-weight:700;color:rgba(200,16,46,.9);letter-spacing:.04em;}
+.ppl-chip::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;}
 
 .purpose-table{width:100%;border-collapse:collapse;}
 .purpose-table thead th{background:var(--dark-grey);color:var(--white);padding:12px 16px;text-align:left;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;}
@@ -307,6 +320,32 @@ section{position:relative;}
   .compare-grid{grid-template-columns:140px 1fr 1fr;}
   .hero-meta{grid-template-columns:1fr 1fr;}
 }
+
+/* ── EXPANDABLE RESP CARDS ── */
+.resp-card { background:var(--off-white); border-left:3px solid var(--light-grey); padding:0; transition:border-left-color .25s, box-shadow .25s; overflow:hidden; }
+.resp-card:hover { border-left-color:var(--red); }
+.resp-card.open { border-left-color:var(--red); box-shadow:0 4px 20px rgba(0,0,0,.06); }
+.resp-card-summary {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 24px; cursor:pointer; gap:16px;
+}
+.resp-card-summary-left { display:flex; flex-direction:column; gap:4px; flex:1; }
+.resp-card-label { font-size:9px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--red); }
+.resp-card-title { font-family:var(--font-display); font-size:15px; font-weight:600; color:var(--dark-grey); line-height:1.3; }
+.resp-card-preview { font-size:11px; color:var(--mid-grey); line-height:1.5; margin-top:2px; }
+.resp-card-toggle {
+  width:28px; height:28px; border-radius:50%; border:1.5px solid var(--light-grey);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  font-size:16px; color:var(--mid-grey); transition:all .2s; font-weight:300; line-height:1;
+}
+.resp-card.open .resp-card-toggle { background:var(--red); border-color:var(--red); color:var(--white); }
+.resp-card-body-wrap {
+  max-height:0; overflow:hidden;
+  transition:max-height .4s cubic-bezier(.22,1,.36,1), padding .3s;
+  padding:0 24px;
+}
+.resp-card.open .resp-card-body-wrap { max-height:300px; padding:0 24px 20px; }
+.resp-card-body { font-size:13px; line-height:1.75; color:rgba(45,45,45,.7); padding-top:12px; border-top:1px solid var(--light-grey); }
 </style>
 </head>
 <body>
@@ -327,11 +366,11 @@ section{position:relative;}
       <li><a href="index.html">Home</a></li>
       <li><a href="company.html">Company</a></li>
       <li><a href="stakeholders.html">People</a></li>
-      <li><a href="charter.html" class="active">Role Charter</a></li>
-      <li><a href="engagement.html">Engagement</a></li>
-      <li><a href="rhythm.html">Operating Rhythm</a></li>
+      <li><a href="charter.html" class="active">Your Role</a></li>
+      <li><a href="engagement.html">How You Engage</a></li>
+      <li><a href="rhythm.html">Your Calendar</a></li>
       <li><a href="processes.html">Processes</a></li>
-      <li><a href="#">Dashboard</a></li>
+      <li><a href="dashboard.html">Your Dashboard</a></li>
     </ul>
   </div>
 </nav>
@@ -342,7 +381,7 @@ section{position:relative;}
     <div class="hero-inner">
       <div>
         <div class="hero-breadcrumb">
-          <a href="#">Home</a> &nbsp;/&nbsp; <a href="#">Company</a> &nbsp;/&nbsp; <span>Role Charter</span>
+          <a href="#">Home</a> &nbsp;/&nbsp; <a href="#">Company</a> &nbsp;/&nbsp; <span>Your Role</span>
         </div>
         <h1 class="hero-title">Defining the <em>HRBP Role</em><br>at Arvind Limited</h1>
         <p class="hero-body">Role clarity is where HRBP effectiveness begins. This charter defines the philosophy, scope, responsibilities, and decision rights that govern how the HRBP function operates across Arvind's business units.</p>
@@ -370,6 +409,20 @@ section{position:relative;}
         </div>
       </div>
     </div>
+    <div class="hero-strip rv">
+      <div class="hs-cell">
+        <div class="hs-label">What this is</div>
+        <div class="hs-val">The definitive charter for the <em>HRBP role</em> at Arvind — scope, accountability, and decision rights.</div>
+      </div>
+      <div class="hs-cell">
+        <div class="hs-label">When to use it</div>
+        <div class="hs-val">Role clarity conversations, onboarding new HRBPs, or resolving scope disputes with Plant HR or COE.</div>
+      </div>
+      <div class="hs-cell">
+        <div class="hs-label">Time to read</div>
+        <div class="hs-val"><em>8 min</em> full read · <em>2 min</em> summary scan via section nav above.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -382,7 +435,7 @@ section{position:relative;}
     <a class="snav-btn" href="#responsibilities">Key Responsibilities</a>
     <a class="snav-btn" href="#decision-rights">Decision Rights Framework</a>
     <a class="snav-btn" href="#raci">RACI Matrix</a>
-    <a class="snav-btn" href="#differentiation">Role Differentiation — HRBP vs HOD (IR) vs COE vs GCC</a>
+    <a class="snav-btn" href="#differentiation">Role Differentiation — HRBP vs Functional Head (IR) vs COE vs GCC</a>
   </div>
 </div>
 
@@ -395,7 +448,7 @@ section{position:relative;}
       <div class="section-header rv">
         <span class="section-eyebrow" style="color:rgba(200,16,46,.8)">Section 1 · Role Foundation</span>
         <h2 class="section-title" style="color:var(--white)">Built on the <em>Ulrich Model.</em><br>Measured by business outcomes.</h2>
-        <p class="section-intro" style="color:rgba(255,255,255,.55)">The HRBP at Arvind is not a generalist HR function. It is the people-strategy engine of the business unit — embedded, accountable, and evaluated on impact rather than process completion. Three functions, one model.</p>
+        <p class="section-intro" style="color:rgba(255,255,255,.55)">Why does having three separate HR functions — rather than one — produce better outcomes? Because it forces clarity of role. The HRBP is the people-strategy engine of the BU: embedded, accountable, measured on impact not process completion.</p>
       </div>
       <div class="model-strip rv">
         <div class="model-card">
@@ -485,18 +538,37 @@ section{position:relative;}
     <div class="section-header rv">
       <span class="section-eyebrow">1.2 · Purpose Statement</span>
       <h2 class="section-title">The single point of accountability<br>for <em>people outcomes.</em></h2>
-      <p class="section-intro">Hover over the highlighted phrases to understand what each means in practice at Arvind.</p>
+      <p class="section-intro">What separates a real business partner from a glorified HR admin? Clarity of purpose. Hover the highlighted phrases to see what each commitment means in practice at Arvind.</p>
+    </div>
+    <!-- Single shared tooltip element, positioned by JS -->
+    <div id="annotation-tooltip" role="tooltip">
+      <div class="annotation-tip-label" id="atip-label"></div>
+      <div class="annotation-tip-text" id="atip-text"></div>
     </div>
     <div class="purpose-statement-wrap rv">
       <p class="purpose-statement">
         The HRBP at Arvind Limited is the
-        <span class="purpose-phrase annotated">single point of accountability for people outcomes<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">No ambiguity about who owns people outcomes in a BU. The HRBP cannot pass accountability to HOD (IR) or COE when a talent outcome fails.</div></span></span>
+        <span class="purpose-phrase annotated"
+          data-label="What this means"
+          data-tip="No ambiguity about who owns people outcomes in a BU. The HRBP cannot pass accountability to the Functional Head (IR) or COE when a talent outcome fails.">single point of accountability for people outcomes</span>
         at the business unit level. The role
-        <span class="purpose-phrase annotated">translates organisational intent into workforce action<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">Converts Arvind's annual HR strategy into a BU-specific people agenda, making enterprise priorities operational at the unit level.</div></span></span>,
-        <span class="purpose-phrase annotated">enables leaders to make better and more informed people decisions<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">The HRBP coaches and equips managers rather than managing people on their behalf. Decision capability improves; dependence does not increase.</div></span></span>,
+        <span class="purpose-phrase annotated"
+          data-label="What this means"
+          data-tip="Converts Arvind's annual HR strategy into a BU-specific people agenda, making enterprise priorities operational at the unit level.">translates organisational intent into workforce action</span>,
+        <span class="purpose-phrase annotated"
+          data-label="What this means"
+          data-tip="The HRBP coaches and equips managers rather than managing people on their behalf. Decision capability improves; dependence does not increase.">enables leaders to make better and more informed people decisions</span>,
         and ensures that HR's contribution to business performance is
-        <span class="purpose-phrase annotated">measurable, visible, and credible<span class="annotation-tip"><div class="annotation-tip-label">What this means</div><div class="annotation-tip-text">HR impact is tracked via a defined scorecard, presented at business reviews, and attributable to specific HRBP interventions.</div></span></span>.
+        <span class="purpose-phrase annotated"
+          data-label="What this means"
+          data-tip="HR impact is tracked via a defined scorecard, presented at business reviews, and attributable to specific HRBP interventions.">measurable, visible, and credible</span>.
       </p>
+      <div class="purpose-phrase-legend">
+        <span class="ppl-chip">Single point of accountability</span>
+        <span class="ppl-chip">Translates intent into action</span>
+        <span class="ppl-chip">Enables better decisions</span>
+        <span class="ppl-chip">Measurable, visible, credible</span>
+      </div>
     </div>
     <div class="rv">
       <table class="purpose-table">
@@ -509,7 +581,7 @@ section{position:relative;}
         <tbody>
           <tr>
             <td>Single point of accountability</td>
-            <td>No ambiguity about who owns people outcomes in a BU. The HRBP cannot pass accountability to HOD (IR) or COE when a talent outcome fails.</td>
+            <td>No ambiguity about who owns people outcomes in a BU. The HRBP cannot pass accountability to the Functional Head (IR) or COE when a talent outcome fails.</td>
           </tr>
           <tr>
             <td>Embedded strategic partner</td>
@@ -541,7 +613,7 @@ section{position:relative;}
     <div class="section-header rv">
       <span class="section-eyebrow">1.3 · Role Scope</span>
       <h2 class="section-title">What the HRBP <em>owns, influences,</em><br>and must never do.</h2>
-      <p class="section-intro">Diagnostic interviews indicate HRBPs currently spend 70–75% of their time on activities that fall outside the scope defined below. This table is the reference for all scope decisions.</p>
+      <p class="section-intro">Diagnostic interviews show HRBPs currently spend 70–75% of their time on activities that fall <em>outside</em> the scope defined here. If that ratio holds, the role is not functioning. Use this table as the reference for every scope decision.</p>
     </div>
     <div class="scope-tabs-wrap rv">
       <button class="scope-tab-btn active" data-tab="owns" onclick="switchScopeTab(this)">
@@ -570,8 +642,8 @@ section{position:relative;}
 
     <div class="scope-panel" id="sp-influences">
       <div class="scope-items">
-        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor attrition patterns indicating BU-level systemic risk</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP monitors and interprets shopfloor attrition patterns as a signal of BU-level systemic risk — advising HOD (IR) on intervention but not owning the resolution process.</div></div>
-        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor cultural issues — advises HOD (IR) on intervention</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Where shopfloor cultural issues indicate BU-level risk, the HRBP advises HOD (IR) on the appropriate intervention. HRBP provides the strategic lens; HOD (IR) executes on the ground.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor attrition patterns indicating BU-level systemic risk</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP monitors and interprets shopfloor attrition patterns as a signal of BU-level systemic risk — advising the Functional Head (IR) on intervention but not owning the resolution process.</div></div>
+        <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor cultural issues — advises the Functional Head (IR) on intervention</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Where shopfloor cultural issues indicate BU-level risk, the HRBP advises the Functional Head (IR) on the appropriate intervention. HRBP provides the strategic lens; the Functional Head (IR) executes on the ground.</div></div>
         <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">L&D programme design — HRBP provides skill gap data to COE</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP owns training needs identification at BU level and surfaces skill gap data to the L&amp;D COE. The COE owns programme architecture, content, and facilitators. HRBP does not design programmes.</div></div>
         <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Compensation benchmarking inputs — surfaces equity gaps</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP surfaces compensation equity gaps within the BU for E and above grade employees. COE-C&amp;B owns the benchmarking methodology and designs the correction mechanism. HRBP provides the BU context; COE provides the solution.</div></div>
         <div class="scope-item influences-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Cross-BU talent movements — recommends; CHRO and COE decide</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">HRBP identifies cross-BU talent movement opportunities and recommends candidates. CHRO and COE own the decision and execution. HRBP provides the BU talent context but does not unilaterally move employees across units.</div></div>
@@ -584,13 +656,13 @@ section{position:relative;}
     <div class="scope-panel" id="sp-outofscope">
       <div class="scope-items">
         <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Payroll processing, salary queries, PF/ESIC administration</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All payroll processing, salary query resolution, and PF/ESIC administration belongs to GCC (Shared Services). HRBP involvement in these activities is a misallocation of strategic capacity and must be redirected immediately.</div></div>
-        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor attendance tracking and leave management</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Shopfloor attendance tracking and leave management for shopfloor grade employees belongs to HOD (IR) and Plant HR. HRBP is not involved in day-to-day attendance administration.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor attendance tracking and leave management</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Shopfloor attendance tracking and leave management for shopfloor grade employees belongs to Functional Head (IR) and Plant HR. HRBP is not involved in day-to-day attendance administration.</div></div>
         <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Letter issuance — GCC</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Experience letters, relieving letters, salary certificates, and all HR documentation issuance is handled by GCC. HRBP is informed of letters issued but does not generate or release them.</div></div>
-        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor disciplinary proceedings and domestic enquiries — HOD (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All shopfloor disciplinary proceedings, domestic enquiry processes, show cause notices, and suspension decisions belong exclusively to HOD (IR) and the IR team. HRBP is informed of outcomes but does not participate in the process.</div></div>
-        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Union negotiations, collective bargaining, and labour law compliance</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All union interaction, collective bargaining, works committee negotiations, and labour law compliance belongs to HOD (IR). HRBP is informed of outcomes. Involvement beyond this boundary creates dual accountability and weakens IR management.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Shopfloor disciplinary proceedings and domestic enquiries — Functional Head (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All shopfloor disciplinary proceedings, domestic enquiry processes, show cause notices, and suspension decisions belong exclusively to the Functional Head (IR) and the IR team. HRBP is informed of outcomes but does not participate in the process.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Union negotiations, collective bargaining, and labour law compliance</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All union interaction, collective bargaining, works committee negotiations, and labour law compliance belongs to Functional Head (IR). HRBP is informed of outcomes. Involvement beyond this boundary creates dual accountability and weakens IR management.</div></div>
         <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">HRIS data entry and record maintenance — GCC</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All HRIS data entry, employee record maintenance, and system updates belong to GCC. HRBP consults and reviews data but does not maintain records. Asking an HRBP to update HRIS is a misuse of the role.</div></div>
-        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Contract labour documentation and statutory compliance — HOD (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Contract labour management, documentation, statutory compliance for contract workers, and Factory Act compliance belongs to HOD (IR). HRBP is not involved in contract labour administration.</div></div>
-        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Canteen, transport, and facility-related employee welfare — HOD (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All facility-related welfare activities — canteen management, transport arrangements, accommodation, and shopfloor welfare programmes — belong to HOD (IR). These are operationally important but outside the HRBP's remit.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Contract labour documentation and statutory compliance — Functional Head (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">Contract labour management, documentation, statutory compliance for contract workers, and Factory Act compliance belongs to Functional Head (IR). HRBP is not involved in contract labour administration.</div></div>
+        <div class="scope-item outofscope-item"><div class="scope-item-header" onclick="toggleScope(this)"><span class="scope-item-title">Canteen, transport, and facility-related employee welfare — Functional Head (IR)</span><span class="scope-item-arrow">›</span></div><div class="scope-item-body">All facility-related welfare activities — canteen management, transport arrangements, accommodation, and shopfloor welfare programmes — belong to Functional Head (IR). These are operationally important but outside the HRBP's remit.</div></div>
       </div>
     </div>
   </div>
@@ -604,7 +676,7 @@ section{position:relative;}
     <div class="section-header rv">
       <span class="section-eyebrow">1.4 · Key Responsibilities</span>
       <h2 class="section-title">Strategic and operational.<br><em>In the right ratio.</em></h2>
-      <p class="section-intro">Responsibilities split into strategic and operational categories. The target ratio is 65% strategic to 35% operational — this governs weekly prioritisation decisions.</p>
+      <p class="section-intro">Most HRBPs default to operational work because it feels urgent. The target ratio is 65% strategic to 35% operational — if that is inverted, it is a signal, not a workload problem.</p>
     </div>
     <div class="ratio-bar-wrap rv">
       <div class="ratio-labels">
@@ -620,26 +692,206 @@ section{position:relative;}
     </div>
     <div class="resp-panel active" id="rt-strategic">
       <div class="resp-grid">
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Workforce Strategy &amp; Planning</div><div class="resp-card-body">Lead annual headcount planning for the BU in partnership with the plant head and finance. Produce an evidence-based workforce plan accounting for attrition forecasts, skill gaps, and business growth targets. Present the BU people plan at the CHRO's annual review.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Talent Health Management</div><div class="resp-card-body">Maintain a talent health data covering attrition risk by grade, high-potential status, succession bench coverage, and critical role vacancy age. Update monthly and present at BU business reviews.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Succession Planning</div><div class="resp-card-body">Own succession bench mapping for all critical and senior roles (M and above). Conduct bi-annual 9-box calibration with the plant head. Ensure every critical role has at least one identified internal successor with a documented development plan.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Performance Ecosystem Ownership</div><div class="resp-card-body">Facilitate the full PMS cycle for E and above grade employees — from KRA alignment through mid-year review to annual calibration. Ensure rating distributions are equitable and data-driven. Coach managers on structured developmental feedback.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Manager Capability Development</div><div class="resp-card-body">Identify people management capability gaps among BU managers. Work with the L&amp;D COE to nominate targeted interventions. Conduct individual coaching conversations on feedback, underperformance handling, and team trust.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Engagement Diagnosis &amp; Action</div><div class="resp-card-body">Analyse BU-level engagement and pulse survey data. Identify root causes rather than surface scores. Build and own a quarterly action plan with the HR head. Track progress at every monthly one-on-one.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">Organisational Design Advisory</div><div class="resp-card-body">Advise the HR head on team structure, role design, and reporting relationships during growth, restructuring, or leadership change. Provide workforce impact analysis before structural decisions are finalised.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Strategic</div><div class="resp-card-title">CHRO Intelligence Feed</div><div class="resp-card-body">Serve as the primary intelligence channel from the BU to the CHRO. Surface ground-level workforce signals — cultural shifts, risks, compensation equity concerns, leadership capability gaps — before they escalate.</div></div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">Workforce Strategy &amp; Planning</div>
+              <div class="resp-card-preview">Annual headcount planning for the BU.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Lead annual headcount planning for the BU in partnership with the plant head and finance. Produce an evidence-based workforce plan accounting for attrition forecasts, skill gaps, and business growth targets. Present the BU people plan at the CHRO's annual review.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">Talent Health Management</div>
+              <div class="resp-card-preview">Monthly talent health data — attrition risk, HiPo status, succession bench.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Maintain a talent health data covering attrition risk by grade, high-potential status, succession bench coverage, and critical role vacancy age. Update monthly and present at BU business reviews.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">Succession Planning</div>
+              <div class="resp-card-preview">Own succession bench for all critical and senior roles (M and above).</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Own succession bench mapping for all critical and senior roles (M and above). Conduct bi-annual 9-box calibration with the plant head. Ensure every critical role has at least one identified internal successor with a documented development plan.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">Performance Ecosystem Ownership</div>
+              <div class="resp-card-preview">Facilitate the full PMS cycle for E and above grade employees.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Facilitate the full PMS cycle for E and above grade employees — from KRA alignment through mid-year review to annual calibration. Ensure rating distributions are equitable and data-driven. Coach managers on structured developmental feedback.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">Manager Capability Development</div>
+              <div class="resp-card-preview">Identify people management gaps and drive targeted interventions.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Identify people management capability gaps among BU managers. Work with the L&amp;D COE to nominate targeted interventions. Conduct individual coaching conversations on feedback, underperformance handling, and team trust.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">Engagement Diagnosis &amp; Action</div>
+              <div class="resp-card-preview">Analyse BU-level engagement data and own a quarterly action plan.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Analyse BU-level engagement and pulse survey data. Identify root causes rather than surface scores. Build and own a quarterly action plan with the HR head. Track progress at every monthly one-on-one.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">Organisational Design Advisory</div>
+              <div class="resp-card-preview">Advise on team structure, role design, and reporting relationships.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Advise the HR head on team structure, role design, and reporting relationships during growth, restructuring, or leadership change. Provide workforce impact analysis before structural decisions are finalised.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Strategic</div>
+              <div class="resp-card-title">CHRO Intelligence Feed</div>
+              <div class="resp-card-preview">Surface ground-level workforce signals before they escalate.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Serve as the primary intelligence channel from the BU to the CHRO. Surface ground-level workforce signals — cultural shifts, risks, compensation equity concerns, leadership capability gaps — before they escalate.</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="resp-panel" id="rt-operational">
       <p style="font-size:12px;color:var(--mid-grey);margin-bottom:24px;font-style:italic;">These responsibilities are necessary but must be managed efficiently and should not displace strategic priorities. Where possible, delegate, systematise, or transition to the appropriate function.</p>
       <div class="resp-grid">
-        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">E+ Grade Talent Acquisition Facilitation</div><div class="resp-card-body">Participate in shortlisting, interviewing, and offer approval for E and above grade roles. Review job descriptions for accuracy and business relevance. Manage business leader expectations on timelines and own candidate experience.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Onboarding Management</div><div class="resp-card-body">Facilitate Day 1 induction for new joiners (E and above grade). Own the 30/60/90-day check-in process. Monitor probation progress and conduct structured probation review conversations.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">PMS Process Execution</div><div class="resp-card-body">Coordinate the PMS calendar for the BU — goal-setting submissions, mid-year review completion, and appraisal form submission. Track completion rates and escalate non-compliance to the plant head.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">HiPo Programme Nominations</div><div class="resp-card-body">Identify and nominate HiPos for leadership programmes, cross-functional projects, and stretch assignments in coordination with the L&amp;D COE. Track IDP progress and update the succession bench accordingly.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Exit Management</div><div class="resp-card-body">Conduct exit interviews for all E and above grade separations. Analyse themes quarterly and present aggregated insights to the plant head and CHRO. Lead retention conversations for at-risk high performers before resignation.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Monthly Reporting</div><div class="resp-card-body">Produce and share the BU people dashboard monthly, covering the 10 HRBP KPIs defined in the operating rhythm part of this playbook. This report is shared with both the BU Head HR and the CHRO.</div></div>
-        <div class="resp-card"><div class="resp-card-label">Operational</div><div class="resp-card-title">Stakeholder Coordination</div><div class="resp-card-body">Coordinate with COE leads (TA, L&amp;D, C&amp;B) on BU-specific programme inputs, nominations, and data requests. Ensure no programme reaches the BU without prior HRBP context-setting.</div></div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Operational</div>
+              <div class="resp-card-title">E+ Grade Talent Acquisition Facilitation</div>
+              <div class="resp-card-preview">Participate in shortlisting, interviewing, and offer approval for E and above grade roles.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Participate in shortlisting, interviewing, and offer approval for E and above grade roles. Review job descriptions for accuracy and business relevance. Manage business leader expectations on timelines and own candidate experience.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Operational</div>
+              <div class="resp-card-title">Onboarding Management</div>
+              <div class="resp-card-preview">Facilitate Day 1 induction and own the 30/60/90-day check-in process.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Facilitate Day 1 induction for new joiners (E and above grade). Own the 30/60/90-day check-in process. Monitor probation progress and conduct structured probation review conversations.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Operational</div>
+              <div class="resp-card-title">PMS Process Execution</div>
+              <div class="resp-card-preview">Coordinate the PMS calendar — goal-setting, mid-year, and appraisal submissions.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Coordinate the PMS calendar for the BU — goal-setting submissions, mid-year review completion, and appraisal form submission. Track completion rates and escalate non-compliance to the plant head.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Operational</div>
+              <div class="resp-card-title">HiPo Programme Nominations</div>
+              <div class="resp-card-preview">Identify and nominate HiPos for leadership programmes and stretch assignments.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Identify and nominate HiPos for leadership programmes, cross-functional projects, and stretch assignments in coordination with the L&amp;D COE. Track IDP progress and update the succession bench accordingly.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Operational</div>
+              <div class="resp-card-title">Exit Management</div>
+              <div class="resp-card-preview">Conduct exit interviews and lead retention conversations for at-risk high performers.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Conduct exit interviews for all E and above grade separations. Analyse themes quarterly and present aggregated insights to the plant head and CHRO. Lead retention conversations for at-risk high performers before resignation.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Operational</div>
+              <div class="resp-card-title">Monthly Reporting</div>
+              <div class="resp-card-preview">Produce the BU people dashboard covering the 10 HRBP KPIs monthly.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Produce and share the BU people dashboard monthly, covering the 10 HRBP KPIs defined in the operating rhythm part of this playbook. This report is shared with both the BU Head HR and the CHRO.</div>
+          </div>
+        </div>
+<div class="resp-card rv" onclick="toggleRespCard(this)">
+          <div class="resp-card-summary">
+            <div class="resp-card-summary-left">
+              <div class="resp-card-label">Operational</div>
+              <div class="resp-card-title">Stakeholder Coordination</div>
+              <div class="resp-card-preview">Coordinate with COE leads on BU-specific programme inputs and nominations.</div>
+            </div>
+            <div class="resp-card-toggle">+</div>
+          </div>
+          <div class="resp-card-body-wrap">
+            <div class="resp-card-body">Coordinate with COE leads (TA, L&amp;D, C&amp;B) on BU-specific programme inputs, nominations, and feedback loops. Serve as the BU's single point of contact for all COE interactions.</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -655,6 +907,10 @@ section{position:relative;}
       <h2 class="section-title">Who owns which decision.<br><em>No ambiguity.</em></h2>
       <p class="section-intro">For each HR decision domain, the table specifies whether the HRBP Owns, Influences, or Supports. The accountability column identifies who is ultimately answerable for the outcome.</p>
     </div>
+    <div style="background:rgba(200,16,46,.04);border-left:4px solid var(--red);padding:20px 28px;margin-bottom:32px;">
+      <div style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">What HRBPs often get wrong</div>
+      <p style="font-size:13px;line-height:1.7;color:var(--dark-grey);max-width:680px;">Owning a decision is not the same as making it unilaterally. The table below defines where the HRBP must be the final voice — and where they inform but do not decide. Confusing these two is the most common source of friction with the Functional Head (IR) and COE.</p>
+    </div>
     <div class="dr-intro-note rv">
       <strong>Reading guide:</strong> <span class="dr-owns">Owns</span> = the HRBP decides without seeking approval. <span class="dr-influences">Influences</span> = HRBP input formally shapes the decision, but another party holds final authority. <span class="dr-supports" style="color:var(--mid-grey)">Supports</span> = HRBP provides data, logistics, or coordination only — no decision input. <strong>NA</strong> = not involved.
     </div>
@@ -668,22 +924,22 @@ section{position:relative;}
 
     <div class="dr-panel active" id="dr-talent">
       <table class="dr-table">
-        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>Functional Head (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
         <tbody>
           <tr><td><strong>Workforce Planning</strong></td><td class="dr-owns">Owns — BU headcount plan and attrition forecast</td><td class="dr-supports">Supports (Shopfloor grade WFP data)</td><td class="dr-influences">Owns (enterprise WFP framework and tools)</td><td class="dr-supports">Supports (finance inputs)</td><td class="dr-final">BU Head (headcount budget), CHRO (enterprise plan)</td></tr>
           <tr><td><strong>Talent Acquisition — E and above grade</strong></td><td class="dr-owns">Owns — drives process, conducts HR interviews</td><td class="dr-na">NA</td><td class="dr-influences">Owns (sourcing process, vendor, JD standards)</td><td class="dr-owns">Owns (final hire decision)</td><td class="dr-final">HRBP (process quality), BU Head (hire decision)</td></tr>
-          <tr><td><strong>Talent Acquisition — M+</strong></td><td class="dr-influences">Influences — validates JD, reviews shortlist</td><td class="dr-na">NA</td><td class="dr-owns">Owns (design policies, implementation done by GCC)</td><td class="dr-supports">Supports (technical interview input)</td><td class="dr-final">COE-TA (policies), HOD (IR) (offer and joining)</td></tr>
-          <tr><td><strong>Talent Acquisition — Shopfloor</strong></td><td class="dr-na">NA (informed of volumes only)</td><td class="dr-owns">Owns (end-to-end)</td><td class="dr-supports">Supports (process standards only)</td><td class="dr-influences">Influences (headcount approval)</td><td class="dr-final">HOD (IR) (process), BU Head (headcount)</td></tr>
+          <tr><td><strong>Talent Acquisition — M+</strong></td><td class="dr-influences">Influences — validates JD, reviews shortlist</td><td class="dr-na">NA</td><td class="dr-owns">Owns (design policies, implementation done by GCC)</td><td class="dr-supports">Supports (technical interview input)</td><td class="dr-final">COE-TA (policies), Functional Head (IR) (offer and joining)</td></tr>
+          <tr><td><strong>Talent Acquisition — Shopfloor</strong></td><td class="dr-na">NA (informed of volumes only)</td><td class="dr-owns">Owns (end-to-end)</td><td class="dr-supports">Supports (process standards only)</td><td class="dr-influences">Influences (headcount approval)</td><td class="dr-final">Functional Head (IR) (process), BU Head (headcount)</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="dr-panel" id="dr-performance">
       <table class="dr-table">
-        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>Functional Head (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
         <tbody>
           <tr><td><strong>Performance Management — E &amp; above grade</strong></td><td class="dr-owns">Owns &amp; facilitates calibration, manages PMS cycle, initiates PIP</td><td class="dr-na">NA</td><td class="dr-owns">Owns (framework design, bell-curve guidelines, HRIS setup)</td><td class="dr-influences">Influences (rating input for direct reports)</td><td class="dr-final">HRBP (process and calibration quality)</td></tr>
-          <tr><td><strong>Performance Management — Shopfloor Grade</strong></td><td class="dr-na">NA (aggregated data quarterly only)</td><td class="dr-owns">Owns (appraisal process and records)</td><td class="dr-owns">Owns (framework)</td><td class="dr-influences">Influences (shopfloor performance expectations)</td><td class="dr-final">HOD (IR)</td></tr>
+          <tr><td><strong>Performance Management — Shopfloor Grade</strong></td><td class="dr-na">NA (aggregated data quarterly only)</td><td class="dr-owns">Owns (appraisal process and records)</td><td class="dr-owns">Owns (framework)</td><td class="dr-influences">Influences (shopfloor performance expectations)</td><td class="dr-final">Functional Head (IR)</td></tr>
           <tr><td><strong>L&amp;D — Nominations</strong></td><td class="dr-owns">Owns — nominates M-grade for all programmes based on IDP and 9-box</td><td class="dr-influences">Influences (mandatory training compliance — shopfloor workers)</td><td class="dr-supports">Supports (nominations delivered to COE)</td><td class="dr-influences">Influences (time-release approval)</td><td class="dr-final">HRBP (nomination quality and follow-through)</td></tr>
           <tr><td><strong>L&amp;D — Design</strong></td><td class="dr-influences">Influences — provides BU skill gap data and business context</td><td class="dr-supports">Supports (logistical coordination at plant)</td><td class="dr-owns">Owns (programme architecture, content, facilitators)</td><td class="dr-supports">Supports (subject-matter input)</td><td class="dr-final">COE-L&amp;D (programme design and effectiveness)</td></tr>
         </tbody>
@@ -692,7 +948,7 @@ section{position:relative;}
 
     <div class="dr-panel" id="dr-comp">
       <table class="dr-table">
-        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>Functional Head (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
         <tbody>
           <tr><td><strong>Compensation — Annual Increments</strong></td><td class="dr-influences">Influences — input on individual performance context</td><td class="dr-supports">Supports (attendance and input accuracy)</td><td class="dr-owns">Owns (increment framework, band management, letters)</td><td class="dr-influences">Influences (budget approval)</td><td class="dr-final">COE-C&amp;B (framework), HR Head (final approval)</td></tr>
           <tr><td><strong>Compensation — Equity Review</strong></td><td class="dr-owns">Owns — identifies and escalates equity gaps within BU for E and above grade</td><td class="dr-owns">Owns — identifies and escalates equity gaps for shopfloor workers</td><td class="dr-owns">Owns (benchmarking and correction mechanism)</td><td class="dr-influences">Influences (budget approval for correction)</td><td class="dr-final">CHRO (final equity decisions)</td></tr>
@@ -703,18 +959,18 @@ section{position:relative;}
 
     <div class="dr-panel" id="dr-er">
       <table class="dr-table">
-        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>Functional Head (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
         <tbody>
           <tr><td><strong>Employee Relations — E &amp; above grade</strong></td><td class="dr-owns">Owns — coaches manager, facilitates informal resolution, initiates formal process</td><td class="dr-na">NA</td><td class="dr-supports">Supports (policy reference)</td><td class="dr-influences">Influences (decision on formal action)</td><td class="dr-final">HRBP (process), HR Head (formal disciplinary decision)</td></tr>
-          <tr><td><strong>Employee Relations — Shopfloor Grade</strong></td><td class="dr-na">NA (informed of patterns after resolution)</td><td class="dr-owns">Owns (grievance registration, investigation, resolution)</td><td class="dr-supports">Supports (POSH policy, compliance framework)</td><td class="dr-influences">Influences (workplace decision context)</td><td class="dr-final">HOD (IR) (process), HR Head (formal escalation)</td></tr>
-          <tr><td><strong>IR and Labour Compliance</strong></td><td class="dr-na">NA</td><td class="dr-owns">Owns (union interaction, statutory compliance, IR management)</td><td class="dr-owns">Owns (policy framework for compliance)</td><td class="dr-supports">Supports (operations context)</td><td class="dr-final">HOD (IR) (day-to-day), Legal and IR team (formal proceedings)</td></tr>
+          <tr><td><strong>Employee Relations — Shopfloor Grade</strong></td><td class="dr-na">NA (informed of patterns after resolution)</td><td class="dr-owns">Owns (grievance registration, investigation, resolution)</td><td class="dr-supports">Supports (POSH policy, compliance framework)</td><td class="dr-influences">Influences (workplace decision context)</td><td class="dr-final">Functional Head (IR) (process), HR Head (formal escalation)</td></tr>
+          <tr><td><strong>IR and Labour Compliance</strong></td><td class="dr-na">NA</td><td class="dr-owns">Owns (union interaction, statutory compliance, IR management)</td><td class="dr-owns">Owns (policy framework for compliance)</td><td class="dr-supports">Supports (operations context)</td><td class="dr-final">Functional Head (IR) (day-to-day), Legal and IR team (formal proceedings)</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="dr-panel" id="dr-ops">
       <table class="dr-table">
-        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>HOD (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
+        <thead><tr><th>Decision Domain</th><th>HRBP</th><th>Functional Head (IR)</th><th>COE</th><th>Business Leader</th><th>Final Accountability</th></tr></thead>
         <tbody>
           <tr><td><strong>Organisational Design</strong></td><td class="dr-owns">Owns — advises on structure, role design, reporting lines; flags risks</td><td class="dr-supports">Supports (ground-level workforce context)</td><td class="dr-supports">Supports (benchmarking reference)</td><td class="dr-owns">Owns (structural decision)</td><td class="dr-final">BU Head and CHRO (final structural decisions)</td></tr>
           <tr><td><strong>HRBP Scorecard and People Dashboard</strong></td><td class="dr-owns">Owns — produces, maintains, and presents at BU reviews monthly</td><td class="dr-owns">Owns (for shopfloor workers)</td><td class="dr-supports">Supports (dashboard templates and benchmarks)</td><td class="dr-influences">Influences (reviews and provides business feedback)</td><td class="dr-final">CHRO (enterprise review)</td></tr>
@@ -760,7 +1016,7 @@ section{position:relative;}
   <div class="container">
     <div class="section-header rv">
       <span class="section-eyebrow">2.3 · Role Differentiation</span>
-      <h2 class="section-title">HRBP vs HOD (IR) vs COE vs GCC.<br><em>Same organisation. Different worlds.</em></h2>
+      <h2 class="section-title">HRBP vs Functional Head (IR) vs COE vs GCC.<br><em>Same organisation. Different worlds.</em></h2>
       <p class="section-intro">Select any two roles to compare them side by side across 13 operating dimensions. Use the pagination to move through dimension groups.</p>
     </div>
 
@@ -768,14 +1024,14 @@ section{position:relative;}
       <label>Compare</label>
       <select class="compare-select" id="role-a" onchange="renderComparison()">
         <option value="0">HRBP</option>
-        <option value="1">HOD (IR) — Plant HR</option>
+        <option value="1">Functional Head (IR) — Plant HR</option>
         <option value="2">COE</option>
         <option value="3">GCC — Shared Services</option>
       </select>
       <span class="compare-vs">vs</span>
       <select class="compare-select" id="role-b" onchange="renderComparison()">
         <option value="0">HRBP</option>
-        <option value="1" selected>HOD (IR) — Plant HR</option>
+        <option value="1" selected>Functional Head (IR) — Plant HR</option>
         <option value="2">COE</option>
         <option value="3">GCC — Shared Services</option>
       </select>
@@ -788,6 +1044,32 @@ section{position:relative;}
     </div>
 
     <div class="compare-grid rv" id="compare-grid"></div>
+  </div>
+</section>
+
+<!-- NEXT STEPS STRIP -->
+<section style="padding:60px 0;background:var(--off-white);border-top:1px solid var(--light-grey);">
+  <div class="container">
+    <div style="margin-bottom:24px;">
+      <span style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mid-grey);">Now that you have the charter</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
+      <a href="engagement.html" style="text-decoration:none;background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--red);padding:24px;display:block;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'">
+        <div style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Next &#8594;</div>
+        <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--dark-grey);margin-bottom:6px;">Engagement Model</div>
+        <div style="font-size:11px;color:var(--mid-grey);line-height:1.6;">How the HRBP actually operates with business leaders, Plant HR, and the COE on a daily basis.</div>
+      </a>
+      <a href="processes.html" style="text-decoration:none;background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--dark-grey);padding:24px;display:block;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'">
+        <div style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--dark-grey);margin-bottom:8px;">Go deeper &#8594;</div>
+        <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--dark-grey);margin-bottom:6px;">Process Library</div>
+        <div style="font-size:11px;color:var(--mid-grey);line-height:1.6;">161 hire-to-retire processes with SOPs, decision trees, and RACI assignments mapped to each role.</div>
+      </a>
+      <a href="dashboard.html" style="text-decoration:none;background:var(--white);border:1px solid var(--light-grey);border-top:3px solid var(--dark-grey);padding:24px;display:block;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'">
+        <div style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--dark-grey);margin-bottom:8px;">Apply it &#8594;</div>
+        <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--dark-grey);margin-bottom:6px;">HRBP Dashboard</div>
+        <div style="font-size:11px;color:var(--mid-grey);line-height:1.6;">Track the metrics that make the charter measurable — attrition risk, succession bench, engagement scores.</div>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -805,7 +1087,7 @@ section{position:relative;}
           <li><a href="#">Home &amp; Landing</a></li>
           <li><a href="#">Company Overview</a></li>
           <li><a href="#">Key Stakeholders</a></li>
-          <li><a href="#">Role Charter</a></li>
+          <li><a href="#">Your Role</a></li>
           <li><a href="#">90-Day Plan</a></li>
         </ul>
       </div>
@@ -833,6 +1115,14 @@ section{position:relative;}
       <div class="footer-bottom-left">© 2026 Arvind Limited · HRBP Playbook · Internal Document</div>
       <div class="footer-bottom-right">Role Charter · Section 1 &amp; 2 · Summer 2026</div>
     </div>
+  </div>
+
+  <div style="background:rgba(200,16,46,.06);border-top:1px solid rgba(200,16,46,.2);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div>
+      <div style="font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px;">Read this file</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.8);font-weight:600;">Read the full Role Charter as a PDF — save it, reference it, keep it close.</div>
+    </div>
+    <a href="https://drive.google.com/file/d/1fkuERJ3CDanG9JosPxmXatMdrRyh3uyb/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;background:var(--red);color:var(--white);font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#a00e24'" onmouseout="this.style.background='var(--red)'">Read the PDF →</a>
   </div>
 </footer>
 
@@ -2545,7 +2835,7 @@ function gradePill(g){
 }
 
 // ── ROLE DIFFERENTIATION ──
-const roles=['HRBP','HOD (IR) — Plant HR','COE','GCC — Shared Services'];
+const roles=['HRBP','Functional Head (IR) — Plant HR','COE','GCC — Shared Services'];
 const dims=[
   {label:'Core Purpose',data:['Translate business strategy into measurable people outcomes at BU level','Manage HR operations, IR, and statutory compliance on the ground at the plant','Design and own enterprise-wide HR frameworks, programmes, and policies','Deliver HR transactions accurately, efficiently, and at scale']},
   {label:'Who They Serve',data:['Management layer (E1–BM) — HODs, business leaders and senior employees','Entire plant workforce, with heaviest focus on shopfloor','The entire organisation — COE outputs apply to all BUs and locations','Every employee requiring a letter, payroll answer, or system update']},
@@ -2558,7 +2848,7 @@ const dims=[
   {label:'Primary Reporting',data:['Functionally to HR Head / CHRO; operationally aligned to BU / Plant Head','Reports to Plant Head with dotted line to HR function; strong local accountability','Reports to COE functional head (Head of TA / L&D / C&B)','Reports to GCC Manager / HR Operations Head']},
   {label:'Arvind-Specific Context',data:['Currently spending 70–75% of time on operational tasks; this playbook defines the target operating model','Strongest at IR and shopfloor management; needs cleaner HRBP boundary to prevent role duplication','Currently designing programmes without sufficient HRBP input on BU-level needs — a gap this model addresses','Currently non-existent at Arvind — this is the target state model']},
   {label:'A Good Day Looks Like',data:['Sat in a BU business review, surfaced a workforce risk, and got a decision made','Zero pending grievances, attendance 100% accurate, no IR escalation, shopfloor workforce stable and informed','A new leadership programme running consistently across 5 plants with measurable behaviour change','100 queries resolved within SLA, payroll submitted error-free, all letters issued on time — and no HRBP asked to help']},
-  {label:'What Must Not Happen',data:['HRBP processing payroll queries, issuing letters, handling PF forms, or doing shopfloor attendance work','HOD (IR) making succession decisions, attending M-grade calibration sessions, or acting as HRBP substitute','COE engaging directly with plant heads on strategic people decisions, bypassing the HRBP entirely','GCC providing HR advice, making policy exceptions, or becoming a workaround for broken processes']},
+  {label:'What Must Not Happen',data:['HRBP processing payroll queries, issuing letters, handling PF forms, or doing shopfloor attendance work','Functional Head (IR) making succession decisions, attending M-grade calibration sessions, or acting as HRBP substitute','COE engaging directly with plant heads on strategic people decisions, bypassing the HRBP entirely','GCC providing HR advice, making policy exceptions, or becoming a workaround for broken processes']},
   {label:'Collaboration with HRBP',data:['—','HRBP advises on BU strategy; Plant HR executes on ground. Boundary must be clear and respected.','HRBP provides BU skill gap data and context; COE uses it to design programmes. Gap currently exists.','HRBP is informed of GCC outputs (letters, payroll). HRBP should never be asked to fill GCC gaps.']}
 ];
 const PAGE_SIZE=4;
@@ -2598,6 +2888,56 @@ function changePage(dir){
   renderComparison();
 }
 renderComparison();
+
+// ── PURPOSE STATEMENT TOOLTIPS (fixed-position, no layout disruption) ──
+(function(){
+  const tip = document.getElementById('annotation-tooltip');
+  const tipLabel = document.getElementById('atip-label');
+  const tipText = document.getElementById('atip-text');
+  if(!tip) return;
+
+  document.querySelectorAll('.purpose-phrase.annotated').forEach(span => {
+    span.addEventListener('mouseenter', function(e){
+      tipLabel.textContent = this.dataset.label || '';
+      tipText.textContent = this.dataset.tip || '';
+      tip.classList.add('visible');
+      positionTip(e);
+    });
+    span.addEventListener('mousemove', positionTip);
+    span.addEventListener('mouseleave', function(){
+      tip.classList.remove('visible');
+    });
+  });
+
+  function positionTip(e){
+    const tw = 260;
+    const margin = 12;
+    let x = e.clientX - tw / 2;
+    let y = e.clientY - tip.offsetHeight - margin - 20;
+    // Keep within viewport horizontally
+    if(x < 8) x = 8;
+    if(x + tw > window.innerWidth - 8) x = window.innerWidth - tw - 8;
+    // If too close to top, flip below cursor
+    if(y < 8) y = e.clientY + margin + 20;
+    tip.style.left = x + 'px';
+    tip.style.top = y + 'px';
+  }
+})();
+
+// ── EXPANDABLE RESPONSIBILITY CARDS ──
+function toggleRespCard(card) {
+  const isOpen = card.classList.contains('open');
+  // Close all others in same panel
+  const panel = card.closest('.resp-panel');
+  if (panel) panel.querySelectorAll('.resp-card.open').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.resp-card-toggle').textContent = '+';
+  });
+  if (!isOpen) {
+    card.classList.add('open');
+    card.querySelector('.resp-card-toggle').textContent = '−';
+  }
+}
 </script>
 </body>
 </html>
